@@ -1,0 +1,76 @@
+#include "marjoram/season.hpp"
+
+#include "gtest/gtest.h"
+#include <string>
+
+TEST(Either, ctor) {
+  auto int_int = Either<int, int>(LeftEither, 5);
+  auto float_float = Either<float, float>(RightEither, 5);
+  auto string_double = Either<std::string, double>(4.0);
+  auto string_double2 = Either<std::string, double>("Hello");
+  auto float_float2 = Either<float, float>(LeftEither);
+}
+
+TEST(Either, flatMap) {
+  auto five = Either<std::string, int>(5);
+  auto msqInts = [](int i) { return Either<std::string, int>(i * i); };
+  auto squared = five.flatMap(msqInts);
+  auto twiceSquared = five.flatMap(msqInts).flatMap(msqInts);
+
+  ASSERT_TRUE(squared.isRight());
+  ASSERT_FALSE(squared.isLeft());
+  EXPECT_EQ(squared.asRight(), 25);
+  ASSERT_TRUE(twiceSquared.isRight());
+  EXPECT_EQ(twiceSquared.asRight(), 25 * 25);
+
+  auto notFive = Either<std::string, int>("RA RA RASPUTIN!");
+  squared = notFive.flatMap(msqInts);
+  twiceSquared = notFive.flatMap(msqInts).flatMap(msqInts);
+
+  ASSERT_FALSE(squared.isRight());
+  ASSERT_TRUE(squared.isLeft());
+  EXPECT_EQ(squared.asLeft(), "RA RA RASPUTIN!");
+  ASSERT_TRUE(twiceSquared.isLeft());
+  EXPECT_EQ(twiceSquared.asLeft(), "RA RA RASPUTIN!");
+}
+
+TEST(Either, map) {
+  auto five = Either<std::string, int>(5);
+  auto msqInts = [](int i) { return i * i; };
+  auto squared = five.map(msqInts);
+  auto twiceSquared = five.map(msqInts).map(msqInts);
+
+  ASSERT_TRUE(squared.isRight());
+  ASSERT_FALSE(squared.isLeft());
+  EXPECT_EQ(squared.asRight(), 25);
+  ASSERT_TRUE(twiceSquared.isRight());
+  EXPECT_EQ(twiceSquared.asRight(), 25 * 25);
+}
+
+struct SomeType {
+  SomeType(std::unique_ptr<int>&& i) : ip(std::move(i)) {}
+  std::unique_ptr<int> ip;
+};
+
+TEST(Either, unique_ptr) {
+  auto ept = Either<std::string, std::unique_ptr<int>>(new int(42));
+  auto est =
+      ept.map([](std::unique_ptr<int>&& i) { return SomeType(std::move(i)); });
+  ASSERT_TRUE(ept.isRight());
+  EXPECT_EQ(*est.asRight().ip, 42);
+  EXPECT_EQ(ept.asRight(), nullptr);  // after move should be empty -> nullptr
+}
+
+TEST(Either, fold) {
+  auto eStr = Either<std::string, int>("There was a cat");
+  auto eInt = Either<std::string, int>(42);
+
+  auto fa = [](const std::string& s) -> std::size_t { return s.length(); };
+  auto fb = [](const int& i) -> std::size_t { return i; };
+
+  auto rStr = eStr.fold(fa, fb);
+  auto rInt = eInt.fold(fa, fb);
+
+  EXPECT_EQ(rStr, std::string("There was a cat").length());
+  EXPECT_EQ(rInt, 42LU);
+}
