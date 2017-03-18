@@ -1,0 +1,4 @@
+build/
+doc/html
+doc/latex
+*.swp

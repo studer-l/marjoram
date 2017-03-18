@@ -1,0 +1,6 @@
+[submodule "external/googletest"]
+	path = external/googletest
+	url = https://github.com/google/googletest.git
+[submodule "external/sanitizers-cmake"]
+	path = external/sanitizers-cmake
+	url = git://github.com/arsenm/sanitizers-cmake.git
