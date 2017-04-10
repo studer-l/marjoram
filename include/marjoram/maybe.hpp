@@ -4,9 +4,9 @@
 #include <type_traits>
 #include <utility>
 
-#include "monad.hpp"
-
 namespace marjoram {
+template <typename A> class MaybeIterator;
+template <typename A> class ConstMaybeIterator;
 
 /**
  * Convertible to any kind of (empty) `Maybe` object.
@@ -14,17 +14,11 @@ namespace marjoram {
 struct Nothing_t {
   Nothing_t() {}
 };
+
 /**
  * Convenience constant.
  */
 static const Nothing_t Nothing;
-
-/* forward declarations */
-template <typename A> class Maybe;
-
-template <typename A> Maybe<A> Just(A&& a);
-
-template <typename A, typename... Args> Maybe<A> Just(Args&&... args);
 
 /**
  * Maybe monad.
@@ -34,15 +28,14 @@ template <typename A, typename... Args> Maybe<A> Just(Args&&... args);
  * Throughout the documentation, if an object of type Maybe<A> contains a
  * value, this value is denoted by `a`.
  */
-template <typename A> class Maybe : public Monad<A, Maybe> {
+template <typename A, template <class> class impl = boost::optional>
+class Maybe {
   static_assert(std::is_same<std::decay_t<A>, A>::value,
                 "Maybe<A>: A must be a value type.");
 
  public:
   /**
    * New empty object (containing `Nothing`).
-   *
-   * Example: `auto empty = Maybe(Nothing);`
    */
   /* implicit */ Maybe(Nothing_t /* overload selection */) : impl_() {}
 
@@ -61,7 +54,7 @@ template <typename A> class Maybe : public Monad<A, Maybe> {
    * @param f Function object.
    *
    * Type requirement:
-   * - `F::operator()` when called with `const A&` argument  has return type
+   * - `F::operator()` when called with `const A&` argument has return type
    *   `Maybe<B>`, where `B` is non void
    *
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
@@ -88,6 +81,44 @@ template <typename A> class Maybe : public Monad<A, Maybe> {
   template <typename F> auto flatMap(F f) -> std::result_of_t<F(A)> {
     if (isJust()) {
       return f(std::move(getImpl()));
+    }
+    return Nothing;
+  }
+
+  /**
+   * Returns maybe containing result of `f(a)` if this holds a value, otherwise
+   * returns Nothing.
+   *
+   * @param f Function object.
+   *
+   * Type requirement:
+   * - `F::operator()` when called with `const A&` argument has non-void return
+   *    type `B`.
+   *
+   * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
+   */
+  template <typename F> auto map(F f) const -> Maybe<std::result_of_t<F(A)>> {
+    if (isJust()) {
+      return Maybe<std::result_of_t<F(A)>>((f(get())));
+    }
+    return Nothing;
+  }
+
+  /**
+   * Returns maybe containing result of `f(a)` if this holds a value, otherwise
+   * returns Nothing.
+   *
+   * @param f Function object.
+   *
+   * Type requirement:
+   * - `F::operator()` when called with `const A&&` argument has non-void
+   * return type `B`.
+   *
+   * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
+   */
+  template <typename F> auto map(F f) -> Maybe<std::result_of_t<F(A)>> {
+    if (isJust()) {
+      return Maybe<std::result_of_t<F(A)>>((f(std::move(get()))));
     }
     return Nothing;
   }
@@ -132,13 +163,84 @@ template <typename A> class Maybe : public Monad<A, Maybe> {
    */
   const A& getOrElse(const A& dflt) const { return isJust() ? get() : dflt; }
 
+  MaybeIterator<A> begin() { return {*this, true}; }
+  ConstMaybeIterator<A> begin() const { return {*this, true}; }
+  ConstMaybeIterator<A> cbegin() const { return {*this, true}; }
+
+  MaybeIterator<A> end() { return {*this, false}; }
+  ConstMaybeIterator<A> end() const { return {*this, false}; }
+  ConstMaybeIterator<A> cend() const { return {*this, false}; }
+
  private:
   // Implementation: boost::optional
-  using impl = boost::optional<A>;
   const A& getImpl() const { return impl_.get(); }
   A& getImpl() { return impl_.get(); }
 
-  impl impl_;
+  impl<A> impl_;
+};
+
+template <typename A> class MaybeIterator {
+ public:
+  using value_type = A;
+  using reference = A&;
+  using pointer = A*;
+
+  MaybeIterator(Maybe<A>& Ma, bool start)
+      : Ma_(Ma), start_(start && Ma.isJust()) {}
+  bool operator!=(const MaybeIterator<A>& other) {
+    return start_ != other.start_;
+  }
+
+  reference operator*() { return Ma_.get(); }
+
+  pointer operator->() { return &Ma_.get(); }
+
+  MaybeIterator& operator++() {
+    start_ = false;
+    return *this;
+  }
+
+  MaybeIterator& operator++(int) {
+    MaybeIterator ret(Ma_, start_);
+    start_ = false;
+    return ret;
+  }
+
+ private:
+  Maybe<A>& Ma_;
+  bool start_;
+};
+
+template <typename A> class ConstMaybeIterator {
+ public:
+  using value_type = const A;
+  using reference = const A&;
+  using pointer = const A*;
+
+  ConstMaybeIterator(const Maybe<A>& Ma, bool start)
+      : Ma_(Ma), start_(start && Ma.isJust()) {}
+  bool operator!=(const ConstMaybeIterator<A>& other) {
+    return start_ != other.start_;
+  }
+
+  reference operator*() { return Ma_.get(); }
+
+  pointer operator->() { return &Ma_.get(); }
+
+  ConstMaybeIterator& operator++() {
+    start_ = false;
+    return *this;
+  }
+
+  ConstMaybeIterator& operator++(int) {
+    ConstMaybeIterator ret(Ma_, start_);
+    start_ = false;
+    return ret;
+  }
+
+ private:
+  const Maybe<A>& Ma_;
+  bool start_;
 };
 
 /**
@@ -155,4 +257,4 @@ template <typename A> Maybe<A> Just(A&& a) {
 template <typename A, typename... Args> Maybe<A> Just(Args&&... args) {
   return Maybe<A>(std::forward<Args>(args)...);
 }
-} // namespace marjoram
+}  // namespace marjoram

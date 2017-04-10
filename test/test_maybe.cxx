@@ -88,3 +88,20 @@ TEST(Maybe, NoCopyType) {
       nc3.flatMap([](NoCopy_t&& ncc) { return Just(Needy_t(std::move(ncc))); });
   ASSERT_EQ(NoCopy_t::newCount, 3LU);
 }
+
+TEST(Maybe, For) {
+  Maybe<int> five = Just(5);
+  Maybe<int> notFive;
+
+  for (int i : five) {
+    ASSERT_EQ(i, 5);
+  }
+
+  auto b = notFive.begin();
+  auto e = notFive.end();
+  ASSERT_FALSE(b != e);
+
+  for (int i : notFive) {
+    ASSERT_FALSE(i == i);
+  }
+}

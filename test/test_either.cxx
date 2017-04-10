@@ -74,3 +74,21 @@ TEST(Either, fold) {
   EXPECT_EQ(rStr, std::string("There was a cat").length());
   EXPECT_EQ(rInt, 42LU);
 }
+
+
+TEST(Either, For) {
+  Either<int, char> theLetterF(RightEither, 'f');
+  Either<std::string, char> hello("Hello");
+
+  for(char f: theLetterF) {
+    ASSERT_EQ(f, 'f');
+  }
+
+  auto b = hello.begin();
+  auto e = hello.end();
+  ASSERT_FALSE(b != e);
+
+  for(char c: hello) {
+    ASSERT_FALSE(c == c);
+  }
+}

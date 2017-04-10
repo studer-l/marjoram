@@ -24,18 +24,3 @@ same type.
 
 Both `Either` and `Maybe` can be used with non-copyable types, possibly
 allowing them to be moved out of the container.
-
-### Monad
-```c++
-template <typename A, template <class> class M> class Monad
-```
-
-A Monad _mixin_ (using
-[CRTP](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern)),
-providing `map` in terms of `flatMap` and `M(A)`. Also acts as an interface to
-other functions, such as `map2` and `sequence`.
-
-Example usage for `Maybe`:
-```c++
-template <typename A> class Maybe : public Monad<A, Maybe> { ... }
-```

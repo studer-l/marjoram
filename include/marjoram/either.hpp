@@ -1,24 +1,15 @@
 #pragma once
 
-#include "eitherImpl.hpp"
-#include "maybe.hpp"
-#include "monad.hpp"
 #include <algorithm>
 #include <type_traits>
 
+#include "eitherImpl.hpp"
+#include "maybe.hpp"
+
 namespace marjoram {
-namespace detail {
-/**
- * Given a template of two types, constructs a new template where the first
- * type argument is fixed to type `A`.
- */
-template <typename A, template <class, class> class M> struct curry {
-  /**
-   * The curried template.
-   */
-  template <typename C> using type = M<A, C>;
-};
-}  // namespace detail
+
+template <typename A, typename B> class EitherIterator;
+template <typename A, typename B> class ConstEitherIterator;
 
 /**
  * Either monad
@@ -36,8 +27,7 @@ template <typename A, template <class, class> class M> struct curry {
  * value, similarly for B and right.
  */
 template <typename A, typename B>
-class Either : private detail::EitherImpl<A, B>,
-               public Monad<B, detail::curry<A, Either>::template type> {
+class Either : private detail::EitherImpl<A, B> {
  private:
   using impl = detail::EitherImpl<A, B>;
   static_assert(std::is_same<std::decay_t<A>, A>::value,
@@ -46,6 +36,8 @@ class Either : private detail::EitherImpl<A, B>,
                 "Either<A, B>: B must be a value type.");
 
  public:
+  using value_type = B;
+
   /**
    * Set to A
    */
@@ -124,9 +116,9 @@ class Either : private detail::EitherImpl<A, B>,
         std::is_same<std::result_of_t<Fa(A)>, std::result_of_t<Fb(B)>>::value,
         "Either::Fold Fa and Fb must have identical return type.");
     if (impl::side == detail::right) {
-      return fb(impl::asRight());
+      return fb(asRight());
     }
-    return fa(impl::asLeft());
+    return fa(asLeft());
   }
 
   /**
@@ -136,6 +128,9 @@ class Either : private detail::EitherImpl<A, B>,
    * @param fb Function object that can be applied to a B
    * @return Result of either fa(a) or fb(b) depending on which kind of value
    * is contained.
+   *
+   * Note that both fa and fb must have the same return type when applied to
+   * their respective arguments.
    */
   template <typename Fa, typename Fb>
   auto fold(Fa fa, Fb fb) -> std::result_of_t<Fa(A)> {
@@ -144,43 +139,86 @@ class Either : private detail::EitherImpl<A, B>,
         "Either::Fold Fa and Fb must have identical return type.");
 
     if (impl::side == detail::right) {
-      return fb(impl::asRight());
+      return fb(asRight());
     }
-    return fa(impl::asLeft());
+    return fa(asLeft());
   }
 
   /**
-   * Applies supplied function to stored B value if one is available.
+   * Applies supplied function to stored `B` value if one is available.
    *
-   * @param fb Function object that can be applied to a B. Returns Either<A,
-   * C>.
+   * @param fb Function object `B`. `F::operator()` when called with `const B&`
+   * has return type `Either<A, C>`.
    *
-   * @return Either<A, C>, the return type of fb(b). If this object
-   * contains a B value, the result of fb(b) is stored in the returned either
-   * type. Otherwise, the pre-existing A value is copied into the return value.
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
    */
   template <typename Fb> auto flatMap(Fb fb) const -> std::result_of_t<Fb(B)> {
     using C = typename std::result_of_t<Fb(B)>::right_type;
     if (isRight()) {
       return fb(asRight());
     }
-    return Either<A, C>(asLeft());
+    return Either<A, C>(LeftEither, asLeft());
   }
 
   /**
-   * Applies supplied function to stored B value if one is available.
+   * Applies supplied function to stored `B` value if one is available.
    *
-   * @param fb Function object that can be applied to a B.
-   * @return Either<A, C> where C is the return type of fb(b). If this object
-   * contains a B value, the result of fb(b) is stored in the returned either
-   * type. Otherwise, the pre-existing A value is copied into the return value.
+   * @param fb Function object `B`. `F::operator()` when called with `B&&`
+   * has return type `Either<A, C>`.
+   *
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
    */
+
   template <typename Fb> auto flatMap(Fb fb) -> std::result_of_t<Fb(B)> {
     using C = typename std::result_of_t<Fb(B)>::right_type;
     if (isRight()) {
       return fb(std::move(asRight()));
     }
-    return Either<A, C>(asLeft());
+    return Either<A, C>(LeftEither, asLeft());
+  }
+
+  /**
+   * Applies supplied function to stored `B` value if one is available and
+   * wraps the result in Either.
+   *
+   * @param fb Function object `B`. `F::operator()` when called with `const B&`
+   * has return type `Either<A, C>`.
+   *
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
+   */
+
+  template <typename Fb> auto map(Fb fb) -> Either<A, std::result_of_t<Fb(B)>> {
+    using C = typename std::result_of_t<Fb(B)>;
+    if (isRight()) {
+      return Either<A, C>(RightEither, fb(std::move(asRight())));
+    }
+    return Either<A, C>(LeftEither, asLeft());
+  }
+
+  /**
+   * Applies supplied function to stored `B` value if one is available and
+   * wraps result in Either.
+   *
+   * @param fb Function object `B`. `F::operator()` callable with `const B&`
+   * and non-void return type.
+   *
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
+   */
+  template <typename Fb>
+  auto map(Fb fb) const -> Either<A, std::result_of_t<Fb(B)>> {
+    using C = typename std::result_of_t<Fb(B)>;
+    if (isRight()) {
+      return Either<A, C>(RightEither, fb(asRight()));
+    }
+    return Either<A, C>(LeftEither, asLeft());
   }
 
   /**
@@ -191,7 +229,7 @@ class Either : private detail::EitherImpl<A, B>,
     if (isRight()) {
       return Either<B, A>(asRight());
     }
-    return Either<B, A>(asLeft());
+    return Either<B, A>(LeftEither, asLeft());
   }
 
   /**
@@ -204,5 +242,77 @@ class Either : private detail::EitherImpl<A, B>,
     }
     return Nothing;
   }
+
+  EitherIterator<A, B> begin() { return {*this, true}; }
+  ConstEitherIterator<A, B> begin() const { return {*this, true}; }
+  ConstEitherIterator<A, B> cbegin() const { return {*this, true}; }
+
+  EitherIterator<A, B> end() { return {*this, false}; }
+  ConstEitherIterator<A, B> end() const { return {*this, false}; }
+  ConstEitherIterator<A, B> cend() const { return {*this, false}; }
+};
+
+template <typename A, typename B> class EitherIterator {
+ public:
+  using value_type = B;
+  using reference = B&;
+  using pointer = B*;
+
+  EitherIterator(Either<A, B>& Mb, bool start)
+      : Mb_(Mb), start_(start && Mb_.isRight()) {}
+  bool operator!=(const EitherIterator<A, B>& other) {
+    return start_ != other.start_;
+  }
+
+  reference operator*() { return Mb_.asRight(); }
+
+  pointer operator->() { return &Mb_.asRight(); }
+
+  EitherIterator& operator++() {
+    start_ = false;
+    return *this;
+  }
+
+  EitherIterator& operator++(int) {
+    EitherIterator ret(Mb_, start_);
+    start_ = false;
+    return ret;
+  }
+
+ private:
+  Either<A, B>& Mb_;
+  bool start_;
+};
+
+template <typename A, typename B> class ConstEitherIterator {
+ public:
+  using value_type = const B;
+  using reference = const B&;
+  using pointer = const B*;
+
+  ConstEitherIterator(const Either<A, B>& Mb, bool start)
+      : Mb_(Mb), start_(start && Mb_.isRight()) {}
+  bool operator!=(const ConstEitherIterator<A, B>& other) {
+    return start_ != other.start_;
+  }
+
+  reference operator*() { return Mb_.asRight(); }
+
+  pointer operator->() { return &Mb_.asRight(); }
+
+  ConstEitherIterator& operator++() {
+    start_ = false;
+    return *this;
+  }
+
+  ConstEitherIterator& operator++(int) {
+    ConstEitherIterator ret(Mb_, start_);
+    start_ = false;
+    return ret;
+  }
+
+ private:
+  const Either<A, B>& Mb_;
+  bool start_;
 };
 }  // namespace marjoram

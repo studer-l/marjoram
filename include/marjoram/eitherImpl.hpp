@@ -132,7 +132,7 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Undefined behavior if this either does not contain a B.
    * @return reference to stored value of type B.
    */
-  Right_t& asRight() const {
+  const Right_t& asRight() const {
     assert(side == right);
     return *reinterpret_cast<const Right_t*>(&storage);
   }
@@ -154,7 +154,7 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Undefined behavior if this either does not contain a A.
    * @return reference to stored value of type A.
    */
-  Left_t& asLeft() const {
+  const Left_t& asLeft() const {
     assert(side == left);
     return *reinterpret_cast<const Left_t*>(&storage);
   }
