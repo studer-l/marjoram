@@ -105,7 +105,7 @@ template <typename A> class Lazy {
 
   /**
    * Composes self with `g`, that is, creates a new lazy value that yields the
-   * result of composing `g` with `f` nad flattening, essentially
+   * result of composing `g` with `f` and flattening, essentially
    * `Lazy<T>(g(f()))`.
    *
    * @param g Function object.
@@ -130,7 +130,7 @@ template <typename A> class Lazy {
 
   /**
    * Composes self with `g`, that is, creates a new lazy value that yields the
-   * result of composing `g` with `f` nad flattening, essentially
+   * result of composing `g` with `f` and flattening, essentially
    * `Lazy<T>(g(f()))`.
    *
    * @param g Function object.

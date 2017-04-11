@@ -68,10 +68,10 @@ class Either : private detail::EitherImpl<A, B> {
    * Note that LeftSide is just a tag, a const static instance is declared as
    * marjoram::LeftEither for convenience. Example:
    * \code
-   * auto e = Either<std::string, char*>(marjoram::LeftEither, "beep");
+   * auto e = Either<double, int>(marjoram::LeftEither, 5);
    * \endcode
-   * Constructs a left sided either containing a std::string (altough a char*
-   * could have bound to "beep" as well).
+   * Constructs a left sided Either containing a double (although a int
+   * could have bound to `5` as well).
    */
   template <typename... Args>
   explicit Either(LeftSide /* selects overload */, Args&&... args)
@@ -88,14 +88,14 @@ class Either : private detail::EitherImpl<A, B> {
       : impl(RightEither, std::forward<Args>(args)...) {}
 
   /**
-   * Checks whether an A is stored.
-   * @return true if this Either<A, B> contains an A value.
+   * Checks whether an `A` is stored.
+   * @return true if this `Either<A, B>` contains an A value.
    */
   bool isLeft() const { return impl::side == detail::left; }
 
   /**
-   * Checks whether a B is stored.
-   * @return true if this Either<A, B> contains a B value.
+   * Checks whether a `B` is stored.
+   * @return true if this `Either<A, B>` contains a `B` value.
    */
   bool isRight() const { return impl::side == detail::right; }
 
@@ -105,10 +105,13 @@ class Either : private detail::EitherImpl<A, B> {
   /**
    * Reduces Either<A, B> to single value via two function objects.
    *
-   * @param fa Function object that can be applied to an A
-   * @param fb Function object that can be applied to a B
-   * @return Result of either fa(a) or fb(b) depending on which kind of value
-   * is contained.
+   * @param fa Function object that can be applied to an `A`.
+   * @param fb Function object that can be applied to a `B`.
+   * @return Result of either `fa(a)` or `fb(b)` depending on which kind of
+   * value is contained.
+   *
+   * Note that both `fa` and `fb` must have the same return type when applied to
+   * their respective arguments.
    */
   template <typename Fa, typename Fb>
   auto fold(Fa fa, Fb fb) const -> std::result_of_t<Fa(A)> {
@@ -124,12 +127,12 @@ class Either : private detail::EitherImpl<A, B> {
   /**
    * Reduces Either<A, B> to single value via two function objects.
    *
-   * @param fa Function object that can be applied to an A
-   * @param fb Function object that can be applied to a B
-   * @return Result of either fa(a) or fb(b) depending on which kind of value
-   * is contained.
+   * @param fa Function object that can be applied to an `A`.
+   * @param fb Function object that can be applied to a `B`.
+   * @return Result of either `fa(a)` or `fb(b)` depending on which kind of
+   * value is contained.
    *
-   * Note that both fa and fb must have the same return type when applied to
+   * Note that both `fa` and `fb` must have the same return type when applied to
    * their respective arguments.
    */
   template <typename Fa, typename Fb>
@@ -147,7 +150,7 @@ class Either : private detail::EitherImpl<A, B> {
   /**
    * Applies supplied function to stored `B` value if one is available.
    *
-   * @param fb Function object `B`. `F::operator()` when called with `const B&`
+   * @param fb Function object. `F::operator()` when called with `const B&`
    * has return type `Either<A, C>`.
    *
    * @return If this object contains a `B` value, the result of `fb(b)` is
@@ -165,7 +168,7 @@ class Either : private detail::EitherImpl<A, B> {
   /**
    * Applies supplied function to stored `B` value if one is available.
    *
-   * @param fb Function object `B`. `F::operator()` when called with `B&&`
+   * @param fb Function object. `F::operator()` when called with `B&&`
    * has return type `Either<A, C>`.
    *
    * @return If this object contains a `B` value, the result of `fb(b)` is
@@ -185,8 +188,8 @@ class Either : private detail::EitherImpl<A, B> {
    * Applies supplied function to stored `B` value if one is available and
    * wraps the result in Either.
    *
-   * @param fb Function object `B`. `F::operator()` when called with `const B&`
-   * has return type `Either<A, C>`.
+   * @param fb Function object. `F::operator()` when called with `B&&` has
+   * return type `Either<A, C>`.
    *
    * @return If this object contains a `B` value, the result of `fb(b)` is
    * stored in the returned either. Otherwise, the pre-existing `A` value is
@@ -205,8 +208,8 @@ class Either : private detail::EitherImpl<A, B> {
    * Applies supplied function to stored `B` value if one is available and
    * wraps result in Either.
    *
-   * @param fb Function object `B`. `F::operator()` callable with `const B&`
-   * and non-void return type.
+   * @param fb Function object. `F::operator()` callable with `const B&` and
+   * non-void return type.
    *
    * @return If this object contains a `B` value, the result of `fb(b)` is
    * stored in the returned either. Otherwise, the pre-existing `A` value is
@@ -233,7 +236,7 @@ class Either : private detail::EitherImpl<A, B> {
   }
 
   /**
-   * If a B is contained, returns Just(B). Otherwise returns Nothing.
+   * If a `B` is contained, returns `Just(B)`. Otherwise returns `Nothing`.
    * @return `Maybe<B>` containing either the B or nothing.
    */
   Maybe<B> toMaybe() const {
