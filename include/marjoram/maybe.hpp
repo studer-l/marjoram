@@ -64,7 +64,7 @@ class Maybe {
     if (isJust()) {
       return f(get());
     }
-    return Nothing;
+    return Nothing;  // note that this constraints the return type
   }
 
   /**
@@ -111,7 +111,7 @@ class Maybe {
    * @param f Function object.
    *
    * Type requirement:
-   * - `F::operator()` when called with `const A&&` argument has non-void
+   * - `F::operator()` when called with argument of type `A&&` has non-void
    * return type `B`.
    *
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.

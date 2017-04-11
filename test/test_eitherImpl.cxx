@@ -1,6 +1,7 @@
 #include "marjoram/eitherImpl.hpp"
 
 #include <string>
+#include <memory>
 
 #include "gtest/gtest.h"
 
@@ -47,4 +48,10 @@ TEST(EitherImpl, dtors) {
 TEST(EitherImpl, ctors) {
   auto ei1 = EitherImpl<std::string, int>(marjoram::LeftEither, "Hoi");
   auto ei2 = EitherImpl<std::string, int>(marjoram::RightEither, 56);
+}
+
+TEST(EitherImpl, uniqueptr) {
+  /* test whether EitherImpl compiles with unique ptr member */
+  auto ei1 = EitherImpl<std::unique_ptr<int>, int>(marjoram::RightEither, 5);
+  auto ei2 = EitherImpl<int, std::unique_ptr<int>>(marjoram::LeftEither, 5);
 }

@@ -85,6 +85,9 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Copy assignment operator; Copies underlying value.
    */
   EitherImpl& operator=(const EitherImpl& rhs) {
+    if (this == &rhs) {
+      return *this;
+    }
     /* destroy whatever we are currently holding */
     cleanup();
 
@@ -102,6 +105,9 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Move assignment operator; Moves underlying value.
    */
   EitherImpl& operator=(EitherImpl&& rhs) noexcept {
+    if (this == &rhs) {
+      return *this;
+    }
     /* destroy whatever we are currently holding */
     cleanup();
 

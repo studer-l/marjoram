@@ -10,17 +10,25 @@ Tiny library for Functional Programming in C++
 
 ### Maybe
 ```c++
-template <class T> class Maybe<T>;
+template <class T> class Maybe;
 ```
 Straight up extension to `std::optional`/`boost::optional`, endowing it with
 `flatMap`, thus turning it into a proper monad.
 
 ### Either
 ```c++
-template <class L, class R> class Either<L, R>;
+template <class L, class R> class Either;
 ```
 Another monadic datatype; Unlike `std::variant` both `L` and `R` may be the
 same type.
 
 Both `Either` and `Maybe` can be used with non-copyable types, possibly
 allowing them to be moved out of the container.
+
+### Lazy
+```c++
+template <class T> Lazy;
+```
+
+Represents a lazy `A` that will be obtained via a delayed computation whose
+result will be stored for later re-use.

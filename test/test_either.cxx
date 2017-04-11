@@ -75,12 +75,11 @@ TEST(Either, fold) {
   EXPECT_EQ(rInt, 42LU);
 }
 
-
 TEST(Either, For) {
   Either<int, char> theLetterF(RightEither, 'f');
   Either<std::string, char> hello("Hello");
 
-  for(char f: theLetterF) {
+  for (char f : theLetterF) {
     ASSERT_EQ(f, 'f');
   }
 
@@ -88,7 +87,22 @@ TEST(Either, For) {
   auto e = hello.end();
   ASSERT_FALSE(b != e);
 
-  for(char c: hello) {
+  for (char c : hello) {
     ASSERT_FALSE(c == c);
   }
+}
+
+TEST(Either, Assignment) {
+  std::string question = "I wonder whether this works";
+  Either<std::string, std::string> e(RightEither, question);
+  e = e;
+  ASSERT_EQ(e.asRight(), question);
+  e = e;
+  ASSERT_EQ(e.asRight(), question);
+}
+
+TEST(Either, uniqueptr) {
+  /* test whether Either compiles with unique ptr member */
+  auto ei1 = Either<std::unique_ptr<int>, int>(marjoram::RightEither, 5);
+  auto ei2 = Either<int, std::unique_ptr<int>>(marjoram::LeftEither, 5);
 }
