@@ -1,9 +1,11 @@
 #include "marjoram/eitherImpl.hpp"
-
-#include <string>
-#include <memory>
-
 #include "gtest/gtest.h"
+#include <memory>
+#include <string>
+
+using ma::detail::EitherImpl;
+using ma::LeftEither;
+using ma::RightEither;
 
 struct LeftOne {
   char c;
@@ -21,37 +23,29 @@ struct RightOne {
 };
 int RightOne::dtorCount = 0;
 
-using marjoram::detail::EitherImpl;
-
 TEST(EitherImpl, dtors) {
   /* ensure we start out at zero... */
   LeftOne::dtorCount = 0;
   RightOne::dtorCount = 0;
-  {
-    auto ei = EitherImpl<LeftOne, RightOne>(marjoram::LeftEither);
-  }
+  { auto ei = EitherImpl<LeftOne, RightOne>(LeftEither); }
   EXPECT_EQ(LeftOne::dtorCount, 1);
   EXPECT_EQ(RightOne::dtorCount, 0);
-  {
-    auto ei = EitherImpl<LeftOne, RightOne>(marjoram::LeftEither);
-  }
+  { auto ei = EitherImpl<LeftOne, RightOne>(LeftEither); }
   EXPECT_EQ(LeftOne::dtorCount, 2);
   EXPECT_EQ(RightOne::dtorCount, 0);
 
-  {
-    auto ei = EitherImpl<LeftOne, RightOne>(marjoram::RightEither);
-  }
+  { auto ei = EitherImpl<LeftOne, RightOne>(RightEither); }
   EXPECT_EQ(LeftOne::dtorCount, 2);
   EXPECT_EQ(RightOne::dtorCount, 1);
 }
 
 TEST(EitherImpl, ctors) {
-  auto ei1 = EitherImpl<std::string, int>(marjoram::LeftEither, "Hoi");
-  auto ei2 = EitherImpl<std::string, int>(marjoram::RightEither, 56);
+  auto ei1 = EitherImpl<std::string, int>(LeftEither, "Hoi");
+  auto ei2 = EitherImpl<std::string, int>(RightEither, 56);
 }
 
 TEST(EitherImpl, uniqueptr) {
   /* test whether EitherImpl compiles with unique ptr member */
-  auto ei1 = EitherImpl<std::unique_ptr<int>, int>(marjoram::RightEither, 5);
-  auto ei2 = EitherImpl<int, std::unique_ptr<int>>(marjoram::LeftEither, 5);
+  auto ei1 = EitherImpl<std::unique_ptr<int>, int>(RightEither, 5);
+  auto ei2 = EitherImpl<int, std::unique_ptr<int>>(LeftEither, 5);
 }

@@ -25,6 +25,13 @@ same type.
 Both `Either` and `Maybe` can be used with non-copyable types, possibly
 allowing them to be moved out of the container.
 
+### Reader
+```c++
+template <class A, class R> Reader;
+```
+
+Represents computation that requires a shared resource `A` to run.
+
 ### Lazy
 ```c++
 template <class T> Lazy;
@@ -32,3 +39,4 @@ template <class T> Lazy;
 
 Represents a lazy `A` that will be obtained via a delayed computation whose
 result will be stored for later re-use.
+

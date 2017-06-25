@@ -1,6 +1,9 @@
-#include "marjoram/season.hpp"
-
+#include "marjoram/maybe.hpp"
 #include "gtest/gtest.h"
+
+using ma::Maybe;
+using ma::Just;
+using ma::Nothing;
 
 TEST(Maybe, flatMap) {
   auto five = Just(5);

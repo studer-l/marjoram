@@ -1,6 +1,8 @@
-#include "marjoram/season.hpp"
+#include "marjoram/lazy.hpp"
 #include "gtest/gtest.h"
 #include <memory>
+
+using ma::Lazy;
 
 struct foo {
   foo()
@@ -78,6 +80,8 @@ TEST(Lazy, flatMap) {
 
 static int globalEvalCount = 0;
 
+using ma::Flatten;
+
 TEST(Lazy, flatten) {
   Lazy<Lazy<int>> ten([]() {
     globalEvalCount++;
@@ -86,7 +90,7 @@ TEST(Lazy, flatten) {
       return 10;
     });
   });
-  Lazy<int> ften = marjoram::Flatten(ten);
+  Lazy<int> ften = Flatten(ten);
   ASSERT_EQ(globalEvalCount, 0);
   ASSERT_EQ(ften.get(), 10);
   ASSERT_EQ(globalEvalCount, 2);

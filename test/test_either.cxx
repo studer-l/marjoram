@@ -1,7 +1,10 @@
-#include "marjoram/season.hpp"
-
+#include "marjoram/either.hpp"
 #include "gtest/gtest.h"
 #include <string>
+
+using ma::Either;
+using ma::LeftEither;
+using ma::RightEither;
 
 TEST(Either, ctor) {
   auto int_int = Either<int, int>(LeftEither, 5);
@@ -103,6 +106,6 @@ TEST(Either, Assignment) {
 
 TEST(Either, uniqueptr) {
   /* test whether Either compiles with unique ptr member */
-  auto ei1 = Either<std::unique_ptr<int>, int>(marjoram::RightEither, 5);
-  auto ei2 = Either<int, std::unique_ptr<int>>(marjoram::LeftEither, 5);
+  auto ei1 = Either<std::unique_ptr<int>, int>(RightEither, 5);
+  auto ei2 = Either<int, std::unique_ptr<int>>(LeftEither, 5);
 }

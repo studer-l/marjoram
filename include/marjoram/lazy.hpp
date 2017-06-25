@@ -4,7 +4,7 @@
 #include <functional>
 #include <type_traits>
 
-namespace marjoram {
+namespace ma {
 
 /**
  * Lazy `A`; Either contains an `A` or a function that yields an `A`.
@@ -24,7 +24,7 @@ template <typename A> class Lazy {
   Lazy& operator=(const Lazy&) = default;
 
   Lazy& operator=(const A& a) {
-    /* n.b. a new storage_t is made via copy before the old one is overwrriten,
+    /* n.b. a new storage_t is made via copy before the old one is overwritten,
      * hence the case `Lazy<A> Ma(...); Ma = Ma.get();` is safe */
     impl = storage_t(RightEither, a);
     return *this;
@@ -155,7 +155,7 @@ template <typename A> class Lazy {
   }
 
  private:
-  using storage_t = marjoram::Either<std::function<A()>, A>;
+  using storage_t = Either<std::function<A()>, A>;
   mutable storage_t impl;
 };
 
@@ -165,9 +165,8 @@ template <typename A> class Lazy {
  * returned lazy object is independent of the input.
  */
 template <typename A> Lazy<A> Flatten(const Lazy<Lazy<A>>& LLa) {
-  return Lazy<A>([LLa](){ return LLa.get().get(); });
+  return Lazy<A>([LLa]() { return LLa.get().get(); });
 }
-
 
 /**
  * Flattens a nested Lazy.
@@ -175,6 +174,6 @@ template <typename A> Lazy<A> Flatten(const Lazy<Lazy<A>>& LLa) {
  * completion and the input is moved from.
  */
 template <typename A> Lazy<A> Flatten(Lazy<Lazy<A>>&& LLa) {
-  return Lazy<A>([nested = std::move(LLa)](){ return nested.get().get(); });
+  return Lazy<A>([nested = std::move(LLa)]() { return nested.get().get(); });
 }
-}
+}  // namespace ma

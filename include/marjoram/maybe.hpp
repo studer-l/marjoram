@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace marjoram {
+namespace ma {
 template <typename A> class MaybeIterator;
 template <typename A> class ConstMaybeIterator;
 
@@ -257,4 +257,4 @@ template <typename A> Maybe<A> Just(A&& a) {
 template <typename A, typename... Args> Maybe<A> Just(Args&&... args) {
   return Maybe<A>(std::forward<Args>(args)...);
 }
-}  // namespace marjoram
+}  // namespace ma

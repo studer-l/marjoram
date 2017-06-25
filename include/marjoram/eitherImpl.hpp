@@ -4,7 +4,7 @@
 #include <cassert>
 #include <new>
 
-namespace marjoram {
+namespace ma {
 /**
  * Tag indicating the left side.
  */
@@ -184,4 +184,4 @@ template <typename Left_t, typename Right_t> class EitherImpl {
   storage_t storage;
 };
 }  // namespace detail
-}  // namespace marjoram
+}  // namespace ma

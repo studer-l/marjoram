@@ -6,7 +6,7 @@
 #include "eitherImpl.hpp"
 #include "maybe.hpp"
 
-namespace marjoram {
+namespace ma {
 
 template <typename A, typename B> class EitherIterator;
 template <typename A, typename B> class ConstEitherIterator;
@@ -318,4 +318,4 @@ template <typename A, typename B> class ConstEitherIterator {
   const Either<A, B>& Mb_;
   bool start_;
 };
-}  // namespace marjoram
+}  // namespace ma
