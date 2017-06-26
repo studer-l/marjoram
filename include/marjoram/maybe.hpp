@@ -5,8 +5,8 @@
 #include <utility>
 
 namespace ma {
-template <typename A> class MaybeIterator;
-template <typename A> class ConstMaybeIterator;
+template <typename A, template <class> class impl> class MaybeIterator;
+template <typename A, template <class> class impl> class ConstMaybeIterator;
 
 /**
  * Convertible to any kind of (empty) `Maybe` object.
@@ -27,6 +27,16 @@ static const Nothing_t Nothing;
  *
  * Throughout the documentation, if an object of type Maybe<A> contains a
  * value, this value is denoted by `a`.
+ *
+ * Type requirements:
+ *   A: None
+ *   impl: Must implement the following:
+ *      Some constructor accessed via perfect forwarding
+ *      impl() // construct nothing / empty
+ *      impl(const impl&), impl(impl&&)
+ *      bool is_initialized() const
+ *      A& get()
+ *      const A& get() const
  */
 template <typename A, template <class> class impl = boost::optional>
 class Maybe {
@@ -163,23 +173,22 @@ class Maybe {
    */
   const A& getOrElse(const A& dflt) const { return isJust() ? get() : dflt; }
 
-  MaybeIterator<A> begin() { return {*this, true}; }
-  ConstMaybeIterator<A> begin() const { return {*this, true}; }
-  ConstMaybeIterator<A> cbegin() const { return {*this, true}; }
+  MaybeIterator<A, impl> begin() { return {*this, true}; }
+  ConstMaybeIterator<A, impl> begin() const { return {*this, true}; }
+  ConstMaybeIterator<A, impl> cbegin() const { return {*this, true}; }
 
-  MaybeIterator<A> end() { return {*this, false}; }
-  ConstMaybeIterator<A> end() const { return {*this, false}; }
-  ConstMaybeIterator<A> cend() const { return {*this, false}; }
+  MaybeIterator<A, impl> end() { return {*this, false}; }
+  ConstMaybeIterator<A, impl> end() const { return {*this, false}; }
+  ConstMaybeIterator<A, impl> cend() const { return {*this, false}; }
 
  private:
-  // Implementation: boost::optional
   const A& getImpl() const { return impl_.get(); }
   A& getImpl() { return impl_.get(); }
 
   impl<A> impl_;
 };
 
-template <typename A> class MaybeIterator {
+template <typename A, template <class> class impl> class MaybeIterator {
  public:
   using value_type = A;
   using reference = A&;
@@ -187,7 +196,7 @@ template <typename A> class MaybeIterator {
 
   MaybeIterator(Maybe<A>& Ma, bool start)
       : Ma_(Ma), start_(start && Ma.isJust()) {}
-  bool operator!=(const MaybeIterator<A>& other) {
+  bool operator!=(const MaybeIterator<A, impl>& other) {
     return start_ != other.start_;
   }
 
@@ -211,7 +220,7 @@ template <typename A> class MaybeIterator {
   bool start_;
 };
 
-template <typename A> class ConstMaybeIterator {
+template <typename A, template <class> class impl> class ConstMaybeIterator {
  public:
   using value_type = const A;
   using reference = const A&;
@@ -219,7 +228,7 @@ template <typename A> class ConstMaybeIterator {
 
   ConstMaybeIterator(const Maybe<A>& Ma, bool start)
       : Ma_(Ma), start_(start && Ma.isJust()) {}
-  bool operator!=(const ConstMaybeIterator<A>& other) {
+  bool operator!=(const ConstMaybeIterator<A, impl>& other) {
     return start_ != other.start_;
   }
 
