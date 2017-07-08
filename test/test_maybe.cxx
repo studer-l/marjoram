@@ -133,8 +133,18 @@ TEST(Maybe, ImmutableFor) {
   for (auto& i : five) {
     using nonref_t = std::remove_reference_t<decltype(i)>;
     static_assert(std::is_const<nonref_t>::value,
-                  "Contents of Maybe must be marked const");
+                  "ConstMaybeIterator iterator must return const references.");
   }
+}
+
+TEST(Maybe, MutableFor) {
+  Maybe<int> five = Just(5);
+
+  for (auto& i : five) {
+    i = 6;
+  }
+  ASSERT_TRUE(five.isJust());
+  ASSERT_EQ(five.get(), 6);
 }
 
 TEST(Maybe, NoCopyFor) {

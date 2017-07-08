@@ -16,6 +16,19 @@ TEST(Maybe0, plain_old_pointer) {
   EXPECT_EQ(squared.get(), 25);
 }
 
+TEST(Maybe0, nullptr) {
+  /* plain old pointer */
+  auto noPOP = ma::Just0<char*>(nullptr);
+  ASSERT_TRUE(noPOP.isNothing());
+
+  /* smarten up */
+  auto noShared = ma::Just0<std::shared_ptr<wchar_t>>(nullptr);
+  ASSERT_TRUE(noShared.isNothing());
+
+  auto noUnique = ma::Just0<std::unique_ptr<std::string>>(nullptr);
+  ASSERT_TRUE(noShared.isNothing());
+}
+
 struct Lifetime_t {
   Lifetime_t(int v, int& dc) : value(v), dtor_count(dc) {}
   int value;
