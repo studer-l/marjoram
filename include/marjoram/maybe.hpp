@@ -194,7 +194,7 @@ template <typename A, template <class> class impl> class MaybeIterator {
   using reference = A&;
   using pointer = A*;
 
-  MaybeIterator(Maybe<A>& Ma, bool start)
+  MaybeIterator(Maybe<A, impl>& Ma, bool start)
       : Ma_(Ma), start_(start && Ma.isJust()) {}
   bool operator!=(const MaybeIterator<A, impl>& other) {
     return start_ != other.start_;
@@ -216,7 +216,7 @@ template <typename A, template <class> class impl> class MaybeIterator {
   }
 
  private:
-  Maybe<A>& Ma_;
+  Maybe<A, impl>& Ma_;
   bool start_;
 };
 

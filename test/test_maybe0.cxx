@@ -54,3 +54,16 @@ TEST(Maybe0, unique_ptr) {
   }
   ASSERT_EQ(count, 1);
 }
+
+TEST(Maybe0, For) {
+  int count = 0;
+  {
+    auto justFive = ma::Just0(std::make_unique<Lifetime_t>(5, count));
+
+    for (auto& lt : justFive) {
+      ASSERT_EQ(lt.value, 5);
+    }
+    ASSERT_EQ(count, 0);
+  }
+  ASSERT_EQ(count, 1);
+}

@@ -108,3 +108,41 @@ TEST(Maybe, For) {
     ASSERT_FALSE(i == i);
   }
 }
+
+TEST(Maybe, ConstFor) {
+  const Maybe<int> five = Just(5);
+  const Maybe<int> notFive;
+
+  for (int i : five) {
+    ASSERT_EQ(i, 5);
+  }
+
+  auto b = notFive.begin();
+  auto e = notFive.end();
+  ASSERT_FALSE(b != e);
+
+  for (int i : notFive) {
+    ASSERT_FALSE(i == i);
+  }
+}
+
+/* arguably this is a compile time test... oh well */
+TEST(Maybe, ImmutableFor) {
+  const Maybe<int> five = Just(5);
+
+  for (auto& i : five) {
+    using nonref_t = std::remove_reference_t<decltype(i)>;
+    static_assert(std::is_const<nonref_t>::value,
+                  "Contents of Maybe must be marked const");
+  }
+}
+
+TEST(Maybe, NoCopyFor) {
+  auto Mnc = Just(NoCopy_t());
+  bool ran = false;
+  for (auto& nc : Mnc) {
+    (void)nc;  // avoid unused variable warning
+    ran = true;
+  }
+  ASSERT_TRUE(ran);
+}
