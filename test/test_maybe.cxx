@@ -1,3 +1,4 @@
+#include "marjoram/either.hpp"
 #include "marjoram/maybe.hpp"
 #include "gtest/gtest.h"
 
@@ -155,4 +156,32 @@ TEST(Maybe, NoCopyFor) {
     ran = true;
   }
   ASSERT_TRUE(ran);
+}
+
+using ma::Either;
+Maybe<int> Complicated(const Maybe<double>& Md,
+                       const Either<std::string, int>& Esi) {
+  for (const double& d : Md) {
+    for (const int& i : Esi) {
+      return Just(static_cast<int>(i + d));
+    }
+  }
+  return Nothing;
+}
+
+TEST(Maybe, AdvancedFor) {
+  auto Md = Just(5.53);
+  auto Mn = Maybe<double>();
+  auto Ei = Either<std::string, int>(42);
+  auto Es = Either<std::string, int>("Is anybody in there?");
+
+  auto something = Complicated(Md, Ei);
+  ASSERT_TRUE(something.isJust());
+  ASSERT_EQ(something.get(), 47);
+
+  auto nothing1 = Complicated(Md, Es);
+  ASSERT_TRUE(nothing1.isNothing());
+
+  auto nothing2 = Complicated(Mn, Ei);
+  ASSERT_TRUE(nothing2.isNothing());
 }

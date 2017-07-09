@@ -40,7 +40,7 @@ template <template <class...> class F, class... B> struct Curry {
 
 /**
  * `Maybe0` --- MaybeNull
- * A `Maybe` backed by a pointer-like storage, for the Proper C-Like
+ * A `Maybe` backed by a pointer-like storage, for that Proper C-Like
  * Performance. `nullptr` is used as `Nothing`.
  *
  * Downside: Cannot contain nullptr. Depending on Ptr, might not be copyable,

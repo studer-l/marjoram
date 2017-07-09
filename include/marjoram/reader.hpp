@@ -55,6 +55,6 @@ template <class A, class R> class Reader {
   }
 
  private:
-  std::function<R(A)> f_;
+  const std::function<R(A)> f_;
 };
 }  // namespace ma

@@ -255,7 +255,7 @@ template <typename A, template <class> class impl> class ConstMaybeIterator {
 /**
  * Convenience constructor, copies/moves `a` into new Maybe instance.
  */
-template <typename A> Maybe<A> Just(A&& a) {
+template <typename A> Maybe<std::decay_t<A>> Just(A&& a) {
   return Maybe<A>(std::forward<A>(a));
 }
 
