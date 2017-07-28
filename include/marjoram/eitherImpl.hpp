@@ -40,7 +40,7 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Construct containing left type.
    */
   template <typename... Args>
-  explicit EitherImpl(LeftSide /* selects overload */, Args&&... args)
+  EitherImpl(LeftSide /* selects overload */, Args&&... args)
       : side(EitherSide::left) {
     new (&storage) Left_t(std::forward<Args>(args)...);
   }
@@ -49,7 +49,7 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Construct containing right type.
    */
   template <typename... Args>
-  explicit EitherImpl(RightSide /* selects overload */, Args&&... args)
+  EitherImpl(RightSide /* selects overload */, Args&&... args)
       : side(EitherSide::right) {
     new (&storage) Right_t(std::forward<Args>(args)...);
   }

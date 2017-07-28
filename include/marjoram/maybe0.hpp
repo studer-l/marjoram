@@ -39,7 +39,7 @@ template <template <class...> class F, class... B> struct Curry {
 }  // namespace detail
 
 /**
- * `Maybe0` --- MaybeNull
+ * `Maybe0_t` --- MaybeNull
  * A `Maybe` backed by a pointer-like storage, for that Proper C-Like
  * Performance. `nullptr` is used as `Nothing`.
  *
@@ -47,13 +47,13 @@ template <template <class...> class F, class... B> struct Curry {
  * or copying might lead to dangling pointers.
  */
 template <class Ptr>
-using Maybe0 = Maybe<typename std::pointer_traits<Ptr>::element_type,
+using Maybe0_t = Maybe<typename std::pointer_traits<Ptr>::element_type,
                      detail::Curry<detail::MaybePtrImplT, Ptr>::template type>;
 
 /**
  * Convenience constructor, moves `p` into new Maybe0 instance.
  */
-template <typename Ptr> Maybe0<Ptr> Just0(Ptr&& p) {
-  return Maybe0<Ptr>(std::forward<Ptr>(p));
+template <typename Ptr> Maybe0_t<Ptr> Maybe0(Ptr&& p) {
+  return Maybe0_t<Ptr>(std::forward<Ptr>(p));
 }
 }  // namespace ma

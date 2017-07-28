@@ -56,7 +56,7 @@ class Maybe {
    * - `A` must be constructible from `args`.
    */
   template <typename... Args>
-  explicit Maybe(Args&&... args) : impl_(std::forward<Args>(args)...) {}
+  Maybe(Args&&... args) : impl_(std::forward<Args>(args)...) {}
 
   /**
    * Returns result of `f(a)` if this holds a value, otherwise returns Nothing.

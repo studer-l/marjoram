@@ -34,7 +34,7 @@ TEST(Maybe, map) {
 
 Maybe<int> f(bool just) {
   if (just) {
-    return Just(5);
+    return 5;
   }
   return Nothing;
 }

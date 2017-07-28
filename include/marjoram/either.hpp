@@ -57,7 +57,7 @@ class Either : private detail::EitherImpl<A, B> {
             typename = typename std::enable_if<
                 std::is_constructible<A, Args...>::value ^
                 std::is_constructible<B, Args...>::value>::type>
-  explicit Either(Args&&... args)
+  Either(Args&&... args)
       : impl(std::conditional_t<std::is_constructible<A, Args...>::value,
                                 LeftSide, RightSide>(),
              std::forward<Args>(args)...) {}
@@ -74,7 +74,7 @@ class Either : private detail::EitherImpl<A, B> {
    * could have bound to `5` as well).
    */
   template <typename... Args>
-  explicit Either(LeftSide /* selects overload */, Args&&... args)
+  Either(LeftSide /* selects overload */, Args&&... args)
       : impl(LeftEither, std::forward<Args>(args)...) {}
 
   /**
@@ -84,7 +84,7 @@ class Either : private detail::EitherImpl<A, B> {
    * marjoram::RightEither for convenience.
    */
   template <typename... Args>
-  explicit Either(RightSide /* selects overlaod */, Args&&... args)
+  Either(RightSide /* selects overlaod */, Args&&... args)
       : impl(RightEither, std::forward<Args>(args)...) {}
 
   /**

@@ -7,7 +7,7 @@ using ma::Nothing;
 
 TEST(Maybe0, plain_old_pointer) {
   int five = 5;
-  auto justFive = ma::Just0(&five);
+  auto justFive = ma::Maybe0(&five);
   auto square = [](int i) { return i * i; };
   auto squared = justFive.map(square);
 
@@ -18,14 +18,14 @@ TEST(Maybe0, plain_old_pointer) {
 
 TEST(Maybe0, nullptr) {
   /* plain old pointer */
-  auto noPOP = ma::Just0<char*>(nullptr);
+  auto noPOP = ma::Maybe0<char*>(nullptr);
   ASSERT_TRUE(noPOP.isNothing());
 
   /* smarten up */
-  auto noShared = ma::Just0<std::shared_ptr<wchar_t>>(nullptr);
+  auto noShared = ma::Maybe0<std::shared_ptr<wchar_t>>(nullptr);
   ASSERT_TRUE(noShared.isNothing());
 
-  auto noUnique = ma::Just0<std::unique_ptr<std::string>>(nullptr);
+  auto noUnique = ma::Maybe0<std::unique_ptr<std::string>>(nullptr);
   ASSERT_TRUE(noShared.isNothing());
 }
 
@@ -40,7 +40,7 @@ TEST(Maybe0, shared_ptr) {
   int count = 0;
   {
     auto five = std::make_shared<Lifetime_t>(5, count);
-    auto justFive = ma::Just0(std::move(five));
+    auto justFive = ma::Maybe0(std::move(five));
     auto square = [](const Lifetime_t& lt) { return lt.value * lt.value; };
     auto squared = justFive.map(square);
 
@@ -56,7 +56,7 @@ TEST(Maybe0, unique_ptr) {
   int count = 0;
   {
     auto five = std::make_unique<Lifetime_t>(5, count);
-    auto justFive = ma::Just0(std::move(five));
+    auto justFive = ma::Maybe0(std::move(five));
     auto square = [](const Lifetime_t& lt) { return lt.value * lt.value; };
     auto squared = justFive.map(square);
 
@@ -71,7 +71,7 @@ TEST(Maybe0, unique_ptr) {
 TEST(Maybe0, For) {
   int count = 0;
   {
-    auto justFive = ma::Just0(std::make_unique<Lifetime_t>(5, count));
+    auto justFive = ma::Maybe0(std::make_unique<Lifetime_t>(5, count));
 
     for (auto& lt : justFive) {
       ASSERT_EQ(lt.value, 5);
@@ -79,4 +79,12 @@ TEST(Maybe0, For) {
     ASSERT_EQ(count, 0);
   }
   ASSERT_EQ(count, 1);
+}
+
+int* make_five() { return new int(5); }
+
+TEST(Maybe0, WrapInSmartPtr) {
+  auto five = Maybe0(std::unique_ptr<int>(make_five()));
+  ASSERT_TRUE(five.isJust());
+  EXPECT_EQ(five.get(), 5);
 }
