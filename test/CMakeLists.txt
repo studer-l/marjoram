@@ -12,9 +12,6 @@ add_custom_target(testrun
 
 # tests with sanitizers
 find_package(Sanitizers)
-set(SANITIZE_UNDEFINED ON)
-set(SANITIZE_ADDRESS ON)
-set(SANITIZE_MEMORY ON)
 
 add_executable(marjoram_test_san ${test_SRC})
 target_link_libraries(marjoram_test_san gtest_main)

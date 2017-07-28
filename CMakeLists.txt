@@ -16,9 +16,9 @@ endif()
 
 
 # Sanitizer settings for testrun_san target
-#set(SANITIZE_UNDEFINED ON)
-#set(SANITIZE_ADDRESS ON)
-#set(SANITIZE_MEMORY ON)
+set(SANITIZE_UNDEFINED OFF)
+set(SANITIZE_ADDRESS OFF)
+set(SANITIZE_MEMORY OFF)
 
 add_library(marjoram INTERFACE)
 

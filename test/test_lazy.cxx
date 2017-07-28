@@ -97,3 +97,21 @@ TEST(Lazy, flatten) {
   ASSERT_EQ(ften.get(), 10);
   ASSERT_EQ(globalEvalCount, 2);
 }
+
+TEST(Lazy, For) {
+  Lazy<int> five([]() { return 5; });
+  ASSERT_FALSE(five.isEvaluated());
+  for(auto& i: five) {
+    static_assert(std::is_same<decltype(i), const int&>::value, "");
+    ASSERT_EQ(i, 5);
+  }
+  ASSERT_TRUE(five.isEvaluated());
+
+  Lazy<double> ten = five.map([](const int& i) { return 2.0 * i; });
+  ASSERT_FALSE(ten.isEvaluated());
+  for(auto& d: ten) {
+    static_assert(std::is_same<decltype(d), const double&>::value, "");
+    ASSERT_EQ(d, 10.0);
+  }
+  ASSERT_TRUE(ten.isEvaluated());
+}

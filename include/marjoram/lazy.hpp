@@ -6,12 +6,17 @@
 
 namespace ma {
 
+template <class A> class LazyIterator;
+
 /**
  * Lazy `A`; Either contains an `A` or a function that yields an `A`.
  */
 template <typename A> class Lazy {
  public:
   using value_type = A;
+
+  static_assert(std::is_same<std::decay_t<A>, A>::value,
+                "Lazy<A>: A must be a value type.");
 
   /**
    * @param f Function that will be called exactly once when `get` is called
@@ -25,7 +30,7 @@ template <typename A> class Lazy {
 
   Lazy& operator=(const A& a) {
     /* n.b. a new storage_t is made via copy before the old one is overwritten,
-     * hence the case `Lazy<A> Ma(...); Ma = Ma.get();` is safe */
+     * hence the case `Lazy<A> La(...); La = La.get();` is safe */
     impl = storage_t(RightEither, a);
     return *this;
   }
@@ -154,6 +159,9 @@ template <typename A> class Lazy {
         [g, this]() mutable { return g(std::move(get())).get(); });
   }
 
+  LazyIterator<A> begin() const { return LazyIterator<A>(*this, true); }
+  LazyIterator<A> end() const { return LazyIterator<A>(*this, false); }
+
  private:
   using storage_t = Either<std::function<A()>, A>;
   mutable storage_t impl;
@@ -176,4 +184,37 @@ template <typename A> Lazy<A> Flatten(const Lazy<Lazy<A>>& LLa) {
 template <typename A> Lazy<A> Flatten(Lazy<Lazy<A>>&& LLa) {
   return Lazy<A>([nested = std::move(LLa)]() { return nested.get().get(); });
 }
+
+template <typename A> class LazyIterator {
+ public:
+  using value_type = const A;
+  using reference = const A&;
+  using pointer = const A*;
+
+  LazyIterator(const Lazy<A>& La, bool start) : La_(La), start_(start) {}
+
+  bool operator!=(const LazyIterator<A>& other) {
+    return start_ != other.start_;
+  }
+
+  reference operator*() { return La_.get(); }
+
+  pointer operator->() { return &La_.get(); }
+
+  LazyIterator& operator++() {
+    start_ = false;
+    return *this;
+  }
+
+  LazyIterator& operator++(int) {
+    LazyIterator ret(La_, start_);
+    start_ = false;
+    return ret;
+  }
+
+ private:
+  const Lazy<A>& La_;
+  bool start_;
+};
+
 }  // namespace ma

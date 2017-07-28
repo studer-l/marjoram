@@ -228,6 +228,7 @@ template <typename A, template <class> class impl> class ConstMaybeIterator {
 
   ConstMaybeIterator(const Maybe<A>& Ma, bool start)
       : Ma_(Ma), start_(start && Ma.isJust()) {}
+
   bool operator!=(const ConstMaybeIterator<A, impl>& other) {
     return start_ != other.start_;
   }
