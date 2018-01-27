@@ -1,0 +1,15 @@
+sudo: required
+
+services:
+  - docker
+
+language: cpp
+
+install: true
+
+script:
+-  docker run -ti --rm -v $(pwd):/marjoram studerl/marjoram_build /marjoram/ci/travis.sh
+
+
+before_install:
+  - docker pull studerl/marjoram_build

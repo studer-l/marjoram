@@ -12,11 +12,4 @@ add_custom_target(testrun
 
 # tests with sanitizers
 find_package(Sanitizers)
-
-add_executable(marjoram_test_san ${test_SRC})
-target_link_libraries(marjoram_test_san gtest_main)
-add_sanitizers(marjoram_test_san)
-add_custom_target(testrun_san
-    COMMAND marjoram_test_san
-    DEPENDS marjoram_test_san
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+add_sanitizers(marjoram_test)
