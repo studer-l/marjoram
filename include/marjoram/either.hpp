@@ -7,6 +7,12 @@
 #include "maybe.hpp"
 
 namespace ma {
+/**
+ * @defgroup Either Either
+ * @addtogroup Either
+ * @{
+ * Either Monad, supporting constants and functions.
+ */
 
 template <typename A, typename B> class EitherIterator;
 template <typename A, typename B> class ConstEitherIterator;
@@ -37,21 +43,13 @@ class Either : private detail::EitherImpl<A, B> {
 
  public:
   using value_type = B;
-
-  /**
-   * Set to A
-   */
   using left_type = A;
-  /**
-   * Set to B
-   */
   using right_type = B;
 
   /**
    * Convenience constructor that infers the Either's side (right or left).
    *
-   * May be disabled if both A and B can be constructed from the input
-   * arguments.
+   * Disabled if both A and B can be constructed from the input arguments.
    */
   template <typename... Args,
             typename = typename std::enable_if<
@@ -66,9 +64,9 @@ class Either : private detail::EitherImpl<A, B> {
    * Construct left Either<A, B> containing an A.
    *
    * Note that LeftSide is just a tag, a const static instance is declared as
-   * marjoram::LeftEither for convenience. Example:
+   * ma::LeftEither for convenience. Example:
    * \code
-   * auto e = Either<double, int>(marjoram::LeftEither, 5);
+   * auto e = Either<double, int>(ma::LeftEither, 5);
    * \endcode
    * Constructs a left sided Either containing a double (although a int
    * could have bound to `5` as well).
@@ -81,7 +79,7 @@ class Either : private detail::EitherImpl<A, B> {
    * Construct right Either<A, B> containing an B.
    *
    * Note that RightSide is just a tag, a const static instance is declared as
-   * marjoram::RightEither for convenience.
+   * ma::RightEither for convenience.
    */
   template <typename... Args>
   Either(RightSide /* selects overlaod */, Args&&... args)
@@ -255,6 +253,20 @@ class Either : private detail::EitherImpl<A, B> {
   ConstEitherIterator<A, B> cend() const { return {*this, false}; }
 };
 
+/**
+ * Right-biased iterator. Allows mutable access to the right value of an Either.
+ *
+ * Example:
+ *
+ * @code
+ * Either<A, B> e;
+ * [...]
+ * for (B& b: e) {
+ *  // use `b`
+ * }
+ * @endcode
+ * @see ConstEitherIterator
+ */
 template <typename A, typename B> class EitherIterator {
  public:
   using value_type = B;
@@ -287,6 +299,10 @@ template <typename A, typename B> class EitherIterator {
   bool start_;
 };
 
+/**
+ * Right-biased const iterator.
+ * @see EitherIterator
+ */
 template <typename A, typename B> class ConstEitherIterator {
  public:
   using value_type = const B;
@@ -318,4 +334,5 @@ template <typename A, typename B> class ConstEitherIterator {
   const Either<A, B>& Mb_;
   bool start_;
 };
+// @}
 }  // namespace ma

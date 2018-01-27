@@ -5,6 +5,12 @@
 #include <type_traits>
 
 namespace ma {
+/**
+ * @defgroup Lazy Lazy
+ * @addtogroup Lazy
+ * @{
+ * Lazy Monad, supporting constants and functions.
+ */
 
 template <class A> class LazyIterator;
 
@@ -79,9 +85,9 @@ template <typename A> class Lazy {
    *
    *   @return Lazy composition.
    *
-   *   Note that this object is captured inside the returned lazy object by
-   *   reference and must persist until the first evaluation of the return
-   *   value.
+   * @note The `g` is captured inside the returned lazy object by
+   * reference and must persist until the first evaluation of the return
+   * value.
    */
   template <typename G> auto map(G g) const -> Lazy<std::result_of_t<G(A)>> {
     return Lazy<std::result_of_t<G(A)>>([g, this]() { return g(get()); });
@@ -99,9 +105,9 @@ template <typename A> class Lazy {
    *
    *   @return Lazy composition.
    *
-   *   Note that this object is captured inside the returned lazy object by
-   *   reference and must persist until the first evaluation of the return
-   *   value.
+   * @note The `g` object is captured inside the returned lazy object by
+   * reference and must persist until the first evaluation of the return
+   * value.
    */
   template <typename G> auto map(G g) -> Lazy<std::result_of_t<G(A)>> {
     return Lazy<std::result_of_t<G(A)>>(
@@ -121,9 +127,9 @@ template <typename A> class Lazy {
    *
    *   @return Lazy composition.
    *
-   *   Note that this object is captured inside the returned lazy object by
-   *   reference and must persist until the first evaluation of the return
-   *   value.
+   * @note The `g` object is captured inside the returned lazy object by
+   * reference and must persist until the first evaluation of the return
+   * value.
    */
   template <typename G> auto flatMap(G g) const -> std::result_of_t<G(A)> {
     /* we need to artificially constraint the type here */
@@ -146,9 +152,9 @@ template <typename A> class Lazy {
    *
    *   @return Lazy composition.
    *
-   *   Note that this object is captured inside the returned lazy object by
-   *   reference and must persist until the first evaluation of the return
-   *   value.
+   * @note The `g` object is captured inside the returned lazy object by
+   * reference and must persist until the first evaluation of the return
+   * value.
    */
   template <typename G> auto flatMap(G g) -> std::result_of_t<G(A)> {
     /* we need to artificially constraint the type here */
@@ -185,6 +191,21 @@ template <typename A> Lazy<A> Flatten(Lazy<Lazy<A>>&& LLa) {
   return Lazy<A>([nested = std::move(LLa)]() { return nested.get().get(); });
 }
 
+/**
+ * Iterator over Lazy. Allows mutable access to value contained.
+ * If the Lazy instance from which the iterator was created has not yet been
+ * evaluated, it is evaluated once the iterator is dereferenced.
+ *
+ * Example:
+ *
+ * @code
+ * Lazy<A> La;
+ * [...]
+ * for (const A& a: La) {
+ *  // use `a`
+ * }
+ * @endcode
+ */
 template <typename A> class LazyIterator {
  public:
   using value_type = const A;
@@ -216,5 +237,5 @@ template <typename A> class LazyIterator {
   const Lazy<A>& La_;
   bool start_;
 };
-
+// @}
 }  // namespace ma

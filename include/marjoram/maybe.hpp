@@ -9,7 +9,14 @@ template <typename A, template <class> class impl> class MaybeIterator;
 template <typename A, template <class> class impl> class ConstMaybeIterator;
 
 /**
- * Convertible to any kind of (empty) `Maybe` object.
+ * @defgroup Maybe Maybe
+ * @addtogroup Maybe
+ * @{
+ * Maybe Monad, supporting constants and functions.
+ */
+
+/**
+ * Convertible to any kind of (empty) Maybe object.
  */
 struct Nothing_t {
   Nothing_t() {}
@@ -25,18 +32,27 @@ static const Nothing_t Nothing;
  *
  * May contain a value or Nothing.
  *
- * Throughout the documentation, if an object of type Maybe<A> contains a
+ * Throughout the documentation, if an object of type Maybe`<A>` contains a
  * value, this value is denoted by `a`.
  *
  * Type requirements:
- *   A: None
- *   impl: Must implement the following:
- *      Some constructor accessed via perfect forwarding
- *      impl() // construct nothing / empty
- *      impl(const impl&), impl(impl&&)
- *      bool is_initialized() const
- *      A& get()
- *      const A& get() const
+ *  A must be a value type
+ *
+ *  `impl` must implement the following:
+ *    @code
+ *      template<typename... Args> impl(Args&&... args);
+ *      impl() // construct nothing / empty;
+ *      impl(const impl&);
+ *      impl(impl&&);
+ *      bool is_initialized() const;
+ *      A& get();
+ *      const A& get() const;
+ *    @endcode
+ *
+ * By default, we piggyback off `boost::optional`. An alternative
+ * implementation is @ref Maybe0, which is based on pointer-like types using
+ * nullptr as a sentinel value to denote emptiness.
+ * @see Maybe0
  */
 template <typename A, template <class> class impl = boost::optional>
 class Maybe {
@@ -44,6 +60,7 @@ class Maybe {
                 "Maybe<A>: A must be a value type.");
 
  public:
+  using value_type = A;
   /**
    * New empty object (containing `Nothing`).
    */
@@ -53,19 +70,20 @@ class Maybe {
    * Construct `Maybe` containing `A` with perfect forwarding.
    *
    * Type requirements:
-   * - `A` must be constructible from `args`.
+   * - `A` must be constructible from `args...`.
    */
   template <typename... Args>
   Maybe(Args&&... args) : impl_(std::forward<Args>(args)...) {}
 
   /**
-   * Returns result of `f(a)` if this holds a value, otherwise returns Nothing.
+   * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
+   * otherwise returns Nothing.
    *
    * @param f Function object.
    *
    * Type requirement:
    * - `F::operator()` when called with `const A&` argument has return type
-   *   `Maybe<B>`, where `B` is non void
+   *   `Maybe<B>`, where `B` is non void.
    *
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
    */
@@ -161,14 +179,12 @@ class Maybe {
 
   /**
    * If this object contains a value, returns it. Otherwise returns `dflt`.
-   * Undefined behavior if this Maybe does not contain a value.
    * @return reference to contained value.
    */
   A& getOrElse(A& dflt) { return isJust() ? get() : dflt; }
 
   /**
    * If this object contains a value, returns it. Otherwise returns `dflt`.
-   * Undefined behavior if this Maybe does not contain a value.
    * @return reference to contained value.
    */
   const A& getOrElse(const A& dflt) const { return isJust() ? get() : dflt; }
@@ -188,6 +204,22 @@ class Maybe {
   impl<A> impl_;
 };
 
+/**
+ * Iterator over Maybe. Allows mutable access to value contained.
+ * If the Maybe instance from which the iterator was created contains a value,
+ * the loop body is executed.
+ *
+ * Example:
+ *
+ * @code
+ * Maybe<A> Ma;
+ * [...]
+ * for (A& a: Ma) {
+ *  // use `a`
+ * }
+ * @endcode
+ * @see ConstMaybeIterator
+ */
 template <typename A, template <class> class impl> class MaybeIterator {
  public:
   using value_type = A;
@@ -220,6 +252,10 @@ template <typename A, template <class> class impl> class MaybeIterator {
   bool start_;
 };
 
+/**
+ * Immutable Iterator over Maybe.
+ * @see MaybeIterator
+ */
 template <typename A, template <class> class impl> class ConstMaybeIterator {
  public:
   using value_type = const A;
@@ -267,4 +303,5 @@ template <typename A> Maybe<std::decay_t<A>> Just(A&& a) {
 template <typename A, typename... Args> Maybe<A> Just(Args&&... args) {
   return Maybe<A>(std::forward<Args>(args)...);
 }
+// @}
 }  // namespace ma

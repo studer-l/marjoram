@@ -185,3 +185,32 @@ TEST(Maybe, AdvancedFor) {
   auto nothing2 = Complicated(Mn, Ei);
   ASSERT_TRUE(nothing2.isNothing());
 }
+
+struct DangleTest {
+  static int dtorCount;
+  ~DangleTest() {
+    dtorCount++;
+  }
+  DangleTest() = default;
+};
+int DangleTest::dtorCount = 0;
+
+TEST(Maybe, getOrElseDangle1) {
+  Maybe<DangleTest> Ms = Nothing;
+  DangleTest probe;
+  DangleTest& ref = Ms.getOrElse(probe);
+  ASSERT_EQ(&ref, &probe);
+  ASSERT_EQ(DangleTest::dtorCount, 0);
+}
+
+
+const DangleTest& wrong_usage() {
+  Maybe<DangleTest> Ms = Nothing;
+  return Ms.getOrElse(DangleTest());
+}
+
+TEST(Maybe, getOrElseDangle2) {
+  DangleTest::dtorCount = 0;
+  const DangleTest& dt = wrong_usage();
+  ASSERT_EQ(DangleTest::dtorCount, 1); // dt dangles
+}

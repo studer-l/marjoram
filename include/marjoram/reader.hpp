@@ -3,11 +3,17 @@
 #include <functional>
 
 namespace ma {
+/**
+ * @defgroup Reader Reader
+ * @addtogroup Reader
+ * @{
+ * Reader Monad, supporting constants and functions.
+ */
 
 /**
  * Reader Monad
  *
- * Essentially std::function with suger on top.
+ * Essentially std::function with sugar on top.
  *
  * Represents computations that require a shared resource `A` to run.
  * map/flatMap composes further computations.
@@ -57,4 +63,5 @@ template <class A, class R> class Reader {
  private:
   const std::function<R(A)> f_;
 };
+// @}
 }  // namespace ma
