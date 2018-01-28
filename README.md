@@ -1,4 +1,7 @@
 # Marjoram
+
+[![Build Status](https://travis-ci.org/studer-l/marjoram.svg?branch=master)](https://travis-ci.org/studer-l/marjoram)
+
 Tiny header-only library for functional programming in C++.
 
 ## Requirements

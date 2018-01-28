@@ -14,12 +14,6 @@ else()
   message(FATAL_ERROR)
 endif()
 
-
-# Sanitizer settings for testrun_san target
-set(SANITIZE_UNDEFINED OFF)
-set(SANITIZE_ADDRESS OFF)
-set(SANITIZE_MEMORY OFF)
-
 add_library(marjoram INTERFACE)
 
 target_include_directories(marjoram INTERFACE include)
