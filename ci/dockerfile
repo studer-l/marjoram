@@ -1,5 +1,5 @@
 FROM buildpack-deps:xenial-scm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-                      clang cmake libboost-dev make lcov \
+                      clang cmake libboost-dev make llvm \
  && rm -rf /var/lib/apt/lists*
