@@ -1,6 +1,7 @@
 # Marjoram
 
 [![Build Status](https://travis-ci.org/studer-l/marjoram.svg?branch=master)](https://travis-ci.org/studer-l/marjoram)
+[![Coverage Status](https://coveralls.io/repos/github/studer-l/marjoram/badge.svg?branch=coveralls)](https://coveralls.io/github/studer-l/marjoram?branch=coveralls)
 
 Tiny header-only library for functional programming in C++.
 
