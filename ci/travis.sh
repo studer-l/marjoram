@@ -3,7 +3,7 @@
 set -ex
 
 # Build with address and undefinedb behavior sanitizer
-BUILDDIR=/build
+BUILDDIR=/marjoram/ci_build
 mkdir -p $BUILDDIR
 cd $BUILDDIR
 export COVERALLS_REPO_TOKEN=nxEShAdWvkxe8TUHMWWuHsqWlp6EixHOL
