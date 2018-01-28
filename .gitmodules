@@ -4,3 +4,6 @@
 [submodule "external/sanitizers-cmake"]
 	path = external/sanitizers-cmake
 	url = git://github.com/arsenm/sanitizers-cmake.git
+[submodule "external/coveralls-cmake"]
+	path = external/coveralls-cmake
+	url = https://github.com/JoakimSoderberg/coveralls-cmake.git
