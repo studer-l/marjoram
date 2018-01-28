@@ -2,17 +2,11 @@ cmake_minimum_required(VERSION 3.1)
 
 project(marjoram)
 
-# Settings
 set(CMAKE_BUILD_TYPE "Debug")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Boost 1.58.0)
-
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
-else()
-  message(FATAL_ERROR)
-endif()
+find_package(Boost 1.58.0 REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
 
 add_library(marjoram INTERFACE)
 
@@ -36,6 +30,21 @@ add_subdirectory(external)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/sanitizers-cmake/cmake"
   ${CMAKE_MODULE_PATH})
+
+# coveralls
+option(COVERALLS "Generate coveralls data" OFF)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/external/coveralls-cmake/cmake)
+if (COVERALLS)
+    include(Coveralls)
+    coveralls_turn_on_coverage()
+
+    file(GLOB COVERAGE_SRCS "${PROJECT_SOURCE_DIR}/include/marjoram/*")
+    # Create the coveralls target.
+    coveralls_setup(
+        "${COVERAGE_SRCS}" # The source files.
+        ON                 # If we should upload.
+    )
+endif(COVERALLS)
 
 add_subdirectory(test)
 add_subdirectory(doxygen)
