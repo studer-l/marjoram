@@ -12,6 +12,29 @@ namespace ma {
  * @addtogroup Either
  * @{
  * Either Monad, supporting constants and functions.
+ *
+ * An instance of `Either<A,B>` contains either an `A` or a `B`. Unlike
+ * `std::variant` both `A` and `B` may be the same type.
+ *
+ * Example
+ * -------
+ * Given a function that returns either a fully fledged Widget or a descriptive
+ * Error message.
+ * ~~~
+ * class Widget;
+ * class BetterWidget;
+ * BetterWidget refine(Widget& w);
+ *
+ * Either<std::string, Widget> requestWidget(double length, int numberOfBells);
+ * ~~~
+ *
+ * Then client code can treat the above return value uniformly:
+ *
+ * ~~~
+ * Either<std::string, Widget> emw = requestWidget(14.2, 3);
+ * Either<std::string, BetterWidget> morphed = emw.map([](Widget& w) { return  refine(w); });
+ * ~~~
+ *
  */
 
 template <typename A, typename B> class EitherIterator;

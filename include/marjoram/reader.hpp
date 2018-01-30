@@ -8,6 +8,15 @@ namespace ma {
  * @addtogroup Reader
  * @{
  * Reader Monad, supporting constants and functions.
+ *
+ * ~~~
+ * template <class A, class R> Reader;
+ * ~~~
+ *
+ * Represents computation that requires a shared resource `A` to run. Can be
+ * used to implement Dependency Injection (see `test/test_reader.cxx` and [this
+ * blogpost](http://blog.originate.com/blog/2013/10/21/reader-monad-for-dependency-injection/)
+ * for illustration).
  */
 
 /**
