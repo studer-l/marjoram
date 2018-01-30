@@ -4,8 +4,7 @@ var indexSectionsWithContent =
   1: "celmnr",
   2: "aefgijlmort~",
   3: "ns",
-  4: "elmr",
-  5: "m"
+  4: "elmr"
 };
 
 var indexSectionNames =
@@ -14,8 +13,7 @@ var indexSectionNames =
   1: "classes",
   2: "functions",
   3: "variables",
-  4: "groups",
-  5: "pages"
+  4: "groups"
 };
 
 var indexSectionLabels =
@@ -24,7 +22,6 @@ var indexSectionLabels =
   1: "Classes",
   2: "Functions",
   3: "Variables",
-  4: "Modules",
-  5: "Pages"
+  4: "Modules"
 };
 
