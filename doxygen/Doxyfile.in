@@ -791,7 +791,7 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 
-INPUT                  = ../include/marjoram mainpage.md
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include/marjoram @CMAKE_CURRENT_SOURCE_DIR@/mainpage.md
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1131,7 +1131,7 @@ GENERATE_HTML          = YES
 # The default directory is: html.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_OUTPUT            = .
+HTML_OUTPUT            = html
 
 # The HTML_FILE_EXTENSION tag can be used to specify the file extension for each
 # generated HTML page (for example: .htm, .php, .asp).
