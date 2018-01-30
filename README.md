@@ -5,17 +5,9 @@
 
 Tiny header-only library for functional programming in C++.
 
+[Documentation](https://studer-l.github.io/marjoram/)
+
 ## Requirements
 
 - Modern C++ compiler (C++14 or newer)
 - Boost 1.58 or newer (for move-only optional)
-
-## Components
-
-Marjoram provides several convenient templates, mainly:
-
-* [Maybe](#maybe)
-* [Maybe0](#maybe0)
-* [Either](#either)
-* [Lazy](#lazy)
-* [Reader](#reader)
