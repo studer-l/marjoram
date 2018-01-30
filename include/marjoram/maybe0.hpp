@@ -41,23 +41,46 @@ template <template <class...> class F, class... B> struct Curry {
 }  // namespace detail
 
 /**
- * @defgroup Maybe0 Maybe0
- * @ingroup Maybe0
- * `Maybe0_t` --- MaybeNull
- * A `Maybe` backed by a pointer-like storage, for that Proper C-Like
- * Performance. `nullptr` is used as `Nothing`.
+ * @defgroup MaybeNull MaybeNull
  *
- * Downside: Cannot contain nullptr. Depending on Ptr, might not be copyable,
+ * Template class to wrap pointer-like types and treat them as `Maybe`. Use
+ * `nullptr` as sentinel value to indicate Nothing.
+ *
+ * Downside: Cannot contain `nullptr`. Depending on Ptr, might not be copyable,
  * or copying might lead to dangling pointers. Use with care.
+ *
+ * Example
+ * -------
+ * Suppose `requestWidget` returned a pointer to `Widget`, where `nullptr`
+ * indicates operation failed:
+ *
+ * ~~~
+ * Widget* requestWidget(double length, int numberOfBells);
+ * ~~~
+ *
+ * Then the received pointer-like type can be wrapped in a Maybe instance:
+ *
+ * ~~~
+ * Maybe0_t<Widget*> mw = Maybe0(requestWidget(14.2, 3));
+ * ~~~
+ *
+ * Note that no memory management is performed by the `Maybe0_t`, if memory should
+ * be freed then a smart pointer should be used:
+ *
+ * ~~~
+ * using wptr = std::unique_ptr<Widget>;
+ * Maybe0_t<Widget*> mw = Maybe0(wptr(requestWidget(14.2, 3)));
+ * ~~~
  */
+
 template <class Ptr>
 using Maybe0_t =
     Maybe<typename std::pointer_traits<Ptr>::element_type,
           detail::Curry<detail::MaybePtrImplT, Ptr>::template type>;
 
 /**
- * @ingroup Maybe0
- * Convenience constructor, moves `p` into new Maybe0 instance.
+ * @ingroup MaybeNull
+ * Constructor, moves `p` into new Maybe0 instance.
  */
 template <typename Ptr> Maybe0_t<Ptr> Maybe0(Ptr&& p) {
   return Maybe0_t<Ptr>(std::forward<Ptr>(p));

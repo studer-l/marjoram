@@ -10,6 +10,60 @@ namespace ma {
  * @addtogroup Lazy
  * @{
  * Lazy Monad, supporting constants and functions.
+ *
+ * Represents a lazy `A` that will be obtained via a delayed computation. The
+ * result will be stored for later re-use.
+ *
+ * Allows `const` access to the stored value, even if not yet computed (through
+ * `mutable` internal storage).
+ *
+ * Example
+ * -------
+ *
+ * Suppose we would like to simplify the following class:
+ *
+ * ~~~
+ * class Example {
+ *   public:
+ *     void examplify() const {
+ *       if (calcResult == -1) {
+ *         calcResult = expensiveCalculation();
+ *       }
+ *       // use calcResult somehow
+ *     }
+ *
+ *     void examplify2() const {
+ *       if (calcResult == -1) {
+ *         calcResult = expensiveCalculation();
+ *       }
+ *       // use calcResult in some other way
+ *     }
+ *
+ *   private:
+ *     double calcResult = -1; // -1 indicates not computed yet
+ *     double expensiveCalculation();
+ * };
+ * ~~~
+ *
+ * We can do so using a `Lazy<Double>` as follows:
+ * ~~~
+ * class Example {
+ *   public:
+ *     Example() : calcResult([this](){ return expensiveCalculation(); }) {}
+ *
+ *     void examplify() const {
+ *       // use calcResult somehow with calcResult.get() -> double
+ *     }
+ *
+ *     void examplify2() const {
+ *       // use calcResult in some other way with calcResult.get() -> double
+ *     }
+ *
+ *   private:
+ *     Lazy<double> calcResult;
+ *     double expensiveCalculation();
+ * };
+ * ~~~
  */
 
 template <class A> class LazyIterator;

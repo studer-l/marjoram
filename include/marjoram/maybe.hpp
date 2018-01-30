@@ -13,6 +13,39 @@ template <typename A, template <class> class impl> class ConstMaybeIterator;
  * @addtogroup Maybe
  * @{
  * Maybe Monad, supporting constants and functions.
+ *
+ * ~~~
+ * template <class T> class Maybe;
+ * ~~~
+ *
+ * Extension to `std::optional`/`boost::optional`, endowing it with `flatMap`.
+ *
+ * Example
+ * -------
+ * ~~~
+ * class Widget;
+ * class BetterWidget;
+ * BetterWidget morph(Widget& w);
+ *
+ * Maybe<Widget> requestWidget(double length, int numberOfBells) {
+ *   // do some complicated thing
+ *   if (failure) {
+ *     return Nothing;
+ *   }
+ *   return widget;
+ * }
+ * ~~~
+ *
+ * The return value of `requestWidget` can be used regardless of whether the
+ * operation succeeded by using `map`:
+ *
+ * ~~~
+ * auto mw = requestWidget(14.2, 3);
+ * // if a widget was created, morph it
+ * Maybe<BetterWidget> morphed = mw.map([](Widget& w) { return morph(w); });
+ * ~~~
+ *
+ * @see Maybe0
  */
 
 /**
