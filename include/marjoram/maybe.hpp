@@ -100,6 +100,11 @@ class Maybe {
   /* implicit */ Maybe(Nothing_t /* overload selection */) : impl_() {}
 
   /**
+   * New empty object (containing `Nothing`).
+   */
+  Maybe() : impl_() {}
+
+  /**
    * Construct `Maybe` containing `A` with perfect forwarding.
    *
    * Type requirements:
