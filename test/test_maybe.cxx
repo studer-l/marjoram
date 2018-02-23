@@ -214,3 +214,10 @@ TEST(Maybe, getOrElseDangle2) {
   const DangleTest& dt = wrong_usage();
   ASSERT_EQ(DangleTest::dtorCount, 1); // dt dangles
 }
+
+TEST(Maybe, ToVector) {
+  Maybe<float> MbF = ma::Just(42.0f);
+  std::vector<float> v(MbF.begin(), MbF.end());
+  //ASSERT_EQ(v.size(), 1);
+  //ASSERT_EQ(v[0], 42.0f);
+}

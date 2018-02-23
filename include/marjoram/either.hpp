@@ -292,6 +292,8 @@ class Either : private detail::EitherImpl<A, B> {
  */
 template <typename A, typename B> class EitherIterator {
  public:
+  using iterator_category = std::input_iterator_tag;
+  using difference_type = size_t;
   using value_type = B;
   using reference = B&;
   using pointer = B*;
@@ -328,6 +330,8 @@ template <typename A, typename B> class EitherIterator {
  */
 template <typename A, typename B> class ConstEitherIterator {
  public:
+  using iterator_category = std::input_iterator_tag;
+  using difference_type = size_t;
   using value_type = const B;
   using reference = const B&;
   using pointer = const B*;

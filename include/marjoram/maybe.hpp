@@ -260,6 +260,8 @@ class Maybe {
  */
 template <typename A, template <class> class impl> class MaybeIterator {
  public:
+  using iterator_category = std::input_iterator_tag;
+  using difference_type = size_t;
   using value_type = A;
   using reference = A&;
   using pointer = A*;
@@ -296,6 +298,8 @@ template <typename A, template <class> class impl> class MaybeIterator {
  */
 template <typename A, template <class> class impl> class ConstMaybeIterator {
  public:
+  using iterator_category = std::input_iterator_tag;
+  using difference_type = size_t;
   using value_type = const A;
   using reference = const A&;
   using pointer = const A*;

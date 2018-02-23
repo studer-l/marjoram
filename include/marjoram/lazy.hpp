@@ -262,6 +262,8 @@ template <typename A> Lazy<A> Flatten(Lazy<Lazy<A>>&& LLa) {
  */
 template <typename A> class LazyIterator {
  public:
+  using iterator_category = std::input_iterator_tag;
+  using difference_type = size_t;
   using value_type = const A;
   using reference = const A&;
   using pointer = const A*;
