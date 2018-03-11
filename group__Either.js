@@ -33,6 +33,7 @@ var group__Either =
       [ "begin", "group__Either.html#aee9f6d958722291dbf3ce51f36b94fa8", null ],
       [ "cbegin", "group__Either.html#aec539a651aabb54507656f84839279d9", null ],
       [ "cend", "group__Either.html#aa1b47bd5a11981380eedfaa5c27f347b", null ],
+      [ "contains", "group__Either.html#a402a34a70c2c74e5534415a20d85a39e", null ],
       [ "end", "group__Either.html#aeacba4ad11aa3312afb14f0e5569bea5", null ],
       [ "end", "group__Either.html#a482b6d5daa5380a8a265757ef145f92b", null ],
       [ "flatMap", "group__Either.html#a1b6a1820cb3e632e3b4868ba541bbef6", null ],
@@ -44,6 +45,7 @@ var group__Either =
       [ "map", "group__Either.html#a941c5accc6c68f962fd173986ff7552b", null ],
       [ "map", "group__Either.html#a2a6ef3ae4955e9dcc1b07501d49e81c1", null ],
       [ "mirror", "group__Either.html#a35bfe4ef123594c555a96c09c7cbd1c5", null ],
+      [ "recover", "group__Either.html#ab8767248b6faabf5ac0bd741e11ce51b", null ],
       [ "toMaybe", "group__Either.html#a34da55ae38be08cecfb65ccfe9dc38c0", null ]
     ] ]
 ];

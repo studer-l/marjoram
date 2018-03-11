@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lazy',['Lazy',['../group__Lazy.html#a3b3e3a99c05799e1603b66fa36e961c0',1,'ma::Lazy']]]
+  ['just',['Just',['../group__Maybe.html#ga93cfff959393ee876fe2d8992120a8bf',1,'ma']]]
 ];

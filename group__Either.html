@@ -108,7 +108,7 @@ Classes</h2></td></tr>
 <p>An instance of <code><a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a>&lt;A,B&gt;</code> contains either an <code>A</code> or a <code>B</code>. Unlike <code>std::variant</code> both <code>A</code> and <code>B</code> may be the same type.</p>
 <h2>Example </h2>
 <p>Given a function that returns either a fully fledged Widget or a descriptive Error message. </p><div class="fragment"><div class="line"><span class="keyword">class </span>Widget;</div><div class="line"><span class="keyword">class </span>BetterWidget;</div><div class="line">BetterWidget refine(Widget&amp; w);</div><div class="line"></div><div class="line">Either&lt;std::string, Widget&gt; requestWidget(<span class="keywordtype">double</span> length, <span class="keywordtype">int</span> numberOfBells);</div></div><!-- fragment --><p>Then client code can treat the above return value uniformly:</p>
-<div class="fragment"><div class="line">Either&lt;std::string, Widget&gt; emw = requestWidget(14.2, 3);</div><div class="line">Either&lt;std::string, BetterWidget&gt; morphed = emw.map([](Widget&amp; w) { <span class="keywordflow">return</span>  refine(w); });</div></div><!-- fragment --> <hr/><h2 class="groupheader">Class Documentation</h2>
+<div class="fragment"><div class="line">Either&lt;std::string, Widget&gt; emw = requestWidget(14.2, 3);</div><div class="line">Either&lt;std::string, BetterWidget&gt; morphed =</div><div class="line">           emw.map([](Widget&amp; w) { <span class="keywordflow">return</span> refine(w); });</div></div><!-- fragment --> <hr/><h2 class="groupheader">Class Documentation</h2>
 <a name="classma_1_1EitherIterator" id="classma_1_1EitherIterator"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#classma_1_1EitherIterator">&#9670;&nbsp;</a></span>ma::EitherIterator</h2>
 
@@ -289,6 +289,11 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>right_type</b> = B</
 <tr class="memitem:a34da55ae38be08cecfb65ccfe9dc38c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; B &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Either.html#a34da55ae38be08cecfb65ccfe9dc38c0">toMaybe</a> () const</td></tr>
 <tr class="memdesc:a34da55ae38be08cecfb65ccfe9dc38c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">If a <code>B</code> is contained, returns <code>Just(B)</code>.  <a href="#a34da55ae38be08cecfb65ccfe9dc38c0">More...</a><br /></td></tr>
 <tr class="separator:a34da55ae38be08cecfb65ccfe9dc38c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a402a34a70c2c74e5534415a20d85a39e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Either.html#a402a34a70c2c74e5534415a20d85a39e">contains</a> (const B &amp;b)</td></tr>
+<tr class="separator:a402a34a70c2c74e5534415a20d85a39e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8767248b6faabf5ac0bd741e11ce51b"><td class="memTemplParams" colspan="2">template&lt;typename Fa &gt; </td></tr>
+<tr class="memitem:ab8767248b6faabf5ac0bd741e11ce51b"><td class="memTemplItemLeft" align="right" valign="top">B&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Either.html#ab8767248b6faabf5ac0bd741e11ce51b">recover</a> (Fa fa) const</td></tr>
+<tr class="separator:ab8767248b6faabf5ac0bd741e11ce51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad186dd13946a288793ad17e8fc0470e9"><td class="memItemLeft" align="right" valign="top"><a id="ad186dd13946a288793ad17e8fc0470e9"></a>
 <a class="el" href="group__Either.html#classma_1_1EitherIterator">EitherIterator</a>&lt; A, B &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
 <tr class="separator:ad186dd13946a288793ad17e8fc0470e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -447,6 +452,35 @@ template&lt;typename... Args&gt; </div>
 </div>
 </div>
 <h4 class="groupheader">Member Function Documentation</h4>
+<a id="a402a34a70c2c74e5534415a20d85a39e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a402a34a70c2c74e5534415a20d85a39e">&#9670;&nbsp;</a></span>contains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A, typename B&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="group__Either.html#classma_1_1Either">ma::Either</a>&lt; A, B &gt;::contains </td>
+          <td>(</td>
+          <td class="paramtype">const B &amp;&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>True if contains a <code>B</code> value that compares equal to argument <code>b</code>. </dd></dl>
+
+</div>
+</div>
 <a id="a1b6a1820cb3e632e3b4868ba541bbef6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b6a1820cb3e632e3b4868ba541bbef6">&#9670;&nbsp;</a></span>flatMap() <span class="overload">[1/2]</span></h2>
 
@@ -792,6 +826,43 @@ template&lt;typename A, typename B&gt; </div>
 
 <p>Swaps left and right, preserving the stored value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Copy of this either instance with A and B mirrored. </dd></dl>
+
+</div>
+</div>
+<a id="ab8767248b6faabf5ac0bd741e11ce51b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8767248b6faabf5ac0bd741e11ce51b">&#9670;&nbsp;</a></span>recover()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A, typename B&gt; </div>
+<div class="memtemplate">
+template&lt;typename Fa &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">B <a class="el" href="group__Either.html#classma_1_1Either">ma::Either</a>&lt; A, B &gt;::recover </td>
+          <td>(</td>
+          <td class="paramtype">Fa&#160;</td>
+          <td class="paramname"><em>fa</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Fa</td><td>Function object. <code>F::operator()</code> when called with <code>A</code> value has return type <code>B</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Right value if contained, otherwise result of applying <code>Fa</code> to <code>a</code>. </dd></dl>
 
 </div>
 </div>

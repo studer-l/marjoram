@@ -98,13 +98,13 @@ Classes</h2></td></tr>
 <tr class="memitem:structma_1_1Nothing__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#structma_1_1Nothing__t">ma::Nothing_t</a></td></tr>
 <tr class="memdesc:structma_1_1Nothing__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertible to any kind of (empty) <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> object.  <a href="group__Maybe.html#structma_1_1Nothing__t">More...</a><br /></td></tr>
 <tr class="separator:structma_1_1Nothing__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:classma_1_1Maybe"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe&lt; A, impl &gt;</a></td></tr>
+<tr class="memitem:classma_1_1Maybe"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe&lt; A &gt;</a></td></tr>
 <tr class="memdesc:classma_1_1Maybe"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> monad.  <a href="group__Maybe.html#classma_1_1Maybe">More...</a><br /></td></tr>
 <tr class="separator:classma_1_1Maybe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:classma_1_1MaybeIterator"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">ma::MaybeIterator&lt; A, impl &gt;</a></td></tr>
+<tr class="memitem:classma_1_1MaybeIterator"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">ma::MaybeIterator&lt; A &gt;</a></td></tr>
 <tr class="memdesc:classma_1_1MaybeIterator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator over <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a>.  <a href="group__Maybe.html#classma_1_1MaybeIterator">More...</a><br /></td></tr>
 <tr class="separator:classma_1_1MaybeIterator"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:classma_1_1ConstMaybeIterator"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ma::ConstMaybeIterator&lt; A, impl &gt;</a></td></tr>
+<tr class="memitem:classma_1_1ConstMaybeIterator"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ma::ConstMaybeIterator&lt; A &gt;</a></td></tr>
 <tr class="memdesc:classma_1_1ConstMaybeIterator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immutable Iterator over <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a>.  <a href="group__Maybe.html#classma_1_1ConstMaybeIterator">More...</a><br /></td></tr>
 <tr class="separator:classma_1_1ConstMaybeIterator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -115,11 +115,6 @@ template&lt;typename A &gt; </td></tr>
 <tr class="memitem:ga93cfff959393ee876fe2d8992120a8bf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; std::decay_t&lt; A &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#ga93cfff959393ee876fe2d8992120a8bf">ma::Just</a> (A &amp;&amp;a)</td></tr>
 <tr class="memdesc:ga93cfff959393ee876fe2d8992120a8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience constructor, copies/moves <code>a</code> into new <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance. <br /></td></tr>
 <tr class="separator:ga93cfff959393ee876fe2d8992120a8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa22265bcbf2ca624465c881f5d73a4ff"><td class="memTemplParams" colspan="2"><a id="gaa22265bcbf2ca624465c881f5d73a4ff"></a>
-template&lt;typename A , typename... Args&gt; </td></tr>
-<tr class="memitem:gaa22265bcbf2ca624465c881f5d73a4ff"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; A &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#gaa22265bcbf2ca624465c881f5d73a4ff">ma::Just</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:gaa22265bcbf2ca624465c881f5d73a4ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience constructor, constructs new <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance containing an <code>A</code> using the arguments <code>args</code>. <br /></td></tr>
-<tr class="separator:gaa22265bcbf2ca624465c881f5d73a4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -161,101 +156,122 @@ static const <a class="el" href="group__Maybe.html#structma_1_1Nothing__t">Nothi
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><h3>template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;<br />
-class ma::Maybe&lt; A, impl &gt;</h3>
+<div class="textblock"><h3>template&lt;typename A&gt;<br />
+class ma::Maybe&lt; A &gt;</h3>
 
 <p><a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> monad. </p>
 <p>May contain a value or Nothing.</p>
 <p>Throughout the documentation, if an object of type <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a><code>&lt;A&gt;</code> contains a value, this value is denoted by <code>a</code>.</p>
-<p>Type requirements: A must be a value type</p>
-<p><code>impl</code> must implement the following: </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt; impl(Args&amp;&amp;... args);</div><div class="line">impl() <span class="comment">// construct nothing / empty;</span></div><div class="line">impl(const impl&amp;);</div><div class="line">impl(impl&amp;&amp;);</div><div class="line"><span class="keywordtype">bool</span> is_initialized() const;</div><div class="line">A&amp; <a class="code" href="group__Maybe.html#a631ee4e3af0b8ab6af73b535067b34e9">get</a>();</div><div class="line">const A&amp; get() const;</div></div><!-- fragment --><p>By default, we piggyback off <code>boost::optional</code>. An alternative implementation is Maybe0, which is based on pointer-like types using nullptr as a sentinel value to denote emptiness. </p><dl class="section see"><dt>See also</dt><dd>Maybe0 </dd></dl>
+<p>Type requirements: A must be a value type </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Public Types</h3></td></tr>
-<tr class="memitem:a334822644cdac4ee01af8410c4174558"><td class="memItemLeft" align="right" valign="top"><a id="a334822644cdac4ee01af8410c4174558"></a>
+<tr class="memitem:a06880a44a94a4e229d5a6b06df86967f"><td class="memItemLeft" align="right" valign="top"><a id="a06880a44a94a4e229d5a6b06df86967f"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = A</td></tr>
-<tr class="separator:a334822644cdac4ee01af8410c4174558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a06880a44a94a4e229d5a6b06df86967f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
-<tr class="memitem:a6bcb91a43f78d83ffb0cfffec6320a11"><td class="memItemLeft" align="right" valign="top"><a id="a6bcb91a43f78d83ffb0cfffec6320a11"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a6bcb91a43f78d83ffb0cfffec6320a11">Maybe</a> (<a class="el" href="group__Maybe.html#structma_1_1Nothing__t">Nothing_t</a>)</td></tr>
-<tr class="memdesc:a6bcb91a43f78d83ffb0cfffec6320a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">New empty object (containing <code>Nothing</code>). <br /></td></tr>
-<tr class="separator:a6bcb91a43f78d83ffb0cfffec6320a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a650e83ec9f6acd04dd85b4d87e129cdb"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a650e83ec9f6acd04dd85b4d87e129cdb"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a650e83ec9f6acd04dd85b4d87e129cdb">Maybe</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a650e83ec9f6acd04dd85b4d87e129cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <code><a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a></code> containing <code>A</code> with perfect forwarding.  <a href="#a650e83ec9f6acd04dd85b4d87e129cdb">More...</a><br /></td></tr>
-<tr class="separator:a650e83ec9f6acd04dd85b4d87e129cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92235932bbd0faf85f26742180737699"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:a92235932bbd0faf85f26742180737699"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a92235932bbd0faf85f26742180737699">flatMap</a> (F f) const -&gt; std::result_of_t&lt; F(A)&gt;</td></tr>
-<tr class="memdesc:a92235932bbd0faf85f26742180737699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns result of <code>f(a)</code> wrapped in a <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> if this holds a value, otherwise returns Nothing.  <a href="#a92235932bbd0faf85f26742180737699">More...</a><br /></td></tr>
-<tr class="separator:a92235932bbd0faf85f26742180737699"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ac1a993092a81a87d791f898298baa3"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:a2ac1a993092a81a87d791f898298baa3"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a2ac1a993092a81a87d791f898298baa3">flatMap</a> (F f) -&gt; std::result_of_t&lt; F(A)&gt;</td></tr>
-<tr class="memdesc:a2ac1a993092a81a87d791f898298baa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns result of <code>f(a)</code> if this holds a value, otherwise returns Nothing.  <a href="#a2ac1a993092a81a87d791f898298baa3">More...</a><br /></td></tr>
-<tr class="separator:a2ac1a993092a81a87d791f898298baa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66ff0a6b17db779eb7c51be58e74bd2b"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:a66ff0a6b17db779eb7c51be58e74bd2b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a66ff0a6b17db779eb7c51be58e74bd2b">map</a> (F f) const -&gt; <a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; std::result_of_t&lt; F(A)&gt;&gt;</td></tr>
-<tr class="memdesc:a66ff0a6b17db779eb7c51be58e74bd2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maybe containing result of <code>f(a)</code> if this holds a value, otherwise returns Nothing.  <a href="#a66ff0a6b17db779eb7c51be58e74bd2b">More...</a><br /></td></tr>
-<tr class="separator:a66ff0a6b17db779eb7c51be58e74bd2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa6e9c5beac445024cac3650ed8e7dec"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:afa6e9c5beac445024cac3650ed8e7dec"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#afa6e9c5beac445024cac3650ed8e7dec">map</a> (F f) -&gt; <a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; std::result_of_t&lt; F(A)&gt;&gt;</td></tr>
-<tr class="memdesc:afa6e9c5beac445024cac3650ed8e7dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maybe containing result of <code>f(a)</code> if this holds a value, otherwise returns Nothing.  <a href="#afa6e9c5beac445024cac3650ed8e7dec">More...</a><br /></td></tr>
-<tr class="separator:afa6e9c5beac445024cac3650ed8e7dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bcc3b849bdfc14319dbbfd96105e61e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a3bcc3b849bdfc14319dbbfd96105e61e">isJust</a> () const</td></tr>
-<tr class="memdesc:a3bcc3b849bdfc14319dbbfd96105e61e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this instance contains a value.  <a href="#a3bcc3b849bdfc14319dbbfd96105e61e">More...</a><br /></td></tr>
-<tr class="separator:a3bcc3b849bdfc14319dbbfd96105e61e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a961c953c4ed066f031ff65664b791e80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a961c953c4ed066f031ff65664b791e80">isNothing</a> () const</td></tr>
-<tr class="memdesc:a961c953c4ed066f031ff65664b791e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this instance does not contain a value.  <a href="#a961c953c4ed066f031ff65664b791e80">More...</a><br /></td></tr>
-<tr class="separator:a961c953c4ed066f031ff65664b791e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a631ee4e3af0b8ab6af73b535067b34e9"><td class="memItemLeft" align="right" valign="top">const A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a631ee4e3af0b8ab6af73b535067b34e9">get</a> () const</td></tr>
-<tr class="memdesc:a631ee4e3af0b8ab6af73b535067b34e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains contained value.  <a href="#a631ee4e3af0b8ab6af73b535067b34e9">More...</a><br /></td></tr>
-<tr class="separator:a631ee4e3af0b8ab6af73b535067b34e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a957e1d5d0a4e10b1e1c79cb41e1cfabc"><td class="memItemLeft" align="right" valign="top">A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a957e1d5d0a4e10b1e1c79cb41e1cfabc">get</a> ()</td></tr>
-<tr class="memdesc:a957e1d5d0a4e10b1e1c79cb41e1cfabc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains contained value.  <a href="#a957e1d5d0a4e10b1e1c79cb41e1cfabc">More...</a><br /></td></tr>
-<tr class="separator:a957e1d5d0a4e10b1e1c79cb41e1cfabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32ad979665cbd1429bcd97c7f1301bf1"><td class="memItemLeft" align="right" valign="top">A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a32ad979665cbd1429bcd97c7f1301bf1">getOrElse</a> (A &amp;dflt)</td></tr>
-<tr class="memdesc:a32ad979665cbd1429bcd97c7f1301bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this object contains a value, returns it.  <a href="#a32ad979665cbd1429bcd97c7f1301bf1">More...</a><br /></td></tr>
-<tr class="separator:a32ad979665cbd1429bcd97c7f1301bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b97493b0ac1966616f150c043093680"><td class="memItemLeft" align="right" valign="top">const A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a2b97493b0ac1966616f150c043093680">getOrElse</a> (const A &amp;dflt) const</td></tr>
-<tr class="memdesc:a2b97493b0ac1966616f150c043093680"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this object contains a value, returns it.  <a href="#a2b97493b0ac1966616f150c043093680">More...</a><br /></td></tr>
-<tr class="separator:a2b97493b0ac1966616f150c043093680"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f6190ff3c8e1a46cc4a956a8eb194b1"><td class="memItemLeft" align="right" valign="top"><a id="a2f6190ff3c8e1a46cc4a956a8eb194b1"></a>
-<a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a>&lt; A, impl &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
-<tr class="separator:a2f6190ff3c8e1a46cc4a956a8eb194b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ab26a5dc7f3574381154322f604ce4f"><td class="memItemLeft" align="right" valign="top"><a id="a5ab26a5dc7f3574381154322f604ce4f"></a>
-<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A, impl &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const</td></tr>
-<tr class="separator:a5ab26a5dc7f3574381154322f604ce4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa148a41eab4a460891b33a2be02fc57"><td class="memItemLeft" align="right" valign="top"><a id="aaa148a41eab4a460891b33a2be02fc57"></a>
-<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A, impl &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cbegin</b> () const</td></tr>
-<tr class="separator:aaa148a41eab4a460891b33a2be02fc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c6f274dd43dafedcec8c82f65cad2e3"><td class="memItemLeft" align="right" valign="top"><a id="a9c6f274dd43dafedcec8c82f65cad2e3"></a>
-<a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a>&lt; A, impl &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
-<tr class="separator:a9c6f274dd43dafedcec8c82f65cad2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ecb3f6bd79f5c5b285b08c96d1f76e1"><td class="memItemLeft" align="right" valign="top"><a id="a6ecb3f6bd79f5c5b285b08c96d1f76e1"></a>
-<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A, impl &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
-<tr class="separator:a6ecb3f6bd79f5c5b285b08c96d1f76e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0016ccb7f323e3f960dcaae9e5558779"><td class="memItemLeft" align="right" valign="top"><a id="a0016ccb7f323e3f960dcaae9e5558779"></a>
-<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A, impl &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cend</b> () const</td></tr>
-<tr class="separator:a0016ccb7f323e3f960dcaae9e5558779"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a615dffaaba4afaf5742d3d325c615a35"><td class="memItemLeft" align="right" valign="top"><a id="a615dffaaba4afaf5742d3d325c615a35"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a615dffaaba4afaf5742d3d325c615a35">Maybe</a> (<a class="el" href="group__Maybe.html#structma_1_1Nothing__t">Nothing_t</a>)</td></tr>
+<tr class="memdesc:a615dffaaba4afaf5742d3d325c615a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">New empty object (containing <code>Nothing</code>). <br /></td></tr>
+<tr class="separator:a615dffaaba4afaf5742d3d325c615a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34fc34a2bcf1ce0c3e57f5f3e70e3fcf"><td class="memItemLeft" align="right" valign="top"><a id="a34fc34a2bcf1ce0c3e57f5f3e70e3fcf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a34fc34a2bcf1ce0c3e57f5f3e70e3fcf">Maybe</a> ()</td></tr>
+<tr class="memdesc:a34fc34a2bcf1ce0c3e57f5f3e70e3fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">New empty object (containing <code>Nothing</code>). <br /></td></tr>
+<tr class="separator:a34fc34a2bcf1ce0c3e57f5f3e70e3fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a171ba577adb54ce8bdeb211309123b46"><td class="memItemLeft" align="right" valign="top"><a id="a171ba577adb54ce8bdeb211309123b46"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a171ba577adb54ce8bdeb211309123b46">Maybe</a> (const A &amp;a)</td></tr>
+<tr class="memdesc:a171ba577adb54ce8bdeb211309123b46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy <code>a</code> into new <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance. <br /></td></tr>
+<tr class="separator:a171ba577adb54ce8bdeb211309123b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace526b2012c7e6279e2f8b8b8e115894"><td class="memItemLeft" align="right" valign="top"><a id="ace526b2012c7e6279e2f8b8b8e115894"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#ace526b2012c7e6279e2f8b8b8e115894">Maybe</a> (A &amp;&amp;a)</td></tr>
+<tr class="memdesc:ace526b2012c7e6279e2f8b8b8e115894"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move <code>a</code> into new <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance. <br /></td></tr>
+<tr class="separator:ace526b2012c7e6279e2f8b8b8e115894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef94b3c0a236ff4bccc0f292f55d23d2"><td class="memItemLeft" align="right" valign="top"><a id="aef94b3c0a236ff4bccc0f292f55d23d2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#aef94b3c0a236ff4bccc0f292f55d23d2">Maybe</a> (const <a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; A &gt; &amp;Ma)=default</td></tr>
+<tr class="memdesc:aef94b3c0a236ff4bccc0f292f55d23d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance. <br /></td></tr>
+<tr class="separator:aef94b3c0a236ff4bccc0f292f55d23d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4df55794fd334d2f2d6fa4124192fbc"><td class="memItemLeft" align="right" valign="top"><a id="ad4df55794fd334d2f2d6fa4124192fbc"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#ad4df55794fd334d2f2d6fa4124192fbc">Maybe</a> (<a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; A &gt; &amp;&amp;Ma)=default</td></tr>
+<tr class="memdesc:ad4df55794fd334d2f2d6fa4124192fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance. <br /></td></tr>
+<tr class="separator:ad4df55794fd334d2f2d6fa4124192fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac941e1ef86746ea20c39fc8038e72abd"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
+<tr class="memitem:ac941e1ef86746ea20c39fc8038e72abd"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#ac941e1ef86746ea20c39fc8038e72abd">flatMap</a> (F f) const -&gt; std::result_of_t&lt; F(A)&gt;</td></tr>
+<tr class="memdesc:ac941e1ef86746ea20c39fc8038e72abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns result of <code>f(a)</code> wrapped in a <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> if this holds a value, otherwise returns Nothing.  <a href="#ac941e1ef86746ea20c39fc8038e72abd">More...</a><br /></td></tr>
+<tr class="separator:ac941e1ef86746ea20c39fc8038e72abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74f6a4725c09398b8d385b3588d8468c"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
+<tr class="memitem:a74f6a4725c09398b8d385b3588d8468c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a74f6a4725c09398b8d385b3588d8468c">flatMap</a> (F f) -&gt; std::result_of_t&lt; F(A)&gt;</td></tr>
+<tr class="memdesc:a74f6a4725c09398b8d385b3588d8468c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns result of <code>f(a)</code> if this holds a value, otherwise returns Nothing.  <a href="#a74f6a4725c09398b8d385b3588d8468c">More...</a><br /></td></tr>
+<tr class="separator:a74f6a4725c09398b8d385b3588d8468c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd15d32ea93e0b87e66c6fa9dc13235"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
+<tr class="memitem:aefd15d32ea93e0b87e66c6fa9dc13235"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#aefd15d32ea93e0b87e66c6fa9dc13235">map</a> (F f) const -&gt; <a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; std::result_of_t&lt; F(A)&gt;&gt;</td></tr>
+<tr class="memdesc:aefd15d32ea93e0b87e66c6fa9dc13235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maybe containing result of <code>f(a)</code> if this holds a value, otherwise returns Nothing.  <a href="#aefd15d32ea93e0b87e66c6fa9dc13235">More...</a><br /></td></tr>
+<tr class="separator:aefd15d32ea93e0b87e66c6fa9dc13235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0974c16220779d388b9dc825d5744eb2"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
+<tr class="memitem:a0974c16220779d388b9dc825d5744eb2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a0974c16220779d388b9dc825d5744eb2">map</a> (F f) -&gt; <a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; std::result_of_t&lt; F(A)&gt;&gt;</td></tr>
+<tr class="memdesc:a0974c16220779d388b9dc825d5744eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maybe containing result of <code>f(a)</code> if this holds a value, otherwise returns Nothing.  <a href="#a0974c16220779d388b9dc825d5744eb2">More...</a><br /></td></tr>
+<tr class="separator:a0974c16220779d388b9dc825d5744eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba9521bf0d53f1c3c7e0d56481553ce9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#aba9521bf0d53f1c3c7e0d56481553ce9">contains</a> (const A &amp;a1) const</td></tr>
+<tr class="separator:aba9521bf0d53f1c3c7e0d56481553ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8d2da161d6e37f0efb11e150aea8925"><td class="memTemplParams" colspan="2">template&lt;class Left &gt; </td></tr>
+<tr class="memitem:ad8d2da161d6e37f0efb11e150aea8925"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt; Left, A &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#ad8d2da161d6e37f0efb11e150aea8925">toRight</a> (const Left &amp;left) const</td></tr>
+<tr class="separator:ad8d2da161d6e37f0efb11e150aea8925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75b4b985702f43dc427544aae4c94f6d"><td class="memTemplParams" colspan="2">template&lt;class Right &gt; </td></tr>
+<tr class="memitem:a75b4b985702f43dc427544aae4c94f6d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt; A, Right &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a75b4b985702f43dc427544aae4c94f6d">toLeft</a> (const Right &amp;right) const</td></tr>
+<tr class="separator:a75b4b985702f43dc427544aae4c94f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9786efb41650f9fca9f05192cda0d5aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a9786efb41650f9fca9f05192cda0d5aa">isJust</a> () const</td></tr>
+<tr class="memdesc:a9786efb41650f9fca9f05192cda0d5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this instance contains a value.  <a href="#a9786efb41650f9fca9f05192cda0d5aa">More...</a><br /></td></tr>
+<tr class="separator:a9786efb41650f9fca9f05192cda0d5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0c0193b26561822e7ce488b85f5d91"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#aaf0c0193b26561822e7ce488b85f5d91">isNothing</a> () const</td></tr>
+<tr class="memdesc:aaf0c0193b26561822e7ce488b85f5d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this instance does not contain a value.  <a href="#aaf0c0193b26561822e7ce488b85f5d91">More...</a><br /></td></tr>
+<tr class="separator:aaf0c0193b26561822e7ce488b85f5d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54d6c45cbc4c7a17457d56162efc0e7d"><td class="memItemLeft" align="right" valign="top">const A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a54d6c45cbc4c7a17457d56162efc0e7d">get</a> () const</td></tr>
+<tr class="memdesc:a54d6c45cbc4c7a17457d56162efc0e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains contained value.  <a href="#a54d6c45cbc4c7a17457d56162efc0e7d">More...</a><br /></td></tr>
+<tr class="separator:a54d6c45cbc4c7a17457d56162efc0e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9636c0649e6de673ef2ea19b8b17b1e"><td class="memItemLeft" align="right" valign="top">A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#ab9636c0649e6de673ef2ea19b8b17b1e">get</a> ()</td></tr>
+<tr class="memdesc:ab9636c0649e6de673ef2ea19b8b17b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains contained value.  <a href="#ab9636c0649e6de673ef2ea19b8b17b1e">More...</a><br /></td></tr>
+<tr class="separator:ab9636c0649e6de673ef2ea19b8b17b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e1b46e8118a985cbf709920ec973d8a"><td class="memItemLeft" align="right" valign="top">A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a5e1b46e8118a985cbf709920ec973d8a">getOrElse</a> (A &amp;dflt)</td></tr>
+<tr class="memdesc:a5e1b46e8118a985cbf709920ec973d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this object contains a value, returns it.  <a href="#a5e1b46e8118a985cbf709920ec973d8a">More...</a><br /></td></tr>
+<tr class="separator:a5e1b46e8118a985cbf709920ec973d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4574c3e22600f157723a0740cd97b89a"><td class="memItemLeft" align="right" valign="top">const A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Maybe.html#a4574c3e22600f157723a0740cd97b89a">getOrElse</a> (const A &amp;dflt) const</td></tr>
+<tr class="memdesc:a4574c3e22600f157723a0740cd97b89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this object contains a value, returns it.  <a href="#a4574c3e22600f157723a0740cd97b89a">More...</a><br /></td></tr>
+<tr class="separator:a4574c3e22600f157723a0740cd97b89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd11038568096edaea408ffde403527"><td class="memItemLeft" align="right" valign="top"><a id="aacd11038568096edaea408ffde403527"></a>
+<a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a>&lt; A &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
+<tr class="separator:aacd11038568096edaea408ffde403527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae241602240e02fc14a38fd59fa4e6bc9"><td class="memItemLeft" align="right" valign="top"><a id="ae241602240e02fc14a38fd59fa4e6bc9"></a>
+<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const</td></tr>
+<tr class="separator:ae241602240e02fc14a38fd59fa4e6bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3846fc5ead248d4f63b3ff1ebc834291"><td class="memItemLeft" align="right" valign="top"><a id="a3846fc5ead248d4f63b3ff1ebc834291"></a>
+<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cbegin</b> () const</td></tr>
+<tr class="separator:a3846fc5ead248d4f63b3ff1ebc834291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5708172b077183b1eac69f83128d9390"><td class="memItemLeft" align="right" valign="top"><a id="a5708172b077183b1eac69f83128d9390"></a>
+<a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a>&lt; A &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
+<tr class="separator:a5708172b077183b1eac69f83128d9390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a473e9a2df092fcde2330d9b80e6f026a"><td class="memItemLeft" align="right" valign="top"><a id="a473e9a2df092fcde2330d9b80e6f026a"></a>
+<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
+<tr class="separator:a473e9a2df092fcde2330d9b80e6f026a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a659ee441f94e824497cb7652c5d04f33"><td class="memItemLeft" align="right" valign="top"><a id="a659ee441f94e824497cb7652c5d04f33"></a>
+<a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cend</b> () const</td></tr>
+<tr class="separator:a659ee441f94e824497cb7652c5d04f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Constructor &amp; Destructor Documentation</h4>
-<a id="a650e83ec9f6acd04dd85b4d87e129cdb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a650e83ec9f6acd04dd85b4d87e129cdb">&#9670;&nbsp;</a></span>Maybe()</h2>
+<h4 class="groupheader">Member Function Documentation</h4>
+<a id="aba9521bf0d53f1c3c7e0d56481553ce9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba9521bf0d53f1c3c7e0d56481553ce9">&#9670;&nbsp;</a></span>contains()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::<a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a> </td>
+          <td class="memname">bool <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::contains </td>
           <td>(</td>
-          <td class="paramtype">Args &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>args</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">const A &amp;&#160;</td>
+          <td class="paramname"><em>a1</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -264,22 +280,17 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct <code><a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a></code> containing <code>A</code> with perfect forwarding. </p>
-<p>Type requirements:</p><ul>
-<li><code>A</code> must be constructible from <code>args...</code>. </li>
-</ul>
+<dl class="section return"><dt>Returns</dt><dd>true iff this maybe instance contains an <code>a1</code> that compares true to <code>a1</code>, that is, <code>a1 == a2</code>. </dd></dl>
 
 </div>
 </div>
-<h4 class="groupheader">Member Function Documentation</h4>
-<a id="a92235932bbd0faf85f26742180737699"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92235932bbd0faf85f26742180737699">&#9670;&nbsp;</a></span>flatMap() <span class="overload">[1/2]</span></h2>
+<a id="ac941e1ef86746ea20c39fc8038e72abd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac941e1ef86746ea20c39fc8038e72abd">&#9670;&nbsp;</a></span>flatMap() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <div class="memtemplate">
 template&lt;typename F &gt; </div>
 <table class="mlabels">
@@ -287,7 +298,7 @@ template&lt;typename F &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::flatMap </td>
+          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::flatMap </td>
           <td>(</td>
           <td class="paramtype">F&#160;</td>
           <td class="paramname"><em>f</em></td><td>)</td>
@@ -315,13 +326,13 @@ template&lt;typename F &gt; </div>
 
 </div>
 </div>
-<a id="a2ac1a993092a81a87d791f898298baa3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ac1a993092a81a87d791f898298baa3">&#9670;&nbsp;</a></span>flatMap() <span class="overload">[2/2]</span></h2>
+<a id="a74f6a4725c09398b8d385b3588d8468c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74f6a4725c09398b8d385b3588d8468c">&#9670;&nbsp;</a></span>flatMap() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <div class="memtemplate">
 template&lt;typename F &gt; </div>
 <table class="mlabels">
@@ -329,7 +340,7 @@ template&lt;typename F &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::flatMap </td>
+          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::flatMap </td>
           <td>(</td>
           <td class="paramtype">F&#160;</td>
           <td class="paramname"><em>f</em></td><td>)</td>
@@ -357,19 +368,19 @@ template&lt;typename F &gt; </div>
 
 </div>
 </div>
-<a id="a631ee4e3af0b8ab6af73b535067b34e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a631ee4e3af0b8ab6af73b535067b34e9">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
+<a id="a54d6c45cbc4c7a17457d56162efc0e7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54d6c45cbc4c7a17457d56162efc0e7d">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::get </td>
+          <td class="memname">const A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -387,19 +398,19 @@ template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;
 
 </div>
 </div>
-<a id="a957e1d5d0a4e10b1e1c79cb41e1cfabc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a957e1d5d0a4e10b1e1c79cb41e1cfabc">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
+<a id="ab9636c0649e6de673ef2ea19b8b17b1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9636c0649e6de673ef2ea19b8b17b1e">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::get </td>
+          <td class="memname">A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -417,19 +428,19 @@ template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;
 
 </div>
 </div>
-<a id="a32ad979665cbd1429bcd97c7f1301bf1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32ad979665cbd1429bcd97c7f1301bf1">&#9670;&nbsp;</a></span>getOrElse() <span class="overload">[1/2]</span></h2>
+<a id="a5e1b46e8118a985cbf709920ec973d8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e1b46e8118a985cbf709920ec973d8a">&#9670;&nbsp;</a></span>getOrElse() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::getOrElse </td>
+          <td class="memname">A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::getOrElse </td>
           <td>(</td>
           <td class="paramtype">A &amp;&#160;</td>
           <td class="paramname"><em>dflt</em></td><td>)</td>
@@ -448,19 +459,19 @@ template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;
 
 </div>
 </div>
-<a id="a2b97493b0ac1966616f150c043093680"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b97493b0ac1966616f150c043093680">&#9670;&nbsp;</a></span>getOrElse() <span class="overload">[2/2]</span></h2>
+<a id="a4574c3e22600f157723a0740cd97b89a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4574c3e22600f157723a0740cd97b89a">&#9670;&nbsp;</a></span>getOrElse() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::getOrElse </td>
+          <td class="memname">const A&amp; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::getOrElse </td>
           <td>(</td>
           <td class="paramtype">const A &amp;&#160;</td>
           <td class="paramname"><em>dflt</em></td><td>)</td>
@@ -479,19 +490,19 @@ template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;
 
 </div>
 </div>
-<a id="a3bcc3b849bdfc14319dbbfd96105e61e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bcc3b849bdfc14319dbbfd96105e61e">&#9670;&nbsp;</a></span>isJust()</h2>
+<a id="a9786efb41650f9fca9f05192cda0d5aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9786efb41650f9fca9f05192cda0d5aa">&#9670;&nbsp;</a></span>isJust()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::isJust </td>
+          <td class="memname">bool <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::isJust </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -509,19 +520,19 @@ template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;
 
 </div>
 </div>
-<a id="a961c953c4ed066f031ff65664b791e80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a961c953c4ed066f031ff65664b791e80">&#9670;&nbsp;</a></span>isNothing()</h2>
+<a id="aaf0c0193b26561822e7ce488b85f5d91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf0c0193b26561822e7ce488b85f5d91">&#9670;&nbsp;</a></span>isNothing()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::isNothing </td>
+          <td class="memname">bool <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::isNothing </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -539,13 +550,13 @@ template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt;
 
 </div>
 </div>
-<a id="a66ff0a6b17db779eb7c51be58e74bd2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66ff0a6b17db779eb7c51be58e74bd2b">&#9670;&nbsp;</a></span>map() <span class="overload">[1/2]</span></h2>
+<a id="aefd15d32ea93e0b87e66c6fa9dc13235"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd15d32ea93e0b87e66c6fa9dc13235">&#9670;&nbsp;</a></span>map() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <div class="memtemplate">
 template&lt;typename F &gt; </div>
 <table class="mlabels">
@@ -553,7 +564,7 @@ template&lt;typename F &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::map </td>
+          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::map </td>
           <td>(</td>
           <td class="paramtype">F&#160;</td>
           <td class="paramname"><em>f</em></td><td>)</td>
@@ -581,13 +592,13 @@ template&lt;typename F &gt; </div>
 
 </div>
 </div>
-<a id="afa6e9c5beac445024cac3650ed8e7dec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa6e9c5beac445024cac3650ed8e7dec">&#9670;&nbsp;</a></span>map() <span class="overload">[2/2]</span></h2>
+<a id="a0974c16220779d388b9dc825d5744eb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0974c16220779d388b9dc825d5744eb2">&#9670;&nbsp;</a></span>map() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, template&lt; class &gt; class impl = boost::optional&gt; </div>
+template&lt;typename A&gt; </div>
 <div class="memtemplate">
 template&lt;typename F &gt; </div>
 <table class="mlabels">
@@ -595,7 +606,7 @@ template&lt;typename F &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A, impl &gt;::map </td>
+          <td class="memname">auto <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::map </td>
           <td>(</td>
           <td class="paramtype">F&#160;</td>
           <td class="paramname"><em>f</em></td><td>)</td>
@@ -623,6 +634,68 @@ template&lt;typename F &gt; </div>
 
 </div>
 </div>
+<a id="a75b4b985702f43dc427544aae4c94f6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75b4b985702f43dc427544aae4c94f6d">&#9670;&nbsp;</a></span>toLeft()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A&gt; </div>
+<div class="memtemplate">
+template&lt;class Right &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt;A, Right&gt; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::toLeft </td>
+          <td>(</td>
+          <td class="paramtype">const Right &amp;&#160;</td>
+          <td class="paramname"><em>right</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">ma::Either</a> containing either the stored value or the argument. </dd></dl>
+
+</div>
+</div>
+<a id="ad8d2da161d6e37f0efb11e150aea8925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8d2da161d6e37f0efb11e150aea8925">&#9670;&nbsp;</a></span>toRight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A&gt; </div>
+<div class="memtemplate">
+template&lt;class Left &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt;Left, A&gt; <a class="el" href="group__Maybe.html#classma_1_1Maybe">ma::Maybe</a>&lt; A &gt;::toRight </td>
+          <td>(</td>
+          <td class="paramtype">const Left &amp;&#160;</td>
+          <td class="paramname"><em>left</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">ma::Either</a> containing either the stored value or the argument. </dd></dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -637,8 +710,8 @@ template&lt;typename F &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><h3>template&lt;typename A, template&lt; class &gt; class impl&gt;<br />
-class ma::MaybeIterator&lt; A, impl &gt;</h3>
+<div class="textblock"><h3>template&lt;typename A&gt;<br />
+class ma::MaybeIterator&lt; A &gt;</h3>
 
 <p>Iterator over <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a>. </p>
 <p>Allows mutable access to value contained. If the <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a> instance from which the iterator was created contains a value, the loop body is executed.</p>
@@ -646,34 +719,34 @@ class ma::MaybeIterator&lt; A, impl &gt;</h3>
 <div class="fragment"><div class="line">Maybe&lt;A&gt; Ma;</div><div class="line">[...]</div><div class="line"><span class="keywordflow">for</span> (A&amp; a: Ma) {</div><div class="line"> <span class="comment">// use `a`</span></div><div class="line">}</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator" title="Immutable Iterator over Maybe. ">ConstMaybeIterator</a> </dd></dl>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Public Types</h3></td></tr>
-<tr class="memitem:a1b674b16e02ed2b6d1da5c733410b395"><td class="memItemLeft" align="right" valign="top"><a id="a1b674b16e02ed2b6d1da5c733410b395"></a>
+<tr class="memitem:a52ea031378b37094530bffb5ee73d533"><td class="memItemLeft" align="right" valign="top"><a id="a52ea031378b37094530bffb5ee73d533"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = A</td></tr>
-<tr class="separator:a1b674b16e02ed2b6d1da5c733410b395"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6121e5f164165278491acba11095b56c"><td class="memItemLeft" align="right" valign="top"><a id="a6121e5f164165278491acba11095b56c"></a>
+<tr class="separator:a52ea031378b37094530bffb5ee73d533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af08e08ef28d772dff8e9f5bb98ed6211"><td class="memItemLeft" align="right" valign="top"><a id="af08e08ef28d772dff8e9f5bb98ed6211"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = A &amp;</td></tr>
-<tr class="separator:a6121e5f164165278491acba11095b56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5453e4310f8b4a6ececac16c4f3f2b3"><td class="memItemLeft" align="right" valign="top"><a id="ab5453e4310f8b4a6ececac16c4f3f2b3"></a>
+<tr class="separator:af08e08ef28d772dff8e9f5bb98ed6211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a477e9332a05334076ff7229270eb3a19"><td class="memItemLeft" align="right" valign="top"><a id="a477e9332a05334076ff7229270eb3a19"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b> = A *</td></tr>
-<tr class="separator:ab5453e4310f8b4a6ececac16c4f3f2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a477e9332a05334076ff7229270eb3a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
-<tr class="memitem:a8abf8f520e55976f079a9f32165e385a"><td class="memItemLeft" align="right" valign="top"><a id="a8abf8f520e55976f079a9f32165e385a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MaybeIterator</b> (<a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; A, impl &gt; &amp;Ma, bool start)</td></tr>
-<tr class="separator:a8abf8f520e55976f079a9f32165e385a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7248801a8af21d89778c8825b8d8b2bd"><td class="memItemLeft" align="right" valign="top"><a id="a7248801a8af21d89778c8825b8d8b2bd"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a>&lt; A, impl &gt; &amp;other)</td></tr>
-<tr class="separator:a7248801a8af21d89778c8825b8d8b2bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ca146e0037ffd0972c0fce72a8577be"><td class="memItemLeft" align="right" valign="top"><a id="a1ca146e0037ffd0972c0fce72a8577be"></a>
+<tr class="memitem:acf29b22f4bf6346e0153b4b3c295daf2"><td class="memItemLeft" align="right" valign="top"><a id="acf29b22f4bf6346e0153b4b3c295daf2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MaybeIterator</b> (<a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; A &gt; &amp;Ma, bool start)</td></tr>
+<tr class="separator:acf29b22f4bf6346e0153b4b3c295daf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af176df5e6c8216d882bbd04e8c9c8e77"><td class="memItemLeft" align="right" valign="top"><a id="af176df5e6c8216d882bbd04e8c9c8e77"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a>&lt; A &gt; &amp;other)</td></tr>
+<tr class="separator:af176df5e6c8216d882bbd04e8c9c8e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a8807c078c3c0067f34c76346ad8d1c"><td class="memItemLeft" align="right" valign="top"><a id="a5a8807c078c3c0067f34c76346ad8d1c"></a>
 reference&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> ()</td></tr>
-<tr class="separator:a1ca146e0037ffd0972c0fce72a8577be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a408917c6e1fb59b107ecd1f0b1557a9b"><td class="memItemLeft" align="right" valign="top"><a id="a408917c6e1fb59b107ecd1f0b1557a9b"></a>
+<tr class="separator:a5a8807c078c3c0067f34c76346ad8d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab835c3a3d2972e59370009370efb7d94"><td class="memItemLeft" align="right" valign="top"><a id="ab835c3a3d2972e59370009370efb7d94"></a>
 pointer&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> ()</td></tr>
-<tr class="separator:a408917c6e1fb59b107ecd1f0b1557a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba97e170f9461d3d88cf984be8a376a"><td class="memItemLeft" align="right" valign="top"><a id="a0ba97e170f9461d3d88cf984be8a376a"></a>
+<tr class="separator:ab835c3a3d2972e59370009370efb7d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf92a6b50bccc7c38b332a5317d079c2"><td class="memItemLeft" align="right" valign="top"><a id="acf92a6b50bccc7c38b332a5317d079c2"></a>
 <a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> ()</td></tr>
-<tr class="separator:a0ba97e170f9461d3d88cf984be8a376a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d0dd58750fcb93fb0dbf0ccd9de9434"><td class="memItemLeft" align="right" valign="top"><a id="a4d0dd58750fcb93fb0dbf0ccd9de9434"></a>
+<tr class="separator:acf92a6b50bccc7c38b332a5317d079c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af23388be133285f8db507d7474e5c409"><td class="memItemLeft" align="right" valign="top"><a id="af23388be133285f8db507d7474e5c409"></a>
 <a class="el" href="group__Maybe.html#classma_1_1MaybeIterator">MaybeIterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> (int)</td></tr>
-<tr class="separator:a4d0dd58750fcb93fb0dbf0ccd9de9434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:af23388be133285f8db507d7474e5c409"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -689,41 +762,41 @@ pointer&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> 
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><h3>template&lt;typename A, template&lt; class &gt; class impl&gt;<br />
-class ma::ConstMaybeIterator&lt; A, impl &gt;</h3>
+<div class="textblock"><h3>template&lt;typename A&gt;<br />
+class ma::ConstMaybeIterator&lt; A &gt;</h3>
 
 <p>Immutable Iterator over <a class="el" href="group__Maybe.html#classma_1_1Maybe" title="Maybe monad. ">Maybe</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__Maybe.html#classma_1_1MaybeIterator" title="Iterator over Maybe. ">MaybeIterator</a> </dd></dl>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Public Types</h3></td></tr>
-<tr class="memitem:aef96d4ceb0c93f042ab1ed313bf7c4ef"><td class="memItemLeft" align="right" valign="top"><a id="aef96d4ceb0c93f042ab1ed313bf7c4ef"></a>
+<tr class="memitem:a3fbee71ce11bc0e252ec443758f7737b"><td class="memItemLeft" align="right" valign="top"><a id="a3fbee71ce11bc0e252ec443758f7737b"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = const A</td></tr>
-<tr class="separator:aef96d4ceb0c93f042ab1ed313bf7c4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977b779e4776266cf09d4ebd3deaf644"><td class="memItemLeft" align="right" valign="top"><a id="a977b779e4776266cf09d4ebd3deaf644"></a>
+<tr class="separator:a3fbee71ce11bc0e252ec443758f7737b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e85e64136c26af7299674d58fa923e"><td class="memItemLeft" align="right" valign="top"><a id="a64e85e64136c26af7299674d58fa923e"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = const A &amp;</td></tr>
-<tr class="separator:a977b779e4776266cf09d4ebd3deaf644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a812bf6c936b048638aaeb7611dd9503e"><td class="memItemLeft" align="right" valign="top"><a id="a812bf6c936b048638aaeb7611dd9503e"></a>
+<tr class="separator:a64e85e64136c26af7299674d58fa923e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b73356791adae3be8f972a0b0f9e0a1"><td class="memItemLeft" align="right" valign="top"><a id="a6b73356791adae3be8f972a0b0f9e0a1"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b> = const A *</td></tr>
-<tr class="separator:a812bf6c936b048638aaeb7611dd9503e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a6b73356791adae3be8f972a0b0f9e0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
-<tr class="memitem:afce0d14b8bd23d8b2c1f3ab7d48da488"><td class="memItemLeft" align="right" valign="top"><a id="afce0d14b8bd23d8b2c1f3ab7d48da488"></a>
+<tr class="memitem:a718350bff4c9294c7aea3878ff0ad3fe"><td class="memItemLeft" align="right" valign="top"><a id="a718350bff4c9294c7aea3878ff0ad3fe"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ConstMaybeIterator</b> (const <a class="el" href="group__Maybe.html#classma_1_1Maybe">Maybe</a>&lt; A &gt; &amp;Ma, bool start)</td></tr>
-<tr class="separator:afce0d14b8bd23d8b2c1f3ab7d48da488"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1ace1463b30ba8fc519e2d1ff92f422"><td class="memItemLeft" align="right" valign="top"><a id="ac1ace1463b30ba8fc519e2d1ff92f422"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A, impl &gt; &amp;other)</td></tr>
-<tr class="separator:ac1ace1463b30ba8fc519e2d1ff92f422"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e44eb04d1283c4532b0e760352fa6d7"><td class="memItemLeft" align="right" valign="top"><a id="a0e44eb04d1283c4532b0e760352fa6d7"></a>
+<tr class="separator:a718350bff4c9294c7aea3878ff0ad3fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65bf3768a0a18100fd7bae66deba2632"><td class="memItemLeft" align="right" valign="top"><a id="a65bf3768a0a18100fd7bae66deba2632"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a>&lt; A &gt; &amp;other)</td></tr>
+<tr class="separator:a65bf3768a0a18100fd7bae66deba2632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2315026fc84fde67a44d767fa9a87783"><td class="memItemLeft" align="right" valign="top"><a id="a2315026fc84fde67a44d767fa9a87783"></a>
 reference&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> ()</td></tr>
-<tr class="separator:a0e44eb04d1283c4532b0e760352fa6d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e922b29c04504e269e9b6a9e03a46e4"><td class="memItemLeft" align="right" valign="top"><a id="a0e922b29c04504e269e9b6a9e03a46e4"></a>
+<tr class="separator:a2315026fc84fde67a44d767fa9a87783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26724e7b83be421512f475523fcd74cf"><td class="memItemLeft" align="right" valign="top"><a id="a26724e7b83be421512f475523fcd74cf"></a>
 pointer&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> ()</td></tr>
-<tr class="separator:a0e922b29c04504e269e9b6a9e03a46e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38f50a7bf401587a905e8ccfdd92b0e5"><td class="memItemLeft" align="right" valign="top"><a id="a38f50a7bf401587a905e8ccfdd92b0e5"></a>
+<tr class="separator:a26724e7b83be421512f475523fcd74cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adce1bc3b7d2a41cafc2b13c6b3935659"><td class="memItemLeft" align="right" valign="top"><a id="adce1bc3b7d2a41cafc2b13c6b3935659"></a>
 <a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> ()</td></tr>
-<tr class="separator:a38f50a7bf401587a905e8ccfdd92b0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f737c749ea5a67770c06c354ea1f14f"><td class="memItemLeft" align="right" valign="top"><a id="a0f737c749ea5a67770c06c354ea1f14f"></a>
+<tr class="separator:adce1bc3b7d2a41cafc2b13c6b3935659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fcc6155bf9ac39db245bdb4f3394e4e"><td class="memItemLeft" align="right" valign="top"><a id="a9fcc6155bf9ac39db245bdb4f3394e4e"></a>
 <a class="el" href="group__Maybe.html#classma_1_1ConstMaybeIterator">ConstMaybeIterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> (int)</td></tr>
-<tr class="separator:a0f737c749ea5a67770c06c354ea1f14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a9fcc6155bf9ac39db245bdb4f3394e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
