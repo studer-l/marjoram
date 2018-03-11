@@ -129,3 +129,12 @@ TEST(Either, RightRecover) {
   std::string out = Mi.recover([](int i) { return std::to_string(i); });
   ASSERT_EQ(out, "deadbeef");
 }
+
+TEST(Either, Contains) {
+  ma::Either<int, int> DefaultFail(LeftEither, 8);
+  ASSERT_FALSE(DefaultFail.contains(8));
+
+  ma::Either<int, std::string> Compares(RightEither, "42");
+  ASSERT_FALSE(Compares.contains("some other string"));
+  ASSERT_TRUE(Compares.contains("42"));
+}
