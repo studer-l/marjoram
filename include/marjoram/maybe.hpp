@@ -1,5 +1,6 @@
 #pragma once
 
+#include "either.hpp"
 #include <boost/optional/optional.hpp>
 #include <type_traits>
 #include <utility>
@@ -7,6 +8,7 @@
 namespace ma {
 template <typename A> class MaybeIterator;
 template <typename A> class ConstMaybeIterator;
+template <typename A, typename B> class Either;
 /**
  * @defgroup Maybe Maybe
  * @addtogroup Maybe
@@ -180,6 +182,36 @@ template <typename A> class Maybe {
       return Maybe<std::result_of_t<F(A)>>((f(std::move(get()))));
     }
     return Nothing;
+  }
+
+  /**
+   * @return true iff this maybe instance contains an `a1` that compares true to
+   * `a1`, that is, `a1 == a2`.
+   */
+  bool contains(const A& a1) const {
+    return flatMap([&a1](const A& a2) { return a1 == a2; }).getOrElse(false);
+  }
+
+  /**
+   * @return ma::Either containing either the stored value or the argument.
+   */
+  template <class Left> Either<Left, A> toRight(const Left& left) const {
+    using Either = Either<Left, A>;
+    if (isJust()) {
+      return Either(RightEither, get());
+    }
+    return Either(LeftEither, left);
+  }
+
+  /**
+   * @return ma::Either containing either the stored value or the argument.
+   */
+  template <class Right> Either<A, Right> toLeft(const Right& right) const {
+    using Either = Either<A, Right>;
+    if (isJust()) {
+      return Either(LeftEither, get());
+    }
+    return Either(RightEither, right);
   }
 
   /**

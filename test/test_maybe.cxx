@@ -223,3 +223,31 @@ TEST(Maybe, CopyCtor) {
   ma::Maybe<std::string> Ms("hi");
   ma::Maybe<std::string> copy = Ms;
 }
+
+TEST(Maybe, toRight_Happycase) {
+  ma::Maybe<int> Ma(42);
+  ma::Either<std::string, int> E = Ma.toRight(std::string("wat"));
+  ASSERT_TRUE(E.isRight());
+  ASSERT_EQ(E.asRight(), 42);
+}
+
+TEST(Maybe, toRight_Failcase) {
+  ma::Maybe<int> Ma = ma::Nothing;
+  auto E = Ma.toRight(std::string("wat"));
+  ASSERT_TRUE(E.isLeft());
+  ASSERT_EQ(E.asLeft(), std::string("wat"));
+}
+
+TEST(Maybe, toLeft_Happycase) {
+  ma::Maybe<int> Ma(42);
+  ma::Either<int, std::string> E = Ma.toLeft(std::string("wat"));
+  ASSERT_TRUE(E.isLeft());
+  ASSERT_EQ(E.asLeft(), 42);
+}
+
+TEST(Maybe, toLeft_Failcase) {
+  ma::Maybe<int> Ma = ma::Nothing;
+  auto E = Ma.toLeft(std::string("wat"));
+  ASSERT_TRUE(E.isRight());
+  ASSERT_EQ(E.asRight(), std::string("wat"));
+}

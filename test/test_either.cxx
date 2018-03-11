@@ -115,3 +115,17 @@ TEST(Either, Ctors) {
   Either<std::string, int> Ei2 = Ei;
   Either<std::string, int> Ei3 = std::move(Ei);
 }
+
+TEST(Either, LeftRecover) {
+  ma::Either<std::string, int> Mi(LeftEither, "deadbeef");
+  ASSERT_TRUE(Mi.isLeft());
+  auto len = Mi.recover([](const std::string& str) { return str.length(); });
+  ASSERT_EQ(len, 8);
+}
+
+TEST(Either, RightRecover) {
+  ma::Either<int, std::string> Mi(RightEither, "deadbeef");
+  ASSERT_TRUE(Mi.isRight());
+  std::string out = Mi.recover([](int i) { return std::to_string(i); });
+  ASSERT_EQ(out, "deadbeef");
+}
