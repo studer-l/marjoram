@@ -2,8 +2,8 @@
 #include "marjoram/maybe.hpp"
 #include "gtest/gtest.h"
 
-using ma::Maybe;
 using ma::Just;
+using ma::Maybe;
 using ma::Nothing;
 
 TEST(Maybe, flatMap) {
@@ -91,6 +91,13 @@ TEST(Maybe, NoCopyType) {
   auto maybeNeedy =
       nc3.flatMap([](NoCopy_t&& ncc) { return Just(Needy_t(std::move(ncc))); });
   ASSERT_EQ(NoCopy_t::newCount, 3LU);
+}
+
+TEST(Maybe, MoveCtors) {
+  /* compile time test */
+  auto nc = NoCopy_t();
+  ma::Maybe<NoCopy_t> Mnc(std::move(nc));
+  ma::Maybe<NoCopy_t> Mnc2 = std::move(Mnc);
 }
 
 TEST(Maybe, For) {
@@ -188,9 +195,7 @@ TEST(Maybe, AdvancedFor) {
 
 struct DangleTest {
   static int dtorCount;
-  ~DangleTest() {
-    dtorCount++;
-  }
+  ~DangleTest() { dtorCount++; }
   DangleTest() = default;
 };
 int DangleTest::dtorCount = 0;
@@ -203,7 +208,6 @@ TEST(Maybe, getOrElseDangle1) {
   ASSERT_EQ(DangleTest::dtorCount, 0);
 }
 
-
 const DangleTest& wrong_usage() {
   Maybe<DangleTest> Ms = Nothing;
   return Ms.getOrElse(DangleTest());
@@ -211,8 +215,41 @@ const DangleTest& wrong_usage() {
 
 TEST(Maybe, getOrElseDangle2) {
   DangleTest::dtorCount = 0;
-  const DangleTest& dt = wrong_usage();
-  ASSERT_EQ(DangleTest::dtorCount, 1); // dt dangles
+  wrong_usage();
+  ASSERT_EQ(DangleTest::dtorCount, 1);  // dt dangles
+}
+
+TEST(Maybe, CopyCtor) {
+  ma::Maybe<std::string> Ms("hi");
+  ma::Maybe<std::string> copy = Ms;
+}
+
+TEST(Maybe, toRight_Happycase) {
+  ma::Maybe<int> Ma(42);
+  ma::Either<std::string, int> E = Ma.toRight(std::string("wat"));
+  ASSERT_TRUE(E.isRight());
+  ASSERT_EQ(E.asRight(), 42);
+}
+
+TEST(Maybe, toRight_Failcase) {
+  ma::Maybe<int> Ma = ma::Nothing;
+  auto E = Ma.toRight(std::string("wat"));
+  ASSERT_TRUE(E.isLeft());
+  ASSERT_EQ(E.asLeft(), std::string("wat"));
+}
+
+TEST(Maybe, toLeft_Happycase) {
+  ma::Maybe<int> Ma(42);
+  ma::Either<int, std::string> E = Ma.toLeft(std::string("wat"));
+  ASSERT_TRUE(E.isLeft());
+  ASSERT_EQ(E.asLeft(), 42);
+}
+
+TEST(Maybe, toLeft_Failcase) {
+  ma::Maybe<int> Ma = ma::Nothing;
+  auto E = Ma.toLeft(std::string("wat"));
+  ASSERT_TRUE(E.isRight());
+  ASSERT_EQ(E.asRight(), std::string("wat"));
 }
 
 TEST(Maybe, ToVector) {

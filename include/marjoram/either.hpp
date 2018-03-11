@@ -32,7 +32,8 @@ namespace ma {
  *
  * ~~~
  * Either<std::string, Widget> emw = requestWidget(14.2, 3);
- * Either<std::string, BetterWidget> morphed = emw.map([](Widget& w) { return  refine(w); });
+ * Either<std::string, BetterWidget> morphed =
+ *            emw.map([](Widget& w) { return refine(w); });
  * ~~~
  *
  */
@@ -41,7 +42,7 @@ template <typename A, typename B> class EitherIterator;
 template <typename A, typename B> class ConstEitherIterator;
 
 /**
- * Either monad
+ * Either monad.
  *
  * Disjoint union of two types.
  *
@@ -265,6 +266,28 @@ class Either : private detail::EitherImpl<A, B> {
       return Just(asRight());
     }
     return Nothing;
+  }
+
+  /**
+   * @return True if contains a `B` value that compares equal to argument `b`.
+   */
+  bool contains(const B& b) {
+    if (isRight()) {
+      return asRight() == b;
+    }
+    return false;
+  }
+
+  /**
+   * @param Fa Function object. `F::operator()` when called with `A` value has
+   * return type `B`.
+   * @return Right value if contained, otherwise result of applying `Fa` to `a`.
+   */
+  template <typename Fa> B recover(Fa fa) const {
+    if (isRight()) {
+      return asRight();
+    }
+    return fa(asLeft());
   }
 
   EitherIterator<A, B> begin() { return {*this, true}; }

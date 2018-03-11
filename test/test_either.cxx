@@ -109,3 +109,32 @@ TEST(Either, uniqueptr) {
   auto ei1 = Either<std::unique_ptr<int>, int>(RightEither, 5);
   auto ei2 = Either<int, std::unique_ptr<int>>(LeftEither, 5);
 }
+
+TEST(Either, Ctors) {
+  Either<std::string, int> Ei(42);
+  Either<std::string, int> Ei2 = Ei;
+  Either<std::string, int> Ei3 = std::move(Ei);
+}
+
+TEST(Either, LeftRecover) {
+  ma::Either<std::string, int> Mi(LeftEither, "deadbeef");
+  ASSERT_TRUE(Mi.isLeft());
+  auto len = Mi.recover([](const std::string& str) { return str.length(); });
+  ASSERT_EQ(len, 8);
+}
+
+TEST(Either, RightRecover) {
+  ma::Either<int, std::string> Mi(RightEither, "deadbeef");
+  ASSERT_TRUE(Mi.isRight());
+  std::string out = Mi.recover([](int i) { return std::to_string(i); });
+  ASSERT_EQ(out, "deadbeef");
+}
+
+TEST(Either, Contains) {
+  ma::Either<int, int> DefaultFail(LeftEither, 8);
+  ASSERT_FALSE(DefaultFail.contains(8));
+
+  ma::Either<int, std::string> Compares(RightEither, "42");
+  ASSERT_FALSE(Compares.contains("some other string"));
+  ASSERT_TRUE(Compares.contains("42"));
+}

@@ -82,8 +82,8 @@ template <typename A> class Lazy {
    * @param f Function that will be called exactly once when `get` is called
    * the first time.
    */
-  Lazy(std::function<A()> f) : impl(LeftEither, f) {}
-  Lazy(const A& a) : impl(RightEither, a) {}
+  explicit Lazy(std::function<A()> f) : impl(LeftEither, f) {}
+  explicit Lazy(const A& a) : impl(RightEither, a) {}
 
   Lazy(const Lazy&) = default;
   Lazy& operator=(const Lazy&) = default;
