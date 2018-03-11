@@ -13,7 +13,7 @@ nuke_build_dir() {
 
 sanitizer_build() {
   nuke_build_dir
-  # Build with address and undefinedb behavior sanitizer
+  # Build with address and undefined behavior sanitizer
   export CXX=clang++
   cmake -DSANITIZE_ADDRESS=ON -DSANITIZE_UNDEFINED=ON /marjoram
   make testrun
