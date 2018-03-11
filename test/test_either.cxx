@@ -110,10 +110,46 @@ TEST(Either, uniqueptr) {
   auto ei2 = Either<int, std::unique_ptr<int>>(LeftEither, 5);
 }
 
-TEST(Either, Ctors) {
+TEST(Either, RightCtors) {
+  /* copy  assign*/
   Either<std::string, int> Ei(42);
-  Either<std::string, int> Ei2 = Ei;
-  Either<std::string, int> Ei3 = std::move(Ei);
+  Either<std::string, int> Ei2(1337);
+  Ei2 = Ei;
+  ASSERT_EQ(Ei2.asRight(), 42);
+
+  /* copy */
+  Either<std::string, int> Ei3{Ei};
+  ASSERT_EQ(Ei3.asRight(), 42);
+
+  /* move assign */
+  Either<std::string, int> Ei4(89);
+  Ei4 = std::move(Ei);
+  ASSERT_EQ(Ei3.asRight(), 42);
+
+  /* move */
+  Either<std::string, int> Ei5{std::move(Ei2)};
+  ASSERT_EQ(Ei3.asRight(), 42);
+}
+
+TEST(Either, LeftCtors) {
+  /* copy  assign*/
+  Either<int, std::string> Ei(42);
+  Either<int, std::string> Ei2(1337);
+  Ei2 = Ei;
+  ASSERT_EQ(Ei2.asLeft(), 42);
+
+  /* copy */
+  Either<int, std::string> Ei3{Ei};
+  ASSERT_EQ(Ei3.asLeft(), 42);
+
+  /* move assign */
+  Either<int, std::string> Ei4(89);
+  Ei4 = std::move(Ei);
+  ASSERT_EQ(Ei3.asLeft(), 42);
+
+  /* move */
+  Either<int, std::string> Ei5{std::move(Ei2)};
+  ASSERT_EQ(Ei3.asLeft(), 42);
 }
 
 TEST(Either, LeftRecover) {
