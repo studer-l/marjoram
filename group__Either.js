@@ -1,6 +1,8 @@
 var group__Either =
 [
     [ "EitherIterator", "group__Either.html#classma_1_1EitherIterator", [
+      [ "difference_type", "group__Either.html#a6b5a3c69338cd2832ab036933ba8ba7c", null ],
+      [ "iterator_category", "group__Either.html#a94c84ae94b578bb23c19bd292c36ffca", null ],
       [ "pointer", "group__Either.html#a22a51c5604f6610c2a71a1053aff1dcb", null ],
       [ "reference", "group__Either.html#ab4165dfd41382dd37761545b60cf5093", null ],
       [ "value_type", "group__Either.html#ae29ec8ee150bd933656392fa33cfbf36", null ],
@@ -12,6 +14,8 @@ var group__Either =
       [ "operator->", "group__Either.html#a0d1445a34399cb8808b4991f0fc3c1cb", null ]
     ] ],
     [ "ConstEitherIterator", "group__Either.html#classma_1_1ConstEitherIterator", [
+      [ "difference_type", "group__Either.html#aa4ae7cd5073330df41f0b37a370c19b6", null ],
+      [ "iterator_category", "group__Either.html#a4ae9c94860d2e450d7a5142d9cb5aadc", null ],
       [ "pointer", "group__Either.html#a2e703b7d2ae0ad728d7a174a356d7573", null ],
       [ "reference", "group__Either.html#a16ec140b699bc76fb0eccac7ebc5814f", null ],
       [ "value_type", "group__Either.html#ac058e3208f9cef9a1ba74ad89605417e", null ],

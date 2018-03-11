@@ -1,5 +1,7 @@
 var group__Either_classma_1_1EitherIterator =
 [
+    [ "difference_type", "group__Either.html#a6b5a3c69338cd2832ab036933ba8ba7c", null ],
+    [ "iterator_category", "group__Either.html#a94c84ae94b578bb23c19bd292c36ffca", null ],
     [ "pointer", "group__Either.html#a22a51c5604f6610c2a71a1053aff1dcb", null ],
     [ "reference", "group__Either.html#ab4165dfd41382dd37761545b60cf5093", null ],
     [ "value_type", "group__Either.html#ae29ec8ee150bd933656392fa33cfbf36", null ],

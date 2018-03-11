@@ -1,5 +1,7 @@
 var group__Lazy_classma_1_1LazyIterator =
 [
+    [ "difference_type", "group__Lazy.html#af2405fbbfb325a323caec43de8b2f802", null ],
+    [ "iterator_category", "group__Lazy.html#ac0f0b0e90133e5808d23ed83285ef2d0", null ],
     [ "pointer", "group__Lazy.html#a78b36426096578f66e432727592414e1", null ],
     [ "reference", "group__Lazy.html#a719d3c9062ea196bfe8508078de0952c", null ],
     [ "value_type", "group__Lazy.html#a1150574b9fe24ea16887f77222c57c1e", null ],

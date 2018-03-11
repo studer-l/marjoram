@@ -1,5 +1,7 @@
 var group__Maybe_classma_1_1MaybeIterator =
 [
+    [ "difference_type", "group__Maybe.html#aea1fd61568de3852cf7e77e5f37dbf8d", null ],
+    [ "iterator_category", "group__Maybe.html#a99244985310ce08d4f26792d96fd9f0e", null ],
     [ "pointer", "group__Maybe.html#a477e9332a05334076ff7229270eb3a19", null ],
     [ "reference", "group__Maybe.html#af08e08ef28d772dff8e9f5bb98ed6211", null ],
     [ "value_type", "group__Maybe.html#a52ea031378b37094530bffb5ee73d533", null ],
