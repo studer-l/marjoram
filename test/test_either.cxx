@@ -109,3 +109,9 @@ TEST(Either, uniqueptr) {
   auto ei1 = Either<std::unique_ptr<int>, int>(RightEither, 5);
   auto ei2 = Either<int, std::unique_ptr<int>>(LeftEither, 5);
 }
+
+TEST(Either, Ctors) {
+  Either<std::string, int> Ei(42);
+  Either<std::string, int> Ei2 = Ei;
+  Either<std::string, int> Ei3 = std::move(Ei);
+}
