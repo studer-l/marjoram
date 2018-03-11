@@ -15,7 +15,6 @@ Modules
 Marjoram provides several convenient templates, mainly:
 
 * [Maybe](@ref Maybe)
-* [MaybeNull](@ref MaybeNull)
 * [Either](@ref Either)
 * [Lazy](@ref Lazy)
 * [Reader](@ref Reader)
