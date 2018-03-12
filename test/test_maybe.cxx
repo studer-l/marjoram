@@ -1,4 +1,3 @@
-#include "marjoram/either.hpp"
 #include "marjoram/maybe.hpp"
 #include "gtest/gtest.h"
 
@@ -255,6 +254,11 @@ TEST(Maybe, toLeft_Failcase) {
 TEST(Maybe, ToVector) {
   Maybe<float> MbF = ma::Just(42.0f);
   std::vector<float> v(MbF.begin(), MbF.end());
-  //ASSERT_EQ(v.size(), 1);
-  //ASSERT_EQ(v[0], 42.0f);
+  ASSERT_EQ(v.size(), 1LU);
+  ASSERT_EQ(v[0], 42.0f);
+}
+
+TEST(Maybe, Assign) {
+  ma::Maybe<std::pair<int, int>> idx;
+  idx = ma::Just(std::make_pair(2, 4));
 }

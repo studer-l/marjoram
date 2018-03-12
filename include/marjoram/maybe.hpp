@@ -1,6 +1,7 @@
 #pragma once
 
 #include "either.hpp"
+#include "nothing.hpp"
 #include <boost/optional/optional.hpp>
 #include <type_traits>
 #include <utility>
@@ -50,18 +51,6 @@ template <typename A, typename B> class Either;
  */
 
 /**
- * Convertible to any kind of (empty) Maybe object.
- */
-struct Nothing_t {
-  Nothing_t() {}
-};
-
-/**
- * Convenience constant.
- */
-static const Nothing_t Nothing;
-
-/**
  * Maybe monad.
  *
  * May contain a value or Nothing.
@@ -107,6 +96,9 @@ template <typename A> class Maybe {
    * Move Maybe instance.
    */
   Maybe(Maybe<A>&& Ma) = default;
+
+  Maybe<A>& operator=(const Maybe<A>& Ma) = default;
+  Maybe<A>& operator=(Maybe<A>&& Ma) = default;
 
   /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
@@ -185,11 +177,11 @@ template <typename A> class Maybe {
   }
 
   /**
-   * @return true iff this maybe instance contains an `a1` that compares true to
-   * `a1`, that is, `a1 == a2`.
+   * @return true iff this maybe instance contains a value that compares true
+   * to `b`.
    */
-  bool contains(const A& a1) const {
-    return flatMap([&a1](const A& a2) { return a1 == a2; }).getOrElse(false);
+  template <typename B> bool contains(const B& b) const {
+    return flatMap([&b](const A& a) { return a == b; }).getOrElse(false);
   }
 
   /**

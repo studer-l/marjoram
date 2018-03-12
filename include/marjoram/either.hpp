@@ -4,6 +4,7 @@
 #include <type_traits>
 
 #include "eitherImpl.hpp"
+#include "nothing.hpp"
 #include "maybe.hpp"
 
 namespace ma {
@@ -40,6 +41,7 @@ namespace ma {
 
 template <typename A, typename B> class EitherIterator;
 template <typename A, typename B> class ConstEitherIterator;
+template <typename A> class Maybe;
 
 /**
  * Either monad.
@@ -265,15 +267,15 @@ class Either : private detail::EitherImpl<A, B> {
     if (isRight()) {
       return Just(asRight());
     }
-    return Nothing;
+    return ma::Nothing;
   }
 
   /**
    * @return True if contains a `B` value that compares equal to argument `b`.
    */
-  bool contains(const B& b) {
+  template <typename C> bool contains(const C& c) {
     if (isRight()) {
-      return asRight() == b;
+      return asRight() == c;
     }
     return false;
   }
