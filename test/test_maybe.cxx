@@ -202,7 +202,7 @@ int DangleTest::dtorCount = 0;
 TEST(Maybe, getOrElseDangle1) {
   Maybe<DangleTest> Ms = Nothing;
   DangleTest probe;
-  DangleTest& ref = Ms.getOrElse(probe);
+  const DangleTest& ref = Ms.getOrElse(probe);
   ASSERT_EQ(&ref, &probe);
   ASSERT_EQ(DangleTest::dtorCount, 0);
 }
@@ -261,4 +261,14 @@ TEST(Maybe, ToVector) {
 TEST(Maybe, Assign) {
   ma::Maybe<std::pair<int, int>> idx;
   idx = ma::Just(std::make_pair(2, 4));
+}
+
+TEST(Maybe, exists) {
+  ma::Maybe<int> justfive = ma::Just(5);
+  ASSERT_TRUE(justfive.exists([](int i) { return i > 0; }));
+  ASSERT_FALSE(justfive.exists([](int i) { return i % 5; }));
+
+  ma::Maybe<int> notfive = ma::Nothing;
+  ASSERT_FALSE(notfive.exists([](int i) { return !(i % 2); }));
+  ASSERT_FALSE(notfive.exists([](int i) { return i % 2; }));
 }

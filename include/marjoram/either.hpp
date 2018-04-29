@@ -4,8 +4,8 @@
 #include <type_traits>
 
 #include "eitherImpl.hpp"
-#include "nothing.hpp"
 #include "maybe.hpp"
+#include "nothing.hpp"
 
 namespace ma {
 /**
@@ -249,6 +249,27 @@ class Either : private detail::EitherImpl<A, B> {
   }
 
   /**
+   * If right sided either, return result of applying predicate on right.
+   * Otherwise return false.
+   *
+   * @param pred Function object, when called with argument of type `A` must
+   * return bool convertible.
+   */
+  template <class Predicate> bool exists(Predicate pred) const {
+    return fold([](const auto&) { return false; }, pred);
+  }
+
+  /**
+   * Returns contained right value or given default value.
+   */
+  const B& getOrElse(const B& dflt) {
+    if (isRight()) {
+      return asRight();
+    }
+    return dflt;
+  }
+
+  /**
    * Swaps left and right, preserving the stored value.
    * @return Copy of this either instance with A and B mirrored.
    */
@@ -290,6 +311,19 @@ class Either : private detail::EitherImpl<A, B> {
       return asRight();
     }
     return fa(asLeft());
+  }
+
+  /**
+   * If both left and right have the same type, allows merging to common type.
+   * The purpose of the template argument `Dummy` is to allow SFINAE.
+   */
+  template <class Dummy = A>
+  auto merge() const ->
+      typename std::enable_if<std::is_same<A, B>::value, const Dummy&>::type {
+    if (isRight()) {
+      return asRight();
+    }
+    return asLeft();
   }
 
   EitherIterator<A, B> begin() { return {*this, true}; }

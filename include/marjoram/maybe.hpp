@@ -236,13 +236,17 @@ template <typename A> class Maybe {
    * If this object contains a value, returns it. Otherwise returns `dflt`.
    * @return reference to contained value.
    */
-  A& getOrElse(A& dflt) { return isJust() ? get() : dflt; }
+  const A& getOrElse(const A& dflt) const { return isJust() ? get() : dflt; }
 
   /**
-   * If this object contains a value, returns it. Otherwise returns `dflt`.
-   * @return reference to contained value.
+   * Return result of applying predicate to stored value if there is one, false
+   * otherwise.
+   *
+   * @param pred Callable with `const A&`, returns bool convertible.
    */
-  const A& getOrElse(const A& dflt) const { return isJust() ? get() : dflt; }
+  template <class Predicate> bool exists(Predicate pred) const {
+    return map(pred).getOrElse(false);
+  }
 
   MaybeIterator<A> begin() { return {*this, true}; }
   ConstMaybeIterator<A> begin() const { return {*this, true}; }
