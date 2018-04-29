@@ -174,3 +174,32 @@ TEST(Either, Contains) {
   ASSERT_FALSE(Compares.contains("some other string"));
   ASSERT_TRUE(Compares.contains("42"));
 }
+
+TEST(Either, Merge) {
+  ma::Either<std::string, std::string> ss(LeftEither, "test");
+  ASSERT_EQ(ss.merge(), "test");
+
+  ma::Either<std::string, std::string> ss2(RightEither, "test2");
+  ASSERT_EQ(ss2.merge(), "test2");
+
+  ma::Either<std::string, int> si(LeftEither, "test");
+  // ss3.merge();  // does not compile
+}
+
+TEST(Either, exists) {
+  ma::Either<int, std::string> Eis(RightEither, "test");
+  ASSERT_TRUE(Eis.exists([](const std::string& s) { return s.length() > 3; }));
+  ASSERT_FALSE(Eis.exists([](const std::string& s) { return s.empty(); }));
+
+  ma::Either<int, std::string> Eis2(LeftEither, 5);
+  ASSERT_FALSE(Eis2.exists([](const std::string& s) { return s.length() > 3; }));
+  ASSERT_FALSE(Eis2.exists([](const std::string& s) { return s.empty(); }));
+}
+
+TEST(EIther, getOrElse) {
+  ma::Either<int, std::string> Eis(RightEither, "test");
+  ma::Either<int, std::string> Eis2(LeftEither, 6);
+
+  ASSERT_EQ(Eis.getOrElse("foobar"), "test");
+  ASSERT_EQ(Eis2.getOrElse("foobar"), "foobar");
+}
