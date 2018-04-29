@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['contains',['contains',['../group__Either.html#a402a34a70c2c74e5534415a20d85a39e',1,'ma::Either::contains()'],['../group__Maybe.html#aba9521bf0d53f1c3c7e0d56481553ce9',1,'ma::Maybe::contains()']]]
+  ['contains',['contains',['../group__Either.html#a20d7960f1a2ef75e5810d6de5ce1531a',1,'ma::Either::contains()'],['../group__Either.html#ad61f0c8baa428206ab577c58db5a86ef',1,'ma::Maybe::contains()']]]
 ];

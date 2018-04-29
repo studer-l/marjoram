@@ -95,8 +95,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 <h3><a id="index_c"></a>- c -</h3><ul>
 <li>contains()
-: <a class="el" href="group__Either.html#a402a34a70c2c74e5534415a20d85a39e">ma::Either&lt; A, B &gt;</a>
-, <a class="el" href="group__Maybe.html#aba9521bf0d53f1c3c7e0d56481553ce9">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#a20d7960f1a2ef75e5810d6de5ce1531a">ma::Either&lt; A, B &gt;</a>
+, <a class="el" href="group__Either.html#ad61f0c8baa428206ab577c58db5a86ef">ma::Maybe&lt; A &gt;</a>
 </li>
 </ul>
 
@@ -108,6 +108,10 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>EitherImpl()
 : <a class="el" href="classma_1_1detail_1_1EitherImpl.html#aceebd8467be2ae9cde0569f45dc320ee">ma::detail::EitherImpl&lt; Left_t, Right_t &gt;</a>
 </li>
+<li>exists()
+: <a class="el" href="group__Either.html#a47c924312087f519c8fe79c885a9fbc2">ma::Either&lt; A, B &gt;</a>
+, <a class="el" href="group__Either.html#a7c5684831f0ec5b0d10af70e139d8e16">ma::Maybe&lt; A &gt;</a>
+</li>
 </ul>
 
 
@@ -115,7 +119,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>flatMap()
 : <a class="el" href="group__Either.html#a1b6a1820cb3e632e3b4868ba541bbef6">ma::Either&lt; A, B &gt;</a>
 , <a class="el" href="group__Lazy.html#add0225b149b09a7d547f118183d99357">ma::Lazy&lt; A &gt;</a>
-, <a class="el" href="group__Maybe.html#ac941e1ef86746ea20c39fc8038e72abd">ma::Maybe&lt; A &gt;</a>
+, <a class="el" href="group__Either.html#ac941e1ef86746ea20c39fc8038e72abd">ma::Maybe&lt; A &gt;</a>
 , <a class="el" href="group__Reader.html#a6e39e589891ec02d95d196a6369f3373">ma::Reader&lt; A, R &gt;</a>
 </li>
 <li>fold()
@@ -127,10 +131,11 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <h3><a id="index_g"></a>- g -</h3><ul>
 <li>get()
 : <a class="el" href="group__Lazy.html#a0204201fcd0a87596ffee53174009b99">ma::Lazy&lt; A &gt;</a>
-, <a class="el" href="group__Maybe.html#a54d6c45cbc4c7a17457d56162efc0e7d">ma::Maybe&lt; A &gt;</a>
+, <a class="el" href="group__Either.html#a54d6c45cbc4c7a17457d56162efc0e7d">ma::Maybe&lt; A &gt;</a>
 </li>
 <li>getOrElse()
-: <a class="el" href="group__Maybe.html#a5e1b46e8118a985cbf709920ec973d8a">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#ab6bb632028c21d4df2fc0cb6817235a2">ma::Either&lt; A, B &gt;</a>
+, <a class="el" href="group__Either.html#a4574c3e22600f157723a0740cd97b89a">ma::Maybe&lt; A &gt;</a>
 </li>
 </ul>
 
@@ -140,13 +145,13 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="group__Lazy.html#a00c9c06c2fa49f4d722a4a341a718df6">ma::Lazy&lt; A &gt;</a>
 </li>
 <li>isJust()
-: <a class="el" href="group__Maybe.html#a9786efb41650f9fca9f05192cda0d5aa">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#a9786efb41650f9fca9f05192cda0d5aa">ma::Maybe&lt; A &gt;</a>
 </li>
 <li>isLeft()
 : <a class="el" href="group__Either.html#a6c866a8aafbf4388624b7f9809ed8064">ma::Either&lt; A, B &gt;</a>
 </li>
 <li>isNothing()
-: <a class="el" href="group__Maybe.html#aaf0c0193b26561822e7ce488b85f5d91">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#aaf0c0193b26561822e7ce488b85f5d91">ma::Maybe&lt; A &gt;</a>
 </li>
 <li>isRight()
 : <a class="el" href="group__Either.html#ab17141092b97c038bb3b26fe6ab8af33">ma::Either&lt; A, B &gt;</a>
@@ -165,11 +170,14 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>map()
 : <a class="el" href="group__Either.html#a941c5accc6c68f962fd173986ff7552b">ma::Either&lt; A, B &gt;</a>
 , <a class="el" href="group__Lazy.html#a0a68df8eaa1e1dfa9a5490a0d3f4c80d">ma::Lazy&lt; A &gt;</a>
-, <a class="el" href="group__Maybe.html#aefd15d32ea93e0b87e66c6fa9dc13235">ma::Maybe&lt; A &gt;</a>
+, <a class="el" href="group__Either.html#aefd15d32ea93e0b87e66c6fa9dc13235">ma::Maybe&lt; A &gt;</a>
 , <a class="el" href="group__Reader.html#a562a849799b75d34ba11b0370af9b16d">ma::Reader&lt; A, R &gt;</a>
 </li>
 <li>Maybe()
-: <a class="el" href="group__Maybe.html#a615dffaaba4afaf5742d3d325c615a35">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#aef94b3c0a236ff4bccc0f292f55d23d2">ma::Maybe&lt; A &gt;</a>
+</li>
+<li>merge()
+: <a class="el" href="group__Either.html#aa8543bb8e0c3022bee4488c9780f193f">ma::Either&lt; A, B &gt;</a>
 </li>
 <li>mirror()
 : <a class="el" href="group__Either.html#a35bfe4ef123594c555a96c09c7cbd1c5">ma::Either&lt; A, B &gt;</a>
@@ -196,13 +204,13 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 <h3><a id="index_t"></a>- t -</h3><ul>
 <li>toLeft()
-: <a class="el" href="group__Maybe.html#a75b4b985702f43dc427544aae4c94f6d">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#a75b4b985702f43dc427544aae4c94f6d">ma::Maybe&lt; A &gt;</a>
 </li>
 <li>toMaybe()
 : <a class="el" href="group__Either.html#a34da55ae38be08cecfb65ccfe9dc38c0">ma::Either&lt; A, B &gt;</a>
 </li>
 <li>toRight()
-: <a class="el" href="group__Maybe.html#ad8d2da161d6e37f0efb11e150aea8925">ma::Maybe&lt; A &gt;</a>
+: <a class="el" href="group__Either.html#ad8d2da161d6e37f0efb11e150aea8925">ma::Maybe&lt; A &gt;</a>
 </li>
 </ul>
 

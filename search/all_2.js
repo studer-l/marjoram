@@ -4,5 +4,6 @@ var searchData=
   ['either_3c_20std_3a_3afunction_3c_20a_28_29_3e_2c_20a_20_3e',['Either&lt; std::function&lt; A()&gt;, A &gt;',['../group__Either.html',1,'ma']]],
   ['eitherimpl',['EitherImpl',['../classma_1_1detail_1_1EitherImpl.html',1,'ma::detail::EitherImpl&lt; Left_t, Right_t &gt;'],['../classma_1_1detail_1_1EitherImpl.html#aceebd8467be2ae9cde0569f45dc320ee',1,'ma::detail::EitherImpl::EitherImpl(LeftSide, Args &amp;&amp;... args)'],['../classma_1_1detail_1_1EitherImpl.html#a3d1d2811f233ecae4dcc60e11d988188',1,'ma::detail::EitherImpl::EitherImpl(RightSide, Args &amp;&amp;... args)'],['../classma_1_1detail_1_1EitherImpl.html#a333de147a08c92e3c7b192c4ede4eb69',1,'ma::detail::EitherImpl::EitherImpl(const EitherImpl &amp;rhs)'],['../classma_1_1detail_1_1EitherImpl.html#a5596186cf71d995220077b3f813b9845',1,'ma::detail::EitherImpl::EitherImpl(EitherImpl &amp;&amp;rhs) noexcept']]],
   ['eitherimpl_3c_20a_2c_20b_20_3e',['EitherImpl&lt; A, B &gt;',['../classma_1_1detail_1_1EitherImpl.html',1,'ma::detail']]],
-  ['eitheriterator',['EitherIterator',['../group__Either.html#classma_1_1EitherIterator',1,'ma']]]
+  ['eitheriterator',['EitherIterator',['../group__Either.html#classma_1_1EitherIterator',1,'ma']]],
+  ['exists',['exists',['../group__Either.html#a47c924312087f519c8fe79c885a9fbc2',1,'ma::Either::exists()'],['../group__Either.html#a7c5684831f0ec5b0d10af70e139d8e16',1,'ma::Maybe::exists()']]]
 ];

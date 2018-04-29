@@ -12,7 +12,7 @@ var hierarchy =
     [ "ma::Lazy< A >", "group__Lazy.html#classma_1_1Lazy", null ],
     [ "ma::LazyIterator< A >", "group__Lazy.html#classma_1_1LazyIterator", null ],
     [ "ma::LeftSide", "structma_1_1LeftSide.html", null ],
-    [ "ma::Maybe< A >", "group__Maybe.html#classma_1_1Maybe", null ],
+    [ "ma::Maybe< A >", "group__Either.html#classma_1_1Maybe", null ],
     [ "ma::MaybeIterator< A >", "group__Maybe.html#classma_1_1MaybeIterator", null ],
     [ "ma::Nothing_t", "group__Maybe.html#structma_1_1Nothing__t", null ],
     [ "ma::Reader< A, R >", "group__Reader.html#classma_1_1Reader", null ],

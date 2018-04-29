@@ -11,7 +11,7 @@ var annotated_dup =
       [ "Lazy", "group__Lazy.html#classma_1_1Lazy", "group__Lazy_classma_1_1Lazy" ],
       [ "LazyIterator", "group__Lazy.html#classma_1_1LazyIterator", "group__Lazy_classma_1_1LazyIterator" ],
       [ "LeftSide", "structma_1_1LeftSide.html", "structma_1_1LeftSide" ],
-      [ "Maybe", "group__Maybe.html#classma_1_1Maybe", "group__Maybe_classma_1_1Maybe" ],
+      [ "Maybe", "group__Either.html#classma_1_1Maybe", "group__Either_classma_1_1Maybe" ],
       [ "MaybeIterator", "group__Maybe.html#classma_1_1MaybeIterator", "group__Maybe_classma_1_1MaybeIterator" ],
       [ "Nothing_t", "group__Maybe.html#structma_1_1Nothing__t", "group__Maybe_structma_1_1Nothing__t" ],
       [ "Reader", "group__Reader.html#classma_1_1Reader", "group__Reader_classma_1_1Reader" ],
