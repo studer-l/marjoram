@@ -14,7 +14,7 @@ struct LeftSide {
 /**
  * Convenience value for left side tag.
  */
-static const LeftSide LeftEither;
+static const LeftSide Left;
 
 /**
  * Tag indicating the right side.
@@ -25,7 +25,7 @@ struct RightSide {
 /**
  * Convenience value for right side tag.
  */
-static const RightSide RightEither;
+static const RightSide Right;
 
 namespace detail {
 

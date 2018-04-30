@@ -82,8 +82,8 @@ template <typename A> class Lazy {
    * @param f Function that will be called exactly once when `get` is called
    * the first time.
    */
-  explicit Lazy(std::function<A()> f) : impl(LeftEither, f) {}
-  explicit Lazy(const A& a) : impl(RightEither, a) {}
+  explicit Lazy(std::function<A()> f) : impl(Left, f) {}
+  explicit Lazy(const A& a) : impl(Right, a) {}
 
   Lazy(const Lazy&) = default;
   Lazy& operator=(const Lazy&) = default;
@@ -91,12 +91,12 @@ template <typename A> class Lazy {
   Lazy& operator=(const A& a) {
     /* n.b. a new storage_t is made via copy before the old one is overwritten,
      * hence the case `Lazy<A> La(...); La = La.get();` is safe */
-    impl = storage_t(RightEither, a);
+    impl = storage_t(Right, a);
     return *this;
   }
 
   Lazy& operator=(A&& a) {
-    impl = storage_t(RightEither, std::move(a));
+    impl = storage_t(Right, std::move(a));
     return *this;
   }
 
@@ -111,7 +111,7 @@ template <typename A> class Lazy {
    */
   A& get() {
     if (impl.isLeft()) {
-      impl = storage_t(RightEither, impl.asLeft()());
+      impl = storage_t(Right, impl.asLeft()());
     }
     return impl.asRight();
   }
@@ -122,7 +122,7 @@ template <typename A> class Lazy {
    */
   const A& get() const {
     if (impl.isLeft()) {
-      impl = storage_t(RightEither, impl.asLeft()());
+      impl = storage_t(Right, impl.asLeft()());
     }
     return impl.asRight();
   }

@@ -190,9 +190,9 @@ template <typename A> class Maybe {
   template <class Left> Either<Left, A> toRight(const Left& left) const {
     using Either = Either<Left, A>;
     if (isJust()) {
-      return Either(RightEither, get());
+      return Either(ma::Right, get());
     }
-    return Either(LeftEither, left);
+    return Either(ma::Left, left);
   }
 
   /**
@@ -201,9 +201,9 @@ template <typename A> class Maybe {
   template <class Right> Either<A, Right> toLeft(const Right& right) const {
     using Either = Either<A, Right>;
     if (isJust()) {
-      return Either(LeftEither, get());
+      return Either(ma::Left, get());
     }
-    return Either(RightEither, right);
+    return Either(ma::Right, right);
   }
 
   /**

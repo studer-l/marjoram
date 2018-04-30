@@ -3,15 +3,15 @@
 #include <string>
 
 using ma::Either;
-using ma::LeftEither;
-using ma::RightEither;
+using ma::Left;
+using ma::Right;
 
 TEST(Either, ctor) {
-  auto int_int = Either<int, int>(LeftEither, 5);
-  auto float_float = Either<float, float>(RightEither, 5);
+  auto int_int = Either<int, int>(Left, 5);
+  auto float_float = Either<float, float>(Right, 5);
   auto string_double = Either<std::string, double>(4.0);
   auto string_double2 = Either<std::string, double>("Hello");
-  auto float_float2 = Either<float, float>(LeftEither);
+  auto float_float2 = Either<float, float>(Left);
 }
 
 TEST(Either, flatMap) {
@@ -79,7 +79,7 @@ TEST(Either, fold) {
 }
 
 TEST(Either, For) {
-  Either<int, char> theLetterF(RightEither, 'f');
+  Either<int, char> theLetterF(Right, 'f');
   Either<std::string, char> hello("Hello");
 
   for (char f : theLetterF) {
@@ -97,7 +97,7 @@ TEST(Either, For) {
 
 TEST(Either, Assignment) {
   std::string question = "I wonder whether this works";
-  Either<std::string, std::string> e(RightEither, question);
+  Either<std::string, std::string> e(Right, question);
   e = e;
   ASSERT_EQ(e.asRight(), question);
   e = e;
@@ -106,8 +106,8 @@ TEST(Either, Assignment) {
 
 TEST(Either, uniqueptr) {
   /* test whether Either compiles with unique ptr member */
-  auto ei1 = Either<std::unique_ptr<int>, int>(RightEither, 5);
-  auto ei2 = Either<int, std::unique_ptr<int>>(LeftEither, 5);
+  auto ei1 = Either<std::unique_ptr<int>, int>(Right, 5);
+  auto ei2 = Either<int, std::unique_ptr<int>>(Left, 5);
 }
 
 TEST(Either, RightCtors) {
@@ -153,52 +153,52 @@ TEST(Either, LeftCtors) {
 }
 
 TEST(Either, LeftRecover) {
-  ma::Either<std::string, int> Mi(LeftEither, "deadbeef");
+  ma::Either<std::string, int> Mi(Left, "deadbeef");
   ASSERT_TRUE(Mi.isLeft());
   auto len = Mi.recover([](const std::string& str) { return str.length(); });
   ASSERT_EQ(len, 8);
 }
 
 TEST(Either, RightRecover) {
-  ma::Either<int, std::string> Mi(RightEither, "deadbeef");
+  ma::Either<int, std::string> Mi(Right, "deadbeef");
   ASSERT_TRUE(Mi.isRight());
   std::string out = Mi.recover([](int i) { return std::to_string(i); });
   ASSERT_EQ(out, "deadbeef");
 }
 
 TEST(Either, Contains) {
-  ma::Either<int, int> DefaultFail(LeftEither, 8);
+  ma::Either<int, int> DefaultFail(Left, 8);
   ASSERT_FALSE(DefaultFail.contains(8));
 
-  ma::Either<int, std::string> Compares(RightEither, "42");
+  ma::Either<int, std::string> Compares(Right, "42");
   ASSERT_FALSE(Compares.contains("some other string"));
   ASSERT_TRUE(Compares.contains("42"));
 }
 
 TEST(Either, Merge) {
-  ma::Either<std::string, std::string> ss(LeftEither, "test");
+  ma::Either<std::string, std::string> ss(Left, "test");
   ASSERT_EQ(ss.merge(), "test");
 
-  ma::Either<std::string, std::string> ss2(RightEither, "test2");
+  ma::Either<std::string, std::string> ss2(Right, "test2");
   ASSERT_EQ(ss2.merge(), "test2");
 
-  ma::Either<std::string, int> si(LeftEither, "test");
+  ma::Either<std::string, int> si(Left, "test");
   // ss3.merge();  // does not compile
 }
 
 TEST(Either, exists) {
-  ma::Either<int, std::string> Eis(RightEither, "test");
+  ma::Either<int, std::string> Eis(Right, "test");
   ASSERT_TRUE(Eis.exists([](const std::string& s) { return s.length() > 3; }));
   ASSERT_FALSE(Eis.exists([](const std::string& s) { return s.empty(); }));
 
-  ma::Either<int, std::string> Eis2(LeftEither, 5);
+  ma::Either<int, std::string> Eis2(Left, 5);
   ASSERT_FALSE(Eis2.exists([](const std::string& s) { return s.length() > 3; }));
   ASSERT_FALSE(Eis2.exists([](const std::string& s) { return s.empty(); }));
 }
 
 TEST(EIther, getOrElse) {
-  ma::Either<int, std::string> Eis(RightEither, "test");
-  ma::Either<int, std::string> Eis2(LeftEither, 6);
+  ma::Either<int, std::string> Eis(Right, "test");
+  ma::Either<int, std::string> Eis2(Left, 6);
 
   ASSERT_EQ(Eis.getOrElse("foobar"), "test");
   ASSERT_EQ(Eis2.getOrElse("foobar"), "foobar");

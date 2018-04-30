@@ -90,26 +90,26 @@ class Either : private detail::EitherImpl<A, B> {
    * Construct left Either<A, B> containing an A.
    *
    * Note that LeftSide is just a tag, a const static instance is declared as
-   * ma::LeftEither for convenience. Example:
+   * ma::Left for convenience. Example:
    * \code
-   * auto e = Either<double, int>(ma::LeftEither, 5);
+   * auto e = Either<double, int>(ma::Left, 5);
    * \endcode
    * Constructs a left sided Either containing a double (although a int
    * could have bound to `5` as well).
    */
   template <typename... Args>
   Either(LeftSide /* selects overload */, Args&&... args)
-      : impl(LeftEither, std::forward<Args>(args)...) {}
+      : impl(Left, std::forward<Args>(args)...) {}
 
   /**
    * Construct right Either<A, B> containing an B.
    *
    * Note that RightSide is just a tag, a const static instance is declared as
-   * ma::RightEither for convenience.
+   * ma::Right for convenience.
    */
   template <typename... Args>
   Either(RightSide /* selects overlaod */, Args&&... args)
-      : impl(RightEither, std::forward<Args>(args)...) {}
+      : impl(Right, std::forward<Args>(args)...) {}
 
   /**
    * Checks whether an `A` is stored.
@@ -186,7 +186,7 @@ class Either : private detail::EitherImpl<A, B> {
     if (isRight()) {
       return fb(asRight());
     }
-    return Either<A, C>(LeftEither, asLeft());
+    return Either<A, C>(Left, asLeft());
   }
 
   /**
@@ -205,7 +205,7 @@ class Either : private detail::EitherImpl<A, B> {
     if (isRight()) {
       return fb(std::move(asRight()));
     }
-    return Either<A, C>(LeftEither, asLeft());
+    return Either<A, C>(Left, asLeft());
   }
 
   /**
@@ -223,9 +223,9 @@ class Either : private detail::EitherImpl<A, B> {
   template <typename Fb> auto map(Fb fb) -> Either<A, std::result_of_t<Fb(B)>> {
     using C = typename std::result_of_t<Fb(B)>;
     if (isRight()) {
-      return Either<A, C>(RightEither, fb(std::move(asRight())));
+      return Either<A, C>(Right, fb(std::move(asRight())));
     }
-    return Either<A, C>(LeftEither, asLeft());
+    return Either<A, C>(Left, asLeft());
   }
 
   /**
@@ -243,9 +243,9 @@ class Either : private detail::EitherImpl<A, B> {
   auto map(Fb fb) const -> Either<A, std::result_of_t<Fb(B)>> {
     using C = typename std::result_of_t<Fb(B)>;
     if (isRight()) {
-      return Either<A, C>(RightEither, fb(asRight()));
+      return Either<A, C>(Right, fb(asRight()));
     }
-    return Either<A, C>(LeftEither, asLeft());
+    return Either<A, C>(Left, asLeft());
   }
 
   /**
@@ -277,7 +277,7 @@ class Either : private detail::EitherImpl<A, B> {
     if (isRight()) {
       return Either<B, A>(asRight());
     }
-    return Either<B, A>(LeftEither, asLeft());
+    return Either<B, A>(Left, asLeft());
   }
 
   /**

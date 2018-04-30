@@ -4,8 +4,8 @@
 #include <string>
 
 using ma::detail::EitherImpl;
-using ma::LeftEither;
-using ma::RightEither;
+using ma::Left;
+using ma::Right;
 
 struct LeftOne {
   char c;
@@ -27,25 +27,25 @@ TEST(EitherImpl, dtors) {
   /* ensure we start out at zero... */
   LeftOne::dtorCount = 0;
   RightOne::dtorCount = 0;
-  { auto ei = EitherImpl<LeftOne, RightOne>(LeftEither); }
+  { auto ei = EitherImpl<LeftOne, RightOne>(Left); }
   EXPECT_EQ(LeftOne::dtorCount, 1);
   EXPECT_EQ(RightOne::dtorCount, 0);
-  { auto ei = EitherImpl<LeftOne, RightOne>(LeftEither); }
+  { auto ei = EitherImpl<LeftOne, RightOne>(Left); }
   EXPECT_EQ(LeftOne::dtorCount, 2);
   EXPECT_EQ(RightOne::dtorCount, 0);
 
-  { auto ei = EitherImpl<LeftOne, RightOne>(RightEither); }
+  { auto ei = EitherImpl<LeftOne, RightOne>(Right); }
   EXPECT_EQ(LeftOne::dtorCount, 2);
   EXPECT_EQ(RightOne::dtorCount, 1);
 }
 
 TEST(EitherImpl, ctors) {
-  auto ei1 = EitherImpl<std::string, int>(LeftEither, "Hoi");
-  auto ei2 = EitherImpl<std::string, int>(RightEither, 56);
+  auto ei1 = EitherImpl<std::string, int>(Left, "Hoi");
+  auto ei2 = EitherImpl<std::string, int>(Right, 56);
 }
 
 TEST(EitherImpl, uniqueptr) {
   /* test whether EitherImpl compiles with unique ptr member */
-  auto ei1 = EitherImpl<std::unique_ptr<int>, int>(RightEither, 5);
-  auto ei2 = EitherImpl<int, std::unique_ptr<int>>(LeftEither, 5);
+  auto ei1 = EitherImpl<std::unique_ptr<int>, int>(Right, 5);
+  auto ei2 = EitherImpl<int, std::unique_ptr<int>>(Left, 5);
 }
