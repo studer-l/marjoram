@@ -893,6 +893,14 @@ const B &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:aa8543bb8e0c3022bee4488c9780f193f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Either.html#aa8543bb8e0c3022bee4488c9780f193f">merge</a> () const -&gt; typename std::enable_if&lt; std::is_same&lt; A, B &gt;::value, const Dummy &amp;&gt;::type</td></tr>
 <tr class="memdesc:aa8543bb8e0c3022bee4488c9780f193f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If both left and right have the same type, allows merging to common type.  <a href="#aa8543bb8e0c3022bee4488c9780f193f">More...</a><br /></td></tr>
 <tr class="separator:aa8543bb8e0c3022bee4488c9780f193f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30bf79c80fd16426939cfdeff49b21c3"><td class="memTemplParams" colspan="2">template&lt;class BB  = B&gt; </td></tr>
+<tr class="memitem:a30bf79c80fd16426939cfdeff49b21c3"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Either.html#a30bf79c80fd16426939cfdeff49b21c3">rightJoin</a> () const -&gt; typename std::enable_if&lt; std::is_same&lt; <a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt; typename BB::left_type, typename BB::right_type &gt;, right_type &gt;::value &amp;&amp;std::is_same&lt; left_type, typename BB::left_type &gt;::value, <a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt; left_type, typename BB::right_type &gt;&gt;::type</td></tr>
+<tr class="memdesc:a30bf79c80fd16426939cfdeff49b21c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joins instance of <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> through right.  <a href="#a30bf79c80fd16426939cfdeff49b21c3">More...</a><br /></td></tr>
+<tr class="separator:a30bf79c80fd16426939cfdeff49b21c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2289d9fbe92ab3e45422402fccb2d95"><td class="memTemplParams" colspan="2">template&lt;class AA  = A&gt; </td></tr>
+<tr class="memitem:ad2289d9fbe92ab3e45422402fccb2d95"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Either.html#ad2289d9fbe92ab3e45422402fccb2d95">leftJoin</a> () const -&gt; typename std::enable_if&lt; std::is_same&lt; <a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt; typename AA::left_type, typename AA::right_type &gt;, left_type &gt;::value &amp;&amp;std::is_same&lt; right_type, typename AA::right_type &gt;::value, <a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt; typename AA::left_type, right_type &gt;&gt;::type</td></tr>
+<tr class="memdesc:ad2289d9fbe92ab3e45422402fccb2d95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joins instance of <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> through left.  <a href="#ad2289d9fbe92ab3e45422402fccb2d95">More...</a><br /></td></tr>
+<tr class="separator:ad2289d9fbe92ab3e45422402fccb2d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad186dd13946a288793ad17e8fc0470e9"><td class="memItemLeft" align="right" valign="top"><a id="ad186dd13946a288793ad17e8fc0470e9"></a>
 <a class="el" href="group__Either.html#classma_1_1EitherIterator">EitherIterator</a>&lt; A, B &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
 <tr class="separator:ad186dd13946a288793ad17e8fc0470e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1003,7 +1011,7 @@ template&lt;typename... Args&gt; </div>
 </div><div class="memdoc">
 
 <p>Construct left Either&lt;A, B&gt; containing an A. </p>
-<p>Note that <a class="el" href="structma_1_1LeftSide.html" title="Tag indicating the left side. ">LeftSide</a> is just a tag, a const static instance is declared as ma::LeftEither for convenience. Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> e = Either&lt;double, int&gt;(ma::LeftEither, 5);</div></div><!-- fragment --><p> Constructs a left sided <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> containing a double (although a int could have bound to <code>5</code> as well). </p>
+<p>Note that <a class="el" href="structma_1_1LeftSide.html" title="Tag indicating the left side. ">LeftSide</a> is just a tag, a const static instance is declared as ma::Left for convenience. Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> e = Either&lt;double, int&gt;(ma::Left, 5);</div></div><!-- fragment --><p> Constructs a left sided <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> containing a double (although a int could have bound to <code>5</code> as well). </p>
 
 </div>
 </div>
@@ -1046,7 +1054,7 @@ template&lt;typename... Args&gt; </div>
 </div><div class="memdoc">
 
 <p>Construct right Either&lt;A, B&gt; containing an B. </p>
-<p>Note that <a class="el" href="structma_1_1RightSide.html" title="Tag indicating the right side. ">RightSide</a> is just a tag, a const static instance is declared as ma::RightEither for convenience. </p>
+<p>Note that <a class="el" href="structma_1_1RightSide.html" title="Tag indicating the right side. ">RightSide</a> is just a tag, a const static instance is declared as ma::Right for convenience. </p>
 
 </div>
 </div>
@@ -1361,6 +1369,43 @@ template&lt;typename A, typename B&gt; </div>
 
 </div>
 </div>
+<a id="ad2289d9fbe92ab3e45422402fccb2d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2289d9fbe92ab3e45422402fccb2d95">&#9670;&nbsp;</a></span>leftJoin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A, typename B&gt; </div>
+<div class="memtemplate">
+template&lt;class AA  = A&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="group__Either.html#classma_1_1Either">ma::Either</a>&lt; A, B &gt;::leftJoin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; typename std::enable_if&lt;
+      std::is_same&lt;<a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt;typename AA::left_type, typename AA::right_type&gt;,
+                   left_type&gt;::value &amp;&amp;
+          std::is_same&lt;right_type, typename AA::right_type&gt;::value,
+      <a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt;typename AA::left_type, right_type&gt;&gt;::type </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Joins instance of <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> through left. </p>
+<p>Only enabled on objects of the form <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a>&lt;Either&lt;C, B&gt;, B&gt;. </p><dl class="section return"><dt>Returns</dt><dd>Flattened representation Either&lt;C, B&gt;</dd></dl>
+<p>Ignore the dummy template argument, it is used to enable/disable this method. </p>
+
+</div>
+</div>
 <a id="a941c5accc6c68f962fd173986ff7552b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a941c5accc6c68f962fd173986ff7552b">&#9670;&nbsp;</a></span>map() <span class="overload">[1/2]</span></h2>
 
@@ -1467,7 +1512,7 @@ template&lt;class Dummy  = A&gt; </div>
 </div><div class="memdoc">
 
 <p>If both left and right have the same type, allows merging to common type. </p>
-<p>The purpose of the template argument <code>Dummy</code> is to allow SFINAE. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> left or right, depending on which one is set. The purpose of the template argument <code>Dummy</code> is to allow SFINAE. </dd></dl>
 
 </div>
 </div>
@@ -1535,6 +1580,43 @@ template&lt;typename Fa &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Right value if contained, otherwise result of applying <code>Fa</code> to <code>a</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a30bf79c80fd16426939cfdeff49b21c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30bf79c80fd16426939cfdeff49b21c3">&#9670;&nbsp;</a></span>rightJoin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A, typename B&gt; </div>
+<div class="memtemplate">
+template&lt;class BB  = B&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="group__Either.html#classma_1_1Either">ma::Either</a>&lt; A, B &gt;::rightJoin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; typename std::enable_if&lt;
+      std::is_same&lt;<a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt;typename BB::left_type, typename BB::right_type&gt;,
+                   right_type&gt;::value &amp;&amp;
+          std::is_same&lt;left_type, typename BB::left_type&gt;::value,
+      <a class="el" href="group__Either.html#classma_1_1Either">Either</a>&lt;left_type, typename BB::right_type&gt;&gt;::type </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Joins instance of <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a> through right. </p>
+<p>Only enabled on objects of the form <a class="el" href="group__Either.html#classma_1_1Either" title="Either monad. ">Either</a>&lt;A, Either&lt;A, C&gt;&gt;. </p><dl class="section return"><dt>Returns</dt><dd>Flattened representation Either&lt;A, C&gt;</dd></dl>
+<p>Ignore the dummy template argument, it is used to enable/disable this method. </p>
 
 </div>
 </div>

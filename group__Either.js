@@ -78,11 +78,13 @@ var group__Either =
       [ "getOrElse", "group__Either.html#ab6bb632028c21d4df2fc0cb6817235a2", null ],
       [ "isLeft", "group__Either.html#a6c866a8aafbf4388624b7f9809ed8064", null ],
       [ "isRight", "group__Either.html#ab17141092b97c038bb3b26fe6ab8af33", null ],
+      [ "leftJoin", "group__Either.html#ad2289d9fbe92ab3e45422402fccb2d95", null ],
       [ "map", "group__Either.html#a941c5accc6c68f962fd173986ff7552b", null ],
       [ "map", "group__Either.html#a2a6ef3ae4955e9dcc1b07501d49e81c1", null ],
       [ "merge", "group__Either.html#aa8543bb8e0c3022bee4488c9780f193f", null ],
       [ "mirror", "group__Either.html#a35bfe4ef123594c555a96c09c7cbd1c5", null ],
       [ "recover", "group__Either.html#ab8767248b6faabf5ac0bd741e11ce51b", null ],
+      [ "rightJoin", "group__Either.html#a30bf79c80fd16426939cfdeff49b21c3", null ],
       [ "toMaybe", "group__Either.html#a34da55ae38be08cecfb65ccfe9dc38c0", null ]
     ] ]
 ];
