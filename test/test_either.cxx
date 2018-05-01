@@ -192,14 +192,81 @@ TEST(Either, exists) {
   ASSERT_FALSE(Eis.exists([](const std::string& s) { return s.empty(); }));
 
   ma::Either<int, std::string> Eis2(Left, 5);
-  ASSERT_FALSE(Eis2.exists([](const std::string& s) { return s.length() > 3; }));
+  ASSERT_FALSE(
+      Eis2.exists([](const std::string& s) { return s.length() > 3; }));
   ASSERT_FALSE(Eis2.exists([](const std::string& s) { return s.empty(); }));
 }
 
-TEST(EIther, getOrElse) {
+TEST(Either, getOrElse) {
   ma::Either<int, std::string> Eis(Right, "test");
   ma::Either<int, std::string> Eis2(Left, 6);
 
   ASSERT_EQ(Eis.getOrElse("foobar"), "test");
   ASSERT_EQ(Eis2.getOrElse("foobar"), "foobar");
+}
+
+TEST(Either, rightJoin_RightRight) {
+  ma::Either<int, ma::Either<int, std::string>> Eiis(
+      Right, ma::Either<int, std::string>(Right, "hello"));
+  auto joined = Eiis.rightJoin();
+
+  ASSERT_TRUE(joined.isRight());
+  ASSERT_EQ(joined.asRight(), "hello");
+}
+
+TEST(Either, mirror_different_types) {
+  Either<std::string, int> Esi(Left, "Test");
+  auto Eis = Esi.mirror();
+  ASSERT_TRUE(Eis.isRight());
+  ASSERT_EQ(Eis.asRight(), "Test");
+}
+
+TEST(Either, mirror_both_types_same) {
+  Either<int, int> Eii(Right, 5);
+  auto Eiim = Eii.mirror();
+  ASSERT_TRUE(Eiim.isLeft());
+  ASSERT_EQ(Eiim.asLeft(), 5);
+}
+
+TEST(Either, rightJoin_RightLeft) {
+  ma::Either<int, ma::Either<int, std::string>> Eiis(
+      Right, ma::Either<int, std::string>(Left, 42));
+  auto joined = Eiis.rightJoin();
+
+  ASSERT_TRUE(joined.isLeft());
+  ASSERT_EQ(joined.asLeft(), 42);
+}
+
+TEST(Either, rightJoin_Left) {
+  ma::Either<int, ma::Either<int, std::string>> Eiis(Left, 5);
+  auto joined = Eiis.rightJoin();
+
+  ASSERT_TRUE(joined.isLeft());
+  ASSERT_EQ(joined.asLeft(), 5);
+}
+
+TEST(Either, leftJoin_Right) {
+  ma::Either<ma::Either<std::string, int>, int> Esii(Right, 42);
+  auto joined = Esii.leftJoin();
+
+  ASSERT_TRUE(joined.isRight());
+  ASSERT_EQ(joined.asRight(), 42);
+}
+
+TEST(Either, leftJoin_LeftRight) {
+  ma::Either<ma::Either<std::string, int>, int> Esii(
+      Left, ma::Either<std::string, int>(Right, 5));
+  auto joined = Esii.leftJoin();
+
+  ASSERT_TRUE(joined.isRight());
+  ASSERT_EQ(joined.asRight(), 5);
+}
+
+TEST(Either, leftJoin_LefttLeft) {
+  ma::Either<ma::Either<std::string, int>, int> Esii(
+      Left, ma::Either<std::string, int>(Left, "hello"));
+  auto joined = Esii.leftJoin();
+
+  ASSERT_TRUE(joined.isLeft());
+  ASSERT_EQ(joined.asLeft(), "hello");
 }
