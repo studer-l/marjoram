@@ -315,6 +315,7 @@ class Either : private detail::EitherImpl<A, B> {
 
   /**
    * If both left and right have the same type, allows merging to common type.
+   * @return Either left or right, depending on which one is set.
    * The purpose of the template argument `Dummy` is to allow SFINAE.
    */
   template <class Dummy = A>
@@ -328,8 +329,8 @@ class Either : private detail::EitherImpl<A, B> {
 
   /**
    * Joins instance of Either through right.
-   * Only enabled on objects of the form Either<A, Either<A, C>>, returning
-   * the flattened representation Either<A, C>
+   * Only enabled on objects of the form Either<A, Either<A, C>>.
+   * @return Flattened representation Either<A, C>
    *
    * Ignore the dummy template argument, it is used to enable/disable this
    * method.
@@ -345,8 +346,8 @@ class Either : private detail::EitherImpl<A, B> {
 
   /**
    * Joins instance of Either through left.
-   * Only enabled on objects of the form Either<Either<C, B>, B>, returning
-   * the flattened representation Either<C, B>
+   * Only enabled on objects of the form Either<Either<C, B>, B>.
+   * @return Flattened representation Either<C, B>
    *
    * Ignore the dummy template argument, it is used to enable/disable this
    * method.
