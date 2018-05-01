@@ -43,8 +43,6 @@ template <typename A, typename B> class EitherIterator;
 template <typename A, typename B> class ConstEitherIterator;
 template <typename A> class Maybe;
 
-struct EitherTag {};
-
 /**
  * Either monad.
  *
@@ -376,8 +374,7 @@ class Either : private detail::EitherImpl<A, B> {
 };
 
 /**
- * Right-biased iterator. Allows mutable access to the right value of an
- * Either.
+ * Right-biased iterator. Allows mutable access to the right value of an Either.
  *
  * Example:
  *
