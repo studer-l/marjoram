@@ -18,9 +18,9 @@ add_compile_options(-fdiagnostics-color)
 add_compile_options(-ftemplate-backtrace-limit=0)
 add_compile_options(-pedantic)
 add_compile_options(-std=c++14)
-add_compile_options(-W)
 add_compile_options(-Wall)
 add_compile_options(-Wextra)
+add_compile_options(-Wpedantic)
 add_compile_options(-Wno-unused-local-typedefs)
 add_compile_options(-Wno-c++98-compat)
 add_compile_options(-Wno-padded)
@@ -29,12 +29,12 @@ add_compile_options(-Wwrite-strings)
 include_directories("include")
 add_subdirectory(external)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/sanitizers-cmake/cmake"
-  ${CMAKE_MODULE_PATH})
+list(APPEND CMAKE_MODULE_PATH
+  "${CMAKE_SOURCE_DIR}/external/sanitizers-cmake/cmake")
 
 # coveralls
 option(COVERALLS "Generate coveralls data" OFF)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/external/coveralls-cmake/cmake)
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/external/coveralls-cmake/cmake)
 if (COVERALLS)
     include(Coveralls)
     coveralls_turn_on_coverage()

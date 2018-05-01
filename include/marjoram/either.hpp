@@ -43,6 +43,8 @@ template <typename A, typename B> class EitherIterator;
 template <typename A, typename B> class ConstEitherIterator;
 template <typename A> class Maybe;
 
+struct EitherTag {};
+
 /**
  * Either monad.
  *
@@ -108,7 +110,7 @@ class Either : private detail::EitherImpl<A, B> {
    * ma::Right for convenience.
    */
   template <typename... Args>
-  Either(RightSide /* selects overlaod */, Args&&... args)
+  Either(RightSide /* selects overload */, Args&&... args)
       : impl(Right, std::forward<Args>(args)...) {}
 
   /**
@@ -275,9 +277,9 @@ class Either : private detail::EitherImpl<A, B> {
    */
   Either<B, A> mirror() const {
     if (isRight()) {
-      return Either<B, A>(asRight());
+      return Either<B, A>(Left, asRight());
     }
-    return Either<B, A>(Left, asLeft());
+    return Either<B, A>(Right, asLeft());
   }
 
   /**
@@ -326,6 +328,44 @@ class Either : private detail::EitherImpl<A, B> {
     return asLeft();
   }
 
+  /**
+   * Joins instance of Either through right.
+   * Only enabled on objects of the form Either<A, Either<A, C>>, returning
+   * the flattened representation Either<A, C>
+   *
+   * Ignore the dummy template argument, it is used to enable/disable this
+   * method.
+   */
+  template <class BB = B>
+  auto rightJoin() const -> typename std::enable_if<
+      std::is_same<Either<typename BB::left_type, typename BB::right_type>,
+                   right_type>::value &&
+          std::is_same<left_type, typename BB::left_type>::value,
+      Either<left_type, typename BB::right_type>>::type {
+    return flatMap([](const auto& inner) { return inner; });
+  }
+
+  /**
+   * Joins instance of Either through left.
+   * Only enabled on objects of the form Either<Either<C, B>, B>, returning
+   * the flattened representation Either<C, B>
+   *
+   * Ignore the dummy template argument, it is used to enable/disable this
+   * method.
+   */
+  template <class AA = A>
+  auto leftJoin() const -> typename std::enable_if<
+      std::is_same<Either<typename AA::left_type, typename AA::right_type>,
+                   left_type>::value &&
+          std::is_same<right_type, typename AA::right_type>::value,
+      Either<typename AA::left_type, right_type>>::type {
+    // implementation suboptimal: mirror() may introduce temporary copy, but
+    // this is pretty elegant
+    return mirror()
+        .flatMap([](const auto& inner) { return inner.mirror(); })
+        .mirror();
+  }
+
   EitherIterator<A, B> begin() { return {*this, true}; }
   ConstEitherIterator<A, B> begin() const { return {*this, true}; }
   ConstEitherIterator<A, B> cbegin() const { return {*this, true}; }
@@ -336,7 +376,8 @@ class Either : private detail::EitherImpl<A, B> {
 };
 
 /**
- * Right-biased iterator. Allows mutable access to the right value of an Either.
+ * Right-biased iterator. Allows mutable access to the right value of an
+ * Either.
  *
  * Example:
  *
