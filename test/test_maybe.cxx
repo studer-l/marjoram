@@ -272,3 +272,13 @@ TEST(Maybe, exists) {
   ASSERT_FALSE(notfive.exists([](int i) { return !(i % 2); }));
   ASSERT_FALSE(notfive.exists([](int i) { return i % 2; }));
 }
+
+TEST(Maybe, containsBool) {
+  ma::Maybe<bool> justTrue = ma::Just(true);
+  ASSERT_TRUE(justTrue.contains(true));
+  ASSERT_FALSE(justTrue.contains(false));
+
+  ma::Maybe<bool> nada = ma::Nothing;
+  ASSERT_FALSE(nada.contains(true));
+  ASSERT_FALSE(nada.contains(false));
+}

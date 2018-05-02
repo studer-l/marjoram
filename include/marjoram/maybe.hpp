@@ -181,7 +181,7 @@ template <typename A> class Maybe {
    * to `b`.
    */
   template <typename B> bool contains(const B& b) const {
-    return flatMap([&b](const A& a) { return a == b; }).getOrElse(false);
+    return map([&b](const A& a) { return a == b; }).getOrElse(false);
   }
 
   /**
