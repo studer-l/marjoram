@@ -181,8 +181,27 @@ class Either : private detail::EitherImpl<A, B> {
    * stored in the returned either. Otherwise, the pre-existing `A` value is
    * copied into the return value.
    */
-  template <typename Fb> auto flatMap(Fb fb) const -> std::result_of_t<Fb(B)> {
-    using C = typename std::result_of_t<Fb(B)>::right_type;
+  template <typename Fb>
+  auto flatMap(Fb fb) const & -> std::result_of_t<Fb(const B&)> {
+    using C = typename std::result_of_t<Fb(const B&)>::right_type;
+    if (isRight()) {
+      return fb(asRight());
+    }
+    return Either<A, C>(Left, asLeft());
+  }
+
+  /**
+   * Applies supplied function to stored `B` value if one is available.
+   *
+   * @param fb Function object. `F::operator()` when called with `B&`
+   * has return type `Either<A, C>`.
+   *
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
+   */
+  template <typename Fb> auto flatMap(Fb fb) & -> std::result_of_t<Fb(B&)> {
+    using C = typename std::result_of_t<Fb(B&)>::right_type;
     if (isRight()) {
       return fb(asRight());
     }
@@ -199,31 +218,10 @@ class Either : private detail::EitherImpl<A, B> {
    * stored in the returned either. Otherwise, the pre-existing `A` value is
    * copied into the return value.
    */
-
-  template <typename Fb> auto flatMap(Fb fb) -> std::result_of_t<Fb(B)> {
-    using C = typename std::result_of_t<Fb(B)>::right_type;
+  template <typename Fb> auto flatMap(Fb fb) && -> std::result_of_t<Fb(B&&)> {
+    using C = typename std::result_of_t<Fb(B &&)>::right_type;
     if (isRight()) {
       return fb(std::move(asRight()));
-    }
-    return Either<A, C>(Left, asLeft());
-  }
-
-  /**
-   * Applies supplied function to stored `B` value if one is available and
-   * wraps the result in Either.
-   *
-   * @param fb Function object. `F::operator()` when called with `B&&` has
-   * return type `Either<A, C>`.
-   *
-   * @return If this object contains a `B` value, the result of `fb(b)` is
-   * stored in the returned either. Otherwise, the pre-existing `A` value is
-   * copied into the return value.
-   */
-
-  template <typename Fb> auto map(Fb fb) -> Either<A, std::result_of_t<Fb(B)>> {
-    using C = typename std::result_of_t<Fb(B)>;
-    if (isRight()) {
-      return Either<A, C>(Right, fb(std::move(asRight())));
     }
     return Either<A, C>(Left, asLeft());
   }
@@ -240,10 +238,50 @@ class Either : private detail::EitherImpl<A, B> {
    * copied into the return value.
    */
   template <typename Fb>
-  auto map(Fb fb) const -> Either<A, std::result_of_t<Fb(B)>> {
-    using C = typename std::result_of_t<Fb(B)>;
+  auto map(Fb fb) const & -> Either<A, std::result_of_t<Fb(const B&)>> {
+    using C = typename std::result_of_t<Fb(const B&)>;
     if (isRight()) {
       return Either<A, C>(Right, fb(asRight()));
+    }
+    return Either<A, C>(Left, asLeft());
+  }
+
+  /**
+   * Applies supplied function to stored `B` value if one is available and
+   * wraps the result in Either.
+   *
+   * @param fb Function object. `F::operator()` when called with `B&` has
+   * return type `Either<A, C>`.
+   *
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
+   */
+  template <typename Fb>
+  auto map(Fb fb) & -> Either<A, std::result_of_t<Fb(B&)>> {
+    using C = typename std::result_of_t<Fb(B&)>;
+    if (isRight()) {
+      return Either<A, C>(Right, fb(asRight()));
+    }
+    return Either<A, C>(Left, asLeft());
+  }
+
+  /**
+   * Applies supplied function to stored `B` value if one is available and
+   * wraps the result in Either.
+   *
+   * @param fb Function object. `F::operator()` when called with `B&&` has
+   * return type `Either<A, C>`.
+   *
+   * @return If this object contains a `B` value, the result of `fb(b)` is
+   * stored in the returned either. Otherwise, the pre-existing `A` value is
+   * copied into the return value.
+   */
+  template <typename Fb>
+  auto map(Fb fb) && -> Either<A, std::result_of_t<Fb(B&&)>> {
+    using C = typename std::result_of_t<Fb(B &&)>;
+    if (isRight()) {
+      return Either<A, C>(Right, fb(std::move(asRight())));
     }
     return Either<A, C>(Left, asLeft());
   }
