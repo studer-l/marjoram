@@ -77,7 +77,7 @@ struct Needy_t {
 
 TEST(Maybe, NoCopyType) {
   auto nc = Just(NoCopy_t());
-  auto minusOne = nc.flatMap([](NoCopy_t&&) { return Just(-1); });
+  auto minusOne = std::move(nc).flatMap([](NoCopy_t&&) { return Just(-1); });
   ASSERT_EQ(minusOne.get(), -1);
 
   ASSERT_EQ(NoCopy_t::newCount, 1LU);
@@ -87,9 +87,17 @@ TEST(Maybe, NoCopyType) {
   ASSERT_EQ(NoCopy_t::newCount, 2LU);
 
   auto nc3 = Just(NoCopy_t());
-  auto maybeNeedy =
-      nc3.flatMap([](NoCopy_t&& ncc) { return Just(Needy_t(std::move(ncc))); });
+  auto maybeNeedy = std::move(nc3).flatMap(
+      [](NoCopy_t&& ncc) { return Just(Needy_t(std::move(ncc))); });
   ASSERT_EQ(NoCopy_t::newCount, 3LU);
+}
+
+TEST(Maybe, MutableRef) {
+  auto nc = Just(NoCopy_t());
+  auto minusOne = nc.flatMap([](auto&) { return Just(-1); });
+  auto minusOne2 = nc.map([](auto&) { return -1; });
+  ASSERT_EQ(minusOne.get(), -1);
+  ASSERT_EQ(minusOne2.get(), -1);
 }
 
 TEST(Maybe, MoveCtors) {

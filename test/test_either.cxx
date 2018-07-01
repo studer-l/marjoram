@@ -57,8 +57,8 @@ struct SomeType {
 
 TEST(Either, unique_ptr) {
   auto ept = Either<std::string, std::unique_ptr<int>>(new int(42));
-  auto est =
-      ept.map([](std::unique_ptr<int>&& i) { return SomeType(std::move(i)); });
+  auto est = std::move(ept).map(
+      [](std::unique_ptr<int>&& i) { return SomeType(std::move(i)); });
   ASSERT_TRUE(ept.isRight());
   EXPECT_EQ(*est.asRight().ip, 42);
   EXPECT_EQ(ept.asRight(), nullptr);  // after move should be empty -> nullptr
