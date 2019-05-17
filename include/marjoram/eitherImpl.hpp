@@ -8,7 +8,9 @@ namespace ma {
 /**
  * Tag indicating the left side.
  */
-struct LeftSide {};
+struct LeftSide {
+  LeftSide() {}
+};
 /**
  * Convenience value for left side tag.
  */
@@ -17,7 +19,9 @@ static const LeftSide Left;
 /**
  * Tag indicating the right side.
  */
-struct RightSide {};
+struct RightSide {
+  RightSide() {}
+};
 /**
  * Convenience value for right side tag.
  */

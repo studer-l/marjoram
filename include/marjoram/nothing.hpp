@@ -5,7 +5,9 @@ namespace ma {
  * @{
  * Convertible to any kind of (empty) Maybe object.
  */
-struct Nothing_t {};
+struct Nothing_t {
+  Nothing_t() {}
+};
 
 /**
  * Convenience constant.

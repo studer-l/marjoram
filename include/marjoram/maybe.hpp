@@ -85,7 +85,7 @@ template <typename A> class Maybe {
   /**
    * Move `a` into new Maybe instance.
    */
-  Maybe(A&& a) noexcept(noexcept(A(std::move(a)))) : impl_(std::move(a)) {}
+  Maybe(A&& a) : impl_(std::move(a)) {}
 
   /**
    * Copy Maybe instance.
@@ -95,12 +95,10 @@ template <typename A> class Maybe {
   /**
    * Move Maybe instance.
    */
-  Maybe(Maybe<A>&& Ma) noexcept(
-      noexcept(boost::optional<A>(std::move(Ma.impl_)))) = default;
+  Maybe(Maybe<A>&& Ma) = default;
 
   Maybe<A>& operator=(const Maybe<A>& Ma) = default;
-  Maybe<A>& operator=(Maybe<A>&& Ma) noexcept(
-      noexcept(boost::optional<A>(std::move(Ma.impl_)))) = default;
+  Maybe<A>& operator=(Maybe<A>&& Ma)  = default;
 
   /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
