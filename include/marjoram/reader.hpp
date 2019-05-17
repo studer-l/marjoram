@@ -48,7 +48,7 @@ template <class A, class R> class Reader {
   template <typename F>
   auto map(F f) const -> Reader<A, std::result_of_t<F(R)>> {
     return Reader<A, std::result_of_t<F(R)>>(
-        [ f, self = *this ](const A& a) { return f(self.run(a)); });
+        [f, self = *this](const A& a) { return f(self.run(a)); });
   }
 
   /**
@@ -66,7 +66,7 @@ template <class A, class R> class Reader {
     static_assert(std::is_same<ReaderAC, Reader<A, C>>::value,
                   "Reader::flatMap f type mismatch.");
     return Reader<A, C>(
-        [ f, self = *this ](const A& a) { return f(self.run(a)).run(a); });
+        [f, self = *this](const A& a) { return f(self.run(a)).run(a); });
   }
 
  private:

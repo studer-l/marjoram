@@ -40,10 +40,10 @@ Maybe<int> f(bool just) {
 
 TEST(Maybe, getOrElse) {
   EXPECT_TRUE(f(true).isJust());
-  auto something = f(true);
+  auto anything = f(true);
   auto nada = f(false);
 
-  EXPECT_EQ(something.getOrElse(-42), 5);
+  EXPECT_EQ(anything.getOrElse(-42), 5);
   EXPECT_EQ(nada.getOrElse(-42), -42);
 }
 
@@ -189,9 +189,9 @@ TEST(Maybe, AdvancedFor) {
   auto Ei = Either<std::string, int>(42);
   auto Es = Either<std::string, int>("Is anybody in there?");
 
-  auto something = Complicated(Md, Ei);
-  ASSERT_TRUE(something.isJust());
-  ASSERT_EQ(something.get(), 47);
+  auto anything = Complicated(Md, Ei);
+  ASSERT_TRUE(anything.isJust());
+  ASSERT_EQ(anything.get(), 47);
 
   auto nothing1 = Complicated(Md, Es);
   ASSERT_TRUE(nothing1.isNothing());
@@ -289,4 +289,28 @@ TEST(Maybe, containsBool) {
   ma::Maybe<bool> nada = ma::Nothing;
   ASSERT_FALSE(nada.contains(true));
   ASSERT_FALSE(nada.contains(false));
+}
+
+TEST(Maybe, any__of_nothings) {
+  ma::Maybe<bool> nada0;
+  ma::Maybe<bool> nada1;
+  ma::Maybe<bool> nada2;
+  const auto& ref = ma::any(nada0, nada1, nada2);
+  ASSERT_TRUE(ref.isNothing());
+}
+
+TEST(Maybe, any__skips_nothing) {
+  ma::Maybe<bool> nada;
+  ma::Maybe<bool> justTrue = true;
+  auto& ref = ma::any(nada, justTrue);
+  ASSERT_TRUE(ref.contains(true));
+}
+
+TEST(Maybe, any__ignores_tail) {
+  ma::Maybe<bool> nada0;
+  ma::Maybe<bool> justFalse = false;
+  ma::Maybe<bool> nada1;
+  ma::Maybe<bool> justTrue = true;
+  auto& ref = ma::any(nada0, justFalse, nada1, justTrue);
+  ASSERT_TRUE(ref.contains(false));
 }

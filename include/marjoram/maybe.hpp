@@ -98,7 +98,7 @@ template <typename A> class Maybe {
   Maybe(Maybe<A>&& Ma) = default;
 
   Maybe<A>& operator=(const Maybe<A>& Ma) = default;
-  Maybe<A>& operator=(Maybe<A>&& Ma) = default;
+  Maybe<A>& operator=(Maybe<A>&& Ma)  = default;
 
   /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
@@ -114,7 +114,7 @@ template <typename A> class Maybe {
    */
 
   template <typename F>
-  auto flatMap(F f) const & -> std::result_of_t<F(const A&)> {
+  auto flatMap(F f) const& -> std::result_of_t<F(const A&)> {
     if (isJust()) {
       return f(get());
     }
@@ -170,7 +170,7 @@ template <typename A> class Maybe {
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
    */
   template <typename F>
-  auto map(F f) const & -> Maybe<std::result_of_t<F(const A&)>> {
+  auto map(F f) const& -> Maybe<std::result_of_t<F(const A&)>> {
     if (isJust()) {
       return Maybe<std::result_of_t<F(const A&)>>((f(get())));
     }
@@ -210,7 +210,7 @@ template <typename A> class Maybe {
    */
   template <typename F> auto map(F f) && -> Maybe<std::result_of_t<F(A&&)>> {
     if (isJust()) {
-      return Maybe<std::result_of_t<F(A&&)>>((f(std::move(get()))));
+      return Maybe<std::result_of_t<F(A &&)>>((f(std::move(get()))));
     }
     return Nothing;
   }
@@ -302,6 +302,22 @@ template <typename A> class Maybe {
   boost::optional<A> impl_;
 };
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+/** Base case for `any`` */
+template <typename A> const Maybe<A>& any(const Maybe<A>& Ma) { return Ma; }
+#endif
+
+/**
+ * Returns reference to first non-Nothing value among all arguments.
+ */
+template <typename A, typename... As>
+const Maybe<A>& any(const ma::Maybe<A>& first, const As&... rest) {
+  if (first.isJust()) {
+    return first;
+  }
+  return any(rest...);
+}
+
 /**
  * Iterator over Maybe. Allows mutable access to value contained.
  * If the Maybe instance from which the iterator was created contains a value,
@@ -341,7 +357,7 @@ template <typename A> class MaybeIterator {
     return *this;
   }
 
-  MaybeIterator& operator++(int) {
+  const MaybeIterator operator++(int) {
     MaybeIterator ret(Ma_, start_);
     start_ = false;
     return ret;
@@ -380,7 +396,7 @@ template <typename A> class ConstMaybeIterator {
     return *this;
   }
 
-  ConstMaybeIterator& operator++(int) {
+  const ConstMaybeIterator operator++(int) {
     ConstMaybeIterator ret(Ma_, start_);
     start_ = false;
     return ret;
