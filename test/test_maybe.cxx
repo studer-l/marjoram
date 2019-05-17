@@ -290,3 +290,27 @@ TEST(Maybe, containsBool) {
   ASSERT_FALSE(nada.contains(true));
   ASSERT_FALSE(nada.contains(false));
 }
+
+TEST(Maybe, some__of_nothings) {
+  ma::Maybe<bool> nada0;
+  ma::Maybe<bool> nada1;
+  ma::Maybe<bool> nada2;
+  auto& ref = ma::some(nada0, nada1, nada2);
+  ASSERT_TRUE(ref.isNothing());
+}
+
+TEST(Maybe, some__skips_nothing) {
+  ma::Maybe<bool> nada;
+  ma::Maybe<bool> justTrue = true;
+  auto& ref = ma::some(nada, justTrue);
+  ASSERT_TRUE(ref.contains(true));
+}
+
+TEST(Maybe, some__ignores_tail) {
+  ma::Maybe<bool> nada0;
+  ma::Maybe<bool> justFalse = false;
+  ma::Maybe<bool> nada1;
+  ma::Maybe<bool> justTrue = true;
+  auto& ref = ma::some(nada0, justFalse, nada1, justTrue);
+  ASSERT_TRUE(ref.contains(false));
+}

@@ -302,6 +302,22 @@ template <typename A> class Maybe {
   boost::optional<A> impl_;
 };
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+/** Base case for some */
+template <typename A> const Maybe<A>& some(const Maybe<A>& Ma) { return Ma; }
+#endif
+
+/**
+ * Returns reference to first non-Nothing value among all arguments.
+ */
+template <typename A, typename... As>
+const Maybe<A>& some(const ma::Maybe<A>& first, As... rest) {
+  if (first.isJust()) {
+    return first;
+  }
+  return some(rest...);
+}
+
 /**
  * Iterator over Maybe. Allows mutable access to value contained.
  * If the Maybe instance from which the iterator was created contains a value,
