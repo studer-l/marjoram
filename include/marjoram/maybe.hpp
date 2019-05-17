@@ -99,7 +99,8 @@ template <typename A> class Maybe {
       noexcept(boost::optional<A>(std::move(Ma.impl_)))) = default;
 
   Maybe<A>& operator=(const Maybe<A>& Ma) = default;
-  Maybe<A>& operator=(Maybe<A>&& Ma) noexcept = default;
+  Maybe<A>& operator=(Maybe<A>&& Ma) noexcept(
+      noexcept(boost::optional<A>(std::move(Ma.impl_)))) = default;
 
   /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
@@ -312,7 +313,7 @@ template <typename A> const Maybe<A>& any(const Maybe<A>& Ma) { return Ma; }
  * Returns reference to first non-Nothing value among all arguments.
  */
 template <typename A, typename... As>
-const Maybe<A>& any(const ma::Maybe<A>& first, const As& ... rest) {
+const Maybe<A>& any(const ma::Maybe<A>& first, const As&... rest) {
   if (first.isJust()) {
     return first;
   }
