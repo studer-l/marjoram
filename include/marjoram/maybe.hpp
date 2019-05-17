@@ -85,7 +85,7 @@ template <typename A> class Maybe {
   /**
    * Move `a` into new Maybe instance.
    */
-  Maybe(A&& a) : impl_(std::move(a)) {}
+  Maybe(A&& a) noexcept(noexcept(A(std::move(a)))) : impl_(std::move(a)) {}
 
   /**
    * Copy Maybe instance.
@@ -95,10 +95,11 @@ template <typename A> class Maybe {
   /**
    * Move Maybe instance.
    */
-  Maybe(Maybe<A>&& Ma) = default;
+  Maybe(Maybe<A>&& Ma) noexcept(
+      noexcept(boost::optional<A>(std::move(Ma.impl_)))) = default;
 
   Maybe<A>& operator=(const Maybe<A>& Ma) = default;
-  Maybe<A>& operator=(Maybe<A>&& Ma) = default;
+  Maybe<A>& operator=(Maybe<A>&& Ma) noexcept = default;
 
   /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
@@ -303,19 +304,19 @@ template <typename A> class Maybe {
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/** Base case for some */
-template <typename A> const Maybe<A>& some(const Maybe<A>& Ma) { return Ma; }
+/** Base case for `any`` */
+template <typename A> const Maybe<A>& any(const Maybe<A>& Ma) { return Ma; }
 #endif
 
 /**
  * Returns reference to first non-Nothing value among all arguments.
  */
 template <typename A, typename... As>
-const Maybe<A>& some(const ma::Maybe<A>& first, As... rest) {
+const Maybe<A>& any(const ma::Maybe<A>& first, const As& ... rest) {
   if (first.isJust()) {
     return first;
   }
-  return some(rest...);
+  return any(rest...);
 }
 
 /**
@@ -357,7 +358,7 @@ template <typename A> class MaybeIterator {
     return *this;
   }
 
-  MaybeIterator& operator++(int) {
+  const MaybeIterator operator++(int) {
     MaybeIterator ret(Ma_, start_);
     start_ = false;
     return ret;
@@ -396,7 +397,7 @@ template <typename A> class ConstMaybeIterator {
     return *this;
   }
 
-  ConstMaybeIterator& operator++(int) {
+  const ConstMaybeIterator operator++(int) {
     ConstMaybeIterator ret(Ma_, start_);
     start_ = false;
     return ret;

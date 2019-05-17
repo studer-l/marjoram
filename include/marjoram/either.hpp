@@ -448,7 +448,7 @@ template <typename A, typename B> class EitherIterator {
     return *this;
   }
 
-  EitherIterator& operator++(int) {
+  const EitherIterator operator++(int) {
     EitherIterator ret(Mb_, start_);
     start_ = false;
     return ret;
@@ -486,7 +486,7 @@ template <typename A, typename B> class ConstEitherIterator {
     return *this;
   }
 
-  ConstEitherIterator& operator++(int) {
+  const ConstEitherIterator operator++(int) {
     ConstEitherIterator ret(Mb_, start_);
     start_ = false;
     return ret;
