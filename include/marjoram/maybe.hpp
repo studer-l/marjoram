@@ -114,7 +114,7 @@ template <typename A> class Maybe {
    */
 
   template <typename F>
-  auto flatMap(F f) const & -> std::result_of_t<F(const A&)> {
+  auto flatMap(F f) const& -> std::result_of_t<F(const A&)> {
     if (isJust()) {
       return f(get());
     }
@@ -170,7 +170,7 @@ template <typename A> class Maybe {
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
    */
   template <typename F>
-  auto map(F f) const & -> Maybe<std::result_of_t<F(const A&)>> {
+  auto map(F f) const& -> Maybe<std::result_of_t<F(const A&)>> {
     if (isJust()) {
       return Maybe<std::result_of_t<F(const A&)>>((f(get())));
     }
@@ -210,7 +210,7 @@ template <typename A> class Maybe {
    */
   template <typename F> auto map(F f) && -> Maybe<std::result_of_t<F(A&&)>> {
     if (isJust()) {
-      return Maybe<std::result_of_t<F(A&&)>>((f(std::move(get()))));
+      return Maybe<std::result_of_t<F(A &&)>>((f(std::move(get()))));
     }
     return Nothing;
   }

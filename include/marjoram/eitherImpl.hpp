@@ -8,9 +8,7 @@ namespace ma {
 /**
  * Tag indicating the left side.
  */
-struct LeftSide {
-  LeftSide() {}
-};
+struct LeftSide {};
 /**
  * Convenience value for left side tag.
  */
@@ -19,9 +17,7 @@ static const LeftSide Left;
 /**
  * Tag indicating the right side.
  */
-struct RightSide {
-  RightSide() {}
-};
+struct RightSide {};
 /**
  * Convenience value for right side tag.
  */
@@ -40,7 +36,7 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Construct containing left type.
    */
   template <typename... Args>
-  EitherImpl(LeftSide /* selects overload */, Args&&... args)
+  explicit EitherImpl(LeftSide /* selects overload */, Args&&... args)
       : side(EitherSide::left) {
     new (&storage) Left_t(std::forward<Args>(args)...);
   }
@@ -49,7 +45,7 @@ template <typename Left_t, typename Right_t> class EitherImpl {
    * Construct containing right type.
    */
   template <typename... Args>
-  EitherImpl(RightSide /* selects overload */, Args&&... args)
+  explicit EitherImpl(RightSide /* selects overload */, Args&&... args)
       : side(EitherSide::right) {
     new (&storage) Right_t(std::forward<Args>(args)...);
   }
