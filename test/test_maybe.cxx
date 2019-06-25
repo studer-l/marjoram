@@ -1,5 +1,6 @@
 #include "marjoram/maybe.hpp"
 #include "gtest/gtest.h"
+#include <memory>
 
 using ma::Just;
 using ma::Maybe;
@@ -289,4 +290,16 @@ TEST(Maybe, containsBool) {
   ma::Maybe<bool> nada = ma::Nothing;
   ASSERT_FALSE(nada.contains(true));
   ASSERT_FALSE(nada.contains(false));
+}
+
+/*
+ *TEST(Maybe, makePair) {
+ *  std::pair<float, float> orig(1.0, 2.0);
+ *  std::pair<ma::Maybe<float>, int> pOfMb = std::make_pair(ma::Just(orig.first), 2);
+ *}
+ */
+
+TEST(Maybe, getOrElse_uniquePtr) {
+  auto Mbptr = ma::Just(std::make_unique<int>(5));
+  ASSERT_NE(Mbptr.getOrElse(nullptr), nullptr);
 }

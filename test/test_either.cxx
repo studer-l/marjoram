@@ -270,3 +270,8 @@ TEST(Either, leftJoin_LefttLeft) {
   ASSERT_TRUE(joined.isLeft());
   ASSERT_EQ(joined.asLeft(), "hello");
 }
+
+TEST(Either, voidFold) {
+  ma::Either<int, std::string> Eis("test");
+  Eis.fold([](int) { return; }, [](std::string) { return; });
+}
