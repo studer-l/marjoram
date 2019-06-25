@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # script ran by travis inside docker container
 set -ex
 

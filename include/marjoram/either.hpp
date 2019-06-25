@@ -1,11 +1,10 @@
 #pragma once
 
-#include <algorithm>
-#include <type_traits>
-
 #include "eitherImpl.hpp"
 #include "maybe.hpp"
 #include "nothing.hpp"
+#include <algorithm>
+#include <type_traits>
 
 namespace ma {
 /**
@@ -182,7 +181,7 @@ class Either : private detail::EitherImpl<A, B> {
    * copied into the return value.
    */
   template <typename Fb>
-  auto flatMap(Fb fb) const & -> std::result_of_t<Fb(const B&)> {
+  auto flatMap(Fb fb) const& -> std::result_of_t<Fb(const B&)> {
     using C = typename std::result_of_t<Fb(const B&)>::right_type;
     if (isRight()) {
       return fb(asRight());
@@ -238,7 +237,7 @@ class Either : private detail::EitherImpl<A, B> {
    * copied into the return value.
    */
   template <typename Fb>
-  auto map(Fb fb) const & -> Either<A, std::result_of_t<Fb(const B&)>> {
+  auto map(Fb fb) const& -> Either<A, std::result_of_t<Fb(const B&)>> {
     using C = typename std::result_of_t<Fb(const B&)>;
     if (isRight()) {
       return Either<A, C>(Right, fb(asRight()));
@@ -449,7 +448,7 @@ template <typename A, typename B> class EitherIterator {
     return *this;
   }
 
-  EitherIterator& operator++(int) {
+  const EitherIterator operator++(int) {
     EitherIterator ret(Mb_, start_);
     start_ = false;
     return ret;
@@ -487,7 +486,7 @@ template <typename A, typename B> class ConstEitherIterator {
     return *this;
   }
 
-  ConstEitherIterator& operator++(int) {
+  const ConstEitherIterator operator++(int) {
     ConstEitherIterator ret(Mb_, start_);
     start_ = false;
     return ret;

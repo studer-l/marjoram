@@ -283,7 +283,7 @@ template <typename A> class LazyIterator {
     return *this;
   }
 
-  LazyIterator& operator++(int) {
+  const LazyIterator operator++(int) {
     LazyIterator ret(La_, start_);
     start_ = false;
     return ret;

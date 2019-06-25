@@ -3,9 +3,9 @@
 #include <memory>
 #include <string>
 
-using ma::detail::EitherImpl;
 using ma::Left;
 using ma::Right;
+using ma::detail::EitherImpl;
 
 struct LeftOne {
   char c;
