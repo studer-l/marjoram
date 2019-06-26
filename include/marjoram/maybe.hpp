@@ -141,16 +141,19 @@ template <typename A> class Maybe {
 
   /**
    * Returns result of `f(a)` if this holds a value, otherwise returns Nothing.
+   * The value is moved into the argument.
    *
    * @param f Function object.
    *
    * Type requirement:
-   * - `F::operator()` when called with `A&&` argument has return type
-   *   `Maybe<B>`, where `B` is non void
+   * - `F::operator()` when called with `A` argument has return type
+   *   `Maybe<B>`, where `B` is non void.
+   *
+   * The stored value (if any) is moved into the call to F.
    *
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
    */
-  template <typename F> auto flatMap(F f) && -> std::result_of_t<F(A&&)> {
+  template <typename F> auto flatMap(F f) && -> std::result_of_t<F(A)> {
     if (isJust()) {
       return f(std::move(getImpl()));
     }
@@ -199,18 +202,20 @@ template <typename A> class Maybe {
   /**
    * Returns maybe containing result of `f(a)` if this holds a value, otherwise
    * returns Nothing.
+   * The value is moved into the argument.
    *
    * @param f Function object.
    *
    * Type requirement:
-   * - `F::operator()` when called with argument of type `A&&` has non-void
+   * - `F::operator()` when called with argument of type `A` has non-void
    * return type `B`.
+   *
    *
    * @return `Maybe<B>` containing the result of `f(a)` or `Nothing`.
    */
-  template <typename F> auto map(F f) && -> Maybe<std::result_of_t<F(A&&)>> {
+  template <typename F> auto map(F f) && -> Maybe<std::result_of_t<F(A)>> {
     if (isJust()) {
-      return Maybe<std::result_of_t<F(A &&)>>((f(std::move(get()))));
+      return Maybe<std::result_of_t<F(A)>>((f(std::move(get()))));
     }
     return Nothing;
   }
