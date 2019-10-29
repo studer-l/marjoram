@@ -271,7 +271,8 @@ TEST(Either, leftJoin_LefttLeft) {
   ASSERT_EQ(joined.asLeft(), "hello");
 }
 
-TEST(Either, voidFold) {
-  ma::Either<int, std::string> Eis("test");
-  Eis.fold([](int) { return; }, [](std::string) { return; });
+/** compile time test; Ensure the type deduction inside `toMaybe` works */
+TEST(Either, StringToMaybe) {
+  ma::Either<int, std::string> Eis("hello world");
+  ma::Maybe<std::string> ms = Eis.toMaybe();
 }

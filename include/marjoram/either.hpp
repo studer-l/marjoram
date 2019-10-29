@@ -325,7 +325,7 @@ class Either : private detail::EitherImpl<A, B> {
    */
   Maybe<B> toMaybe() const {
     if (isRight()) {
-      return Just(asRight());
+      return ma::Maybe<B>(asRight());
     }
     return ma::Nothing;
   }
