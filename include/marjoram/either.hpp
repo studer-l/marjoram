@@ -413,6 +413,20 @@ class Either : private detail::EitherImpl<A, B> {
   ConstEitherIterator<A, B> cend() const { return {*this, false}; }
 };
 
+template <typename A, typename B>
+bool operator==(const Either<A, B>& rhs, const Either<A, B>& lhs) {
+  if (rhs.isLeft()) {
+    return lhs.isLeft() && rhs.asLeft() == lhs.asLeft();
+  } else {
+    return lhs.isRight() && rhs.asRight() == lhs.asRight();
+  }
+}
+
+template <typename A, typename B>
+bool operator!=(const Either<A, B>& rhs, const Either<A, B>& lhs) {
+  return !(rhs == lhs);
+}
+
 /**
  * Right-biased iterator. Allows mutable access to the right value of an Either.
  *
