@@ -276,3 +276,25 @@ TEST(Either, StringToMaybe) {
   ma::Either<int, std::string> Eis("hello world");
   ma::Maybe<std::string> ms = Eis.toMaybe();
 }
+
+TEST(Either, operator_equality) {
+  ma::Either<int, int> leftFive{ma::Left, 5};
+  ma::Either<int, int> rightFive{ma::Right, 5};
+  ASSERT_NE(leftFive, rightFive);
+  ASSERT_EQ(leftFive.mirror(), rightFive);
+  ASSERT_EQ(leftFive, rightFive.mirror());
+}
+
+struct Peerless {
+  Peerless(){}
+  bool operator==(Peerless) = delete;
+};
+
+TEST(Either, operator_equality_sfinae) {
+  // can declare Either with types that have no operator==
+  Either<int, Peerless> erp (ma::Right);
+  Either<Peerless, int> elp(ma::Left);
+
+  // fails to compile
+  // erp == elp;
+}
