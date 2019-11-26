@@ -98,7 +98,7 @@ template <typename A> class Maybe {
   Maybe(Maybe<A>&& Ma) = default;
 
   Maybe<A>& operator=(const Maybe<A>& Ma) = default;
-  Maybe<A>& operator=(Maybe<A>&& Ma)  = default;
+  Maybe<A>& operator=(Maybe<A>&& Ma) = default;
 
   /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
@@ -372,6 +372,17 @@ template <typename A> class MaybeIterator {
   Maybe<A>& Ma_;
   bool start_;
 };
+
+template <typename A>
+bool operator==(const ma::Maybe<A>& lhs, const ma::Maybe<A>& rhs) {
+  return lhs.map([&rhs](const auto& a) { return rhs.contains(a); })
+      .getOrElse(false);
+}
+
+template <typename A>
+bool operator!=(const ma::Maybe<A>& lhs, const ma::Maybe<A>& rhs) {
+  return !(lhs == rhs);
+}
 
 /**
  * Immutable Iterator over Maybe.
