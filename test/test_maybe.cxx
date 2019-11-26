@@ -326,3 +326,17 @@ TEST(Maybe, any__ignores_tail) {
   auto& ref = ma::any(nada0, justFalse, nada1, justTrue);
   ASSERT_TRUE(ref.contains(false));
 }
+
+TEST(Maybe, comparison) {
+  ma::Maybe<int> justFive(5);
+  ma::Maybe<int> alsoFive(5);
+  ma::Maybe<int> notFive(6);
+  ma::Maybe<int> nada;
+
+  ASSERT_EQ(justFive, justFive);
+  ASSERT_EQ(justFive, alsoFive);
+
+  ASSERT_NE(justFive, nada);
+  ASSERT_NE(nada, justFive);
+  ASSERT_NE(justFive, notFive);
+}
