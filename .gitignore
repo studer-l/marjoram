@@ -3,3 +3,5 @@ ci_build/
 doc/html
 doc/latex
 *.swp
+.clangd
+compile_commands.json
