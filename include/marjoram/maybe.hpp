@@ -229,6 +229,28 @@ template <typename A> class Maybe {
   }
 
   /**
+   * @return copy of `this` if `pred` applied to `this` returns `true`, Nothing
+   * otherwise.
+   */
+  template <typename Predicate> Maybe<A> filter(Predicate pred) const& {
+    if (exists(pred)) {
+      return *this;
+    }
+    return Nothing;
+  }
+
+  /**
+   * @return `this` (moved) if `pred` applied to `this` returns `true`, Nothing
+   * otherwise.
+   */
+  template <typename Predicate> Maybe<A> filter(Predicate pred) && {
+    if (exists(pred)) {
+      return std::move(*this);
+    }
+    return Nothing;
+  }
+
+  /**
    * @return ma::Either containing either the stored value or the argument.
    */
   template <class Left> Either<Left, A> toRight(const Left& left) const {

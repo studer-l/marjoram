@@ -295,7 +295,8 @@ TEST(Maybe, containsBool) {
 /*
  *TEST(Maybe, makePair) {
  *  std::pair<float, float> orig(1.0, 2.0);
- *  std::pair<ma::Maybe<float>, int> pOfMb = std::make_pair(ma::Just(orig.first), 2);
+ *  std::pair<ma::Maybe<float>, int> pOfMb =
+ *std::make_pair(ma::Just(orig.first), 2);
  *}
  */
 
@@ -339,4 +340,20 @@ TEST(Maybe, comparison) {
   ASSERT_NE(justFive, nada);
   ASSERT_NE(nada, justFive);
   ASSERT_NE(justFive, notFive);
+}
+
+TEST(Maybe, filter) {
+  ma::Maybe<int> five(5);
+  ma::Maybe<int> four(4);
+
+  auto isEven = [](int i) { return i % 2 == 0; };
+
+  ASSERT_TRUE(five.filter(isEven).isNothing());
+  ASSERT_TRUE(four.filter(isEven).contains(4));
+}
+
+TEST(Maybe, filter_move) {
+  ma::Maybe<std::unique_ptr<int>> uniqueFour(std::make_unique<int>(4));
+  auto isEven = [](const std::unique_ptr<int>& i) { return *i % 2 == 0; };
+  ASSERT_TRUE(std::move(uniqueFour).filter(isEven).exists([](const auto& ptr) {return *ptr == 4;}));
 }

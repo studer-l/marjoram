@@ -404,6 +404,36 @@ class Either : private detail::EitherImpl<A, B> {
         .mirror();
   }
 
+  /**
+   * If `this` is a left: returns itself (copy).
+   * If the predicate applies to the right value, `this` is returned (copy).
+   * Otherwise, the given value `a` is returned as a left value (move).
+   */
+  template <typename Pred> Either<A, B> filterOrElse(Pred pred, A a) const& {
+    if (exists(pred)) {
+      return *this;
+    }
+    if (isRight()) {
+      return {Left, std::move(a)};
+    }
+    return *this;
+  }
+
+  /**
+   * If `this` is left: returns itself (move).
+   * If the predicate applies to the right value, `this` is returned (move).
+   * Otherwise, the given value `a` is returned as a left value (move).
+   */
+  template <typename Pred> Either<A, B> filterOrElse(Pred pred, A a) && {
+    if (exists(pred)) {
+      return std::move(*this);
+    }
+    if (isRight()) {
+      return {Left, std::move(a)};
+    }
+    return std::move(*this);
+  }
+
   EitherIterator<A, B> begin() { return {*this, true}; }
   ConstEitherIterator<A, B> begin() const { return {*this, true}; }
   ConstEitherIterator<A, B> cbegin() const { return {*this, true}; }

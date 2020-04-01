@@ -286,15 +286,57 @@ TEST(Either, operator_equality) {
 }
 
 struct Peerless {
-  Peerless(){}
+  Peerless() {}
   bool operator==(Peerless) = delete;
 };
 
 TEST(Either, operator_equality_sfinae) {
   // can declare Either with types that have no operator==
-  Either<int, Peerless> erp (ma::Right);
+  Either<int, Peerless> erp(ma::Right);
   Either<Peerless, int> elp(ma::Left);
 
   // fails to compile
   // erp == elp;
+}
+
+TEST(Either, filterOrElse_right) {
+  ma::Either<std::string, int> rightFour{ma::Right, 4};
+  auto isEven = [](int i) { return i % 2 == 0; };
+  auto isOdd = [](int i) { return i % 2 == 1; };
+
+  std::string failed("failed");
+  ASSERT_TRUE(rightFour.filterOrElse(isEven, failed).contains(4));
+
+  auto filtered = rightFour.filterOrElse(isOdd, failed);
+  ASSERT_TRUE(filtered.isLeft());
+  ASSERT_EQ(filtered.asLeft(), failed);
+}
+
+TEST(Either, filterOrElse_left) {
+  ma::Either<std::string, int> leftFive{ma::Left, "hi"};
+  auto isEven = [](int i) { return i % 2 == 0; };
+  auto filtered = leftFive.filterOrElse(isEven, "failed");
+  ASSERT_TRUE(filtered.isLeft());
+  ASSERT_EQ(filtered.asLeft(), "hi");
+}
+
+TEST(Either, filterOrElse_move_right) {
+  ma::Either<std::string, std::unique_ptr<int>> rightFour{
+      ma::Right, std::make_unique<int>(4)};
+  auto isEven = [](const std::unique_ptr<int>& i) { return *i % 2 == 0; };
+
+  std::string failed("failed");
+  ASSERT_TRUE(std::move(rightFour)
+                  .filterOrElse(isEven, failed)
+                  .exists([](const auto& ptr) { return *ptr == 4; }));
+}
+
+TEST(EIther, filterOrElse_move_right_fail) {
+  ma::Either<std::string, std::unique_ptr<int>> rightFour{
+      ma::Right, std::make_unique<int>(4)};
+  std::string failed("failed");
+  auto isOdd = [](const std::unique_ptr<int>& i) { return *i % 2 == 1; };
+  auto filtered = std::move(rightFour).filterOrElse(isOdd, failed);
+  ASSERT_TRUE(filtered.isLeft());
+  ASSERT_EQ(filtered.asLeft(), failed);
 }
