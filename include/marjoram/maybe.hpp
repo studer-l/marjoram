@@ -300,9 +300,21 @@ template <typename A> class Maybe {
 
   /**
    * If this object contains a value, returns it. Otherwise returns `dflt`.
-   * @return reference to contained value.
+   * @return reference to contained value or argument.
    */
   const A& getOrElse(const A& dflt) const { return isJust() ? get() : dflt; }
+
+  /**
+   * If this object contains a value, returns it (along with ownership).
+   * Otherwise returns `dflt`. If `A` cannot be moved, it will be copied.
+   * @return The contained value or argument.
+   */
+  A getOrElse(A dflt) && {
+    if (isJust()) {
+      return std::move(get());
+    }
+    return dflt;
+  }
 
   /**
    * Return result of applying predicate to stored value if there is one, false

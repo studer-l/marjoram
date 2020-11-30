@@ -355,5 +355,19 @@ TEST(Maybe, filter) {
 TEST(Maybe, filter_move) {
   ma::Maybe<std::unique_ptr<int>> uniqueFour(std::make_unique<int>(4));
   auto isEven = [](const std::unique_ptr<int>& i) { return *i % 2 == 0; };
-  ASSERT_TRUE(std::move(uniqueFour).filter(isEven).exists([](const auto& ptr) {return *ptr == 4;}));
+  ASSERT_TRUE(std::move(uniqueFour).filter(isEven).exists([](const auto& ptr) {
+    return *ptr == 4;
+  }));
+}
+
+TEST(Maybe, get_or_else_move) {
+  ma::Maybe<std::unique_ptr<int>> uniqueFour(std::make_unique<int>(4));
+  auto rlyFour = std::move(uniqueFour).getOrElse(std::make_unique<int>(5));
+  ASSERT_EQ(*rlyFour, 4);
+}
+
+TEST(Maybe, get_or_else_move_nothing) {
+  ma::Maybe<std::unique_ptr<int>> nada = ma::Nothing;
+  auto five = std::move(nada).getOrElse(std::make_unique<int>(5));
+  ASSERT_EQ(*five, 5);
 }
