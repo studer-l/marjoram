@@ -1,4 +1,5 @@
 #include "marjoram/maybe.hpp"
+#include "marjoram/nothing.hpp"
 #include "gtest/gtest.h"
 #include <memory>
 
@@ -370,4 +371,10 @@ TEST(Maybe, get_or_else_move_nothing) {
   ma::Maybe<std::unique_ptr<int>> nada = ma::Nothing;
   auto five = std::move(nada).getOrElse(std::make_unique<int>(5));
   ASSERT_EQ(*five, 5);
+}
+
+TEST(Maybe, equal_nothing) {
+  ASSERT_EQ(ma::Nothing, ma::Maybe<int>());
+  ASSERT_EQ(ma::Maybe<int>(), ma::Nothing);
+  ASSERT_EQ(ma::Maybe<float>(), ma::Maybe<float>());
 }

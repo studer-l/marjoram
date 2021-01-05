@@ -408,7 +408,22 @@ template <typename A> class MaybeIterator {
 };
 
 template <typename A>
+bool operator==(const ma::Maybe<A>& lhs, const ma::Nothing_t& /* rhs  */) {
+  return lhs.isNothing();
+}
+
+template <typename A>
+bool operator==(const ma::Nothing_t& /* lhs  */, const ma::Maybe<A>& rhs) {
+  return rhs.isNothing();
+}
+
+template <typename A>
 bool operator==(const ma::Maybe<A>& lhs, const ma::Maybe<A>& rhs) {
+  // handle case were both are nothing
+  if (lhs.isNothing() && rhs.isNothing()) {
+    return true;
+  }
+  // otherwise values must be equal
   return lhs.map([&rhs](const auto& a) { return rhs.contains(a); })
       .getOrElse(false);
 }
