@@ -261,6 +261,56 @@ TEST(Maybe, toLeft_Failcase) {
   ASSERT_EQ(E.asRight(), std::string("wat"));
 }
 
+TEST(Maybe, toRight_move) {
+  auto nc = Just(NoCopy_t());
+  auto e = std::move(nc).toRight(std::string("oops"));
+  ASSERT_FALSE(nc.get().hasBrains);
+}
+
+TEST(Maybe, toRight_move_default_unused) {
+  auto mbstring = Just(std::string("hi"));
+  auto e = std::move(mbstring).toRight(NoCopy_t{});
+}
+
+TEST(Maybe, toRight_move_default) {
+  auto mbstring = ma::Maybe<std::string>{};
+
+  // copy
+  auto e = mbstring.toRight(NoCopy_t{});
+  ASSERT_TRUE(e.isLeft());
+  ASSERT_TRUE(e.asLeft().hasBrains);
+
+  // move
+  e = std::move(mbstring).toRight(NoCopy_t{});
+  ASSERT_TRUE(e.isLeft());
+  ASSERT_TRUE(e.asLeft().hasBrains);
+}
+
+TEST(Maybe, toLeft_move) {
+  auto nc = Just(NoCopy_t());
+  auto e = std::move(nc).toLeft(std::string("oops"));
+  ASSERT_FALSE(nc.get().hasBrains);
+}
+
+TEST(Maybe, toLeft_move_default_unused) {
+  auto mbstring = Just(std::string("hi"));
+  auto e = std::move(mbstring).toLeft(NoCopy_t{});
+}
+
+TEST(Maybe, toLeft_move_default) {
+  auto mbstring = ma::Maybe<std::string>{};
+
+  // copy
+  auto e = mbstring.toLeft(NoCopy_t{});
+  ASSERT_TRUE(e.isRight());
+  ASSERT_TRUE(e.asRight().hasBrains);
+
+  // move
+  e = std::move(mbstring).toLeft(NoCopy_t{});
+  ASSERT_TRUE(e.isRight());
+  ASSERT_TRUE(e.asRight().hasBrains);
+}
+
 TEST(Maybe, ToVector) {
   Maybe<float> MbF = ma::Just(42.0f);
   std::vector<float> v(MbF.begin(), MbF.end());
