@@ -253,23 +253,45 @@ template <typename A> class Maybe {
   /**
    * @return ma::Either containing either the stored value or the argument.
    */
-  template <class Left> Either<Left, A> toRight(const Left& left) const {
+  template <class Left> Either<Left, A> toRight(Left&& left) const& {
     using Either = Either<Left, A>;
     if (isJust()) {
       return Either(ma::Right, get());
     }
-    return Either(ma::Left, left);
+    return Either(ma::Left, std::forward<Left>(left));
   }
 
   /**
    * @return ma::Either containing either the stored value or the argument.
    */
-  template <class Right> Either<A, Right> toLeft(const Right& right) const {
+  template <class Left> Either<Left, A> toRight(Left&& left) && {
+    using Either = Either<Left, A>;
+    if (isJust()) {
+      return Either(ma::Right, std::move(get()));
+    }
+    return Either(ma::Left, std::forward<Left>(left));
+  }
+
+  /**
+   * @return ma::Either containing either the stored value or the argument.
+   */
+  template <class Right> Either<A, Right> toLeft(Right&& right) const& {
     using Either = Either<A, Right>;
     if (isJust()) {
       return Either(ma::Left, get());
     }
-    return Either(ma::Right, right);
+    return Either(ma::Right, std::forward<Right>(right));
+  }
+
+  /**
+   * @return ma::Either containing either the stored value or the argument.
+   */
+  template <class Right> Either<A, Right> toLeft(Right&& right) && {
+    using Either = Either<A, Right>;
+    if (isJust()) {
+      return Either(ma::Left, std::move(get()));
+    }
+    return Either(ma::Right, std::forward<Right>(right));
   }
 
   /**
