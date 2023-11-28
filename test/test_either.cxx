@@ -331,7 +331,7 @@ TEST(Either, filterOrElse_move_right) {
                   .exists([](const auto& ptr) { return *ptr == 4; }));
 }
 
-TEST(EIther, filterOrElse_move_right_fail) {
+TEST(Either, filterOrElse_move_right_fail) {
   ma::Either<std::string, std::unique_ptr<int>> rightFour{
       ma::Right, std::make_unique<int>(4)};
   std::string failed("failed");
@@ -339,4 +339,73 @@ TEST(EIther, filterOrElse_move_right_fail) {
   auto filtered = std::move(rightFour).filterOrElse(isOdd, failed);
   ASSERT_TRUE(filtered.isLeft());
   ASSERT_EQ(filtered.asLeft(), failed);
+}
+
+TEST(Either, leftMap_const_ref) {
+  const ma::Either<int, std::string> leftFour{ma::Left, 4};
+  auto msg = leftFour.leftMap([](const int& a) { return std::to_string(a); });
+  ma::Either<std::string, std::string> expected{ma::Left, std::string("4")};
+  ASSERT_EQ(msg, expected);
+}
+
+TEST(Either, leftMap_mutable_ref) {
+  ma::Either<int, std::string> leftFour{ma::Left, 4};
+  auto eight = leftFour.leftMap([](int& a) { return 2 * a; });
+  ma::Either<int, std::string> expected{ma::Left, 8};
+  ASSERT_EQ(eight, expected);
+}
+
+TEST(Either, leftMap_move_left) {
+  ma::Either<std::unique_ptr<int>, std::string> leftFour{
+      ma::Left, std::make_unique<int>(4)};
+  auto eight = std::move(leftFour).leftMap([](std::unique_ptr<int> a) {
+    *a *= 2;
+    return a;
+  });
+  ASSERT_TRUE(eight.isLeft());
+  ASSERT_EQ(*eight.asLeft(), 8);
+}
+
+TEST(Either, leftFlatMap_const_ref) {
+  const ma::Either<int, std::string> leftFour{ma::Left, 4};
+
+  auto eight = leftFour.leftFlatMap([](const int& a) {
+    return ma::Either<int, std::string>{ma::Left, 2 * a};
+  });
+  ma::Either<int, std::string> expected{ma::Left, 8};
+  ASSERT_EQ(eight, expected);
+
+  auto msg = leftFour.leftFlatMap([](const int& a) {
+    return ma::Either<int, std::string>{ma::Right, std::to_string(a)};
+  });
+  ma::Either<int, std::string> expected2{ma::Right, "4"};
+  ASSERT_EQ(msg, expected2);
+}
+
+TEST(Either, leftFlatMap_mutable_ref) {
+  ma::Either<int, std::string> leftFour{ma::Left, 4};
+
+  auto eight = leftFour.leftFlatMap([](int& a) {
+    return ma::Either<int, std::string>{ma::Left, 2 * a};
+  });
+  ma::Either<int, std::string> expected{ma::Left, 8};
+  ASSERT_EQ(eight, expected);
+
+  auto msg = leftFour.leftFlatMap([](int& a) {
+    return ma::Either<int, std::string>{ma::Right, std::to_string(a)};
+  });
+  ma::Either<int, std::string> expected2{ma::Right, "4"};
+  ASSERT_EQ(msg, expected2);
+}
+
+TEST(Either, leftFlatMap_move) {
+  ma::Either<std::unique_ptr<int>, std::string> leftFour{
+      ma::Left, std::make_unique<int>(4)};
+
+  auto eight = std::move(leftFour).leftFlatMap([](std::unique_ptr<int> a) {
+    return ma::Either<std::string, std::string>(ma::Left, std::to_string(*a));
+  });
+
+  ma::Either<std::string, std::string> expected{ma::Left, "4"};
+  ASSERT_EQ(eight, expected);
 }

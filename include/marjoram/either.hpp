@@ -251,7 +251,7 @@ class Either : private detail::EitherImpl<A, B> {
    * wraps the result in Either.
    *
    * @param fb Function object. `F::operator()` when called with `B&` has
-   * return type `Either<A, C>`.
+   * non-void return type.
    *
    * @return If this object contains a `B` value, the result of `fb(b)` is
    * stored in the returned either. Otherwise, the pre-existing `A` value is
@@ -272,7 +272,7 @@ class Either : private detail::EitherImpl<A, B> {
    * The value is moved into the argument.
    *
    * @param fb Function object. `F::operator()` when called with `B` has
-   * return type `Either<A, C>`.
+   * non-void return type.
    *
    * @return If this object contains a `B` value, the result of `fb(b)` is
    * stored in the returned either. Otherwise, the pre-existing `A` value is
@@ -285,6 +285,122 @@ class Either : private detail::EitherImpl<A, B> {
       return Either<A, C>(Right, fb(std::move(asRight())));
     }
     return Either<A, C>(Left, asLeft());
+  }
+
+  /**
+   * Applies supplied function to stored `A` value if one is available and
+   * wraps result in Either.
+   *
+   * @param fa Function object. `F::operator()` callable with `const A&` and
+   * non-void return type.
+   *
+   * @return If this object contains an `A` value, the result of `fa(a)` is
+   * stored in the returned either. Otherwise, the pre-existing `B` value is
+   * copied into the return value.
+   */
+  template <typename Fa>
+  auto leftMap(Fa fa) const& -> Either<std::result_of_t<Fa(const A&)>, B> {
+    using C = typename std::result_of_t<Fa(const A&)>;
+    if (isLeft()) {
+      return Either<C, B>(Left, fa(asLeft()));
+    }
+    return Either<C, B>(Right, asRight());
+  }
+
+  /**
+   * Applies supplied function to stored `A` value if one is available and
+   * wraps the result in Either.
+   *
+   * @param fa Function object. `F::operator()` when called with `A&` has
+   * non-void return type.
+   *
+   * @return If this object contains a `A` value, the result of `fa(a)` is
+   * stored in the returned either. Otherwise, the pre-existing `B` value is
+   * copied into the return value.
+   */
+  template <typename Fa>
+  auto leftMap(Fa fa) & -> Either<std::result_of_t<Fa(A&)>, B> {
+    using C = typename std::result_of_t<Fa(A&)>;
+    if (isLeft()) {
+      return Either<C, B>(Left, fa(asLeft()));
+    }
+    return Either<C, B>(Right, asRight());
+  }
+
+  /**
+   * Applies supplied function to stored `A` value if one is available and
+   * wraps the result in Either.
+   * The value is moved into the argument.
+   *
+   * @param fa Function object. `F::operator()` when called with `A` has
+   * non-void return type.
+   *
+   * @return If this object contains a `A` value, the result of `fa(a)` is
+   * stored in the returned either. Otherwise, the pre-existing `B` value is
+   * copied into the return value.
+   */
+  template <typename Fa>
+  auto leftMap(Fa fa) && -> Either<std::result_of_t<Fa(A)>, B> {
+    using C = typename std::result_of_t<Fa(A)>;
+    if (isLeft()) {
+      return Either<C, B>(Left, fa(std::move(asLeft())));
+    }
+    return Either<C, B>(Right, asRight());
+  }
+
+  /**
+   * Applies supplied function to stored `A` value if one is available.
+   *
+   * @param fa Function object. `F::operator()` when called with `const A&`
+   * has return type `Either<C, B>`.
+   *
+   * @return If this object contains a `A` value, the result of `fa(a)` is
+   * stored in the returned either. Otherwise, the pre-existing `B` value is
+   * copied into the return value.
+   */
+  template <typename Fa>
+  auto leftFlatMap(Fa fa) const& -> std::result_of_t<Fa(const A&)> {
+    using C = typename std::result_of_t<Fa(const A&)>::left_type;
+    if (isLeft()) {
+      return fa(asLeft());
+    }
+    return Either<C, B>(Right, asRight());
+  }
+
+  /**
+   * Applies supplied function to stored `A` value if one is available.
+   *
+   * @param fa Function object. `F::operator()` when called with `A&`
+   * has return type `Either<C, B>`.
+   *
+   * @return If this object contains a `A` value, the result of `fa(a)` is
+   * stored in the returned either. Otherwise, the pre-existing `B` value is
+   * copied into the return value.
+   */
+  template <typename Fa> auto leftFlatMap(Fa fa) & -> std::result_of_t<Fa(A&)> {
+    using C = typename std::result_of_t<Fa(A&)>::left_type;
+    if (isLeft()) {
+      return fa(asLeft());
+    }
+    return Either<C, B>(Right, asRight());
+  }
+
+  /**
+   * Applies supplied function to stored `A` value if one is available.
+   *
+   * @param fa Function object. `F::operator()` when called with `A`
+   * has return type `Either<C, B>`.
+   *
+   * @return If this object contains a `A` value, the result of `fa(a)` is
+   * stored in the returned either. Otherwise, the pre-existing `B` value is
+   * copied into the return value.
+   */
+  template <typename Fa> auto leftFlatMap(Fa fa) && -> std::result_of_t<Fa(A)> {
+    using C = typename std::result_of_t<Fa(A)>::left_type;
+    if (isLeft()) {
+      return fa(std::move(asLeft()));
+    }
+    return Either<C, B>(Right, asRight());
   }
 
   /**
