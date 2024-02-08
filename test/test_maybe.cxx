@@ -428,3 +428,8 @@ TEST(Maybe, equal_nothing) {
   ASSERT_EQ(ma::Maybe<int>(), ma::Nothing);
   ASSERT_EQ(ma::Maybe<float>(), ma::Maybe<float>());
 }
+
+TEST(Maybe, warns_on_discard) {
+  auto f = []() { return ma::Maybe<int> { 5 }; };
+  f();  // this line must produce a compiler warning
+}

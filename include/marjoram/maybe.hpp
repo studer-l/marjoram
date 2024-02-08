@@ -2,6 +2,7 @@
 
 #include "either.hpp"
 #include "nothing.hpp"
+#include "utils.h"
 #include <boost/optional/optional.hpp>
 #include <type_traits>
 #include <utility>
@@ -61,7 +62,7 @@ template <typename A, typename B> class Either;
  * Type requirements:
  *  A must be a value type
  */
-template <typename A> class Maybe {
+template <typename A> class MARJORAM_NODISCARD Maybe {
   static_assert(std::is_same<std::decay_t<A>, A>::value,
                 "Maybe<A>: A must be a value type.");
 
