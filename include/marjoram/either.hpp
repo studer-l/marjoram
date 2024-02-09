@@ -3,6 +3,7 @@
 #include "eitherImpl.hpp"
 #include "maybe.hpp"
 #include "nothing.hpp"
+#include "utils.h"
 #include <algorithm>
 #include <type_traits>
 
@@ -58,7 +59,7 @@ template <typename A> class Maybe;
  * value, similarly for B and right.
  */
 template <typename A, typename B>
-class Either : private detail::EitherImpl<A, B> {
+class MARJORAM_NODISCARD Either : private detail::EitherImpl<A, B> {
  private:
   using impl = detail::EitherImpl<A, B>;
   static_assert(std::is_same<std::decay_t<A>, A>::value,
