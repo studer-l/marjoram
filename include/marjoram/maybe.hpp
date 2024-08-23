@@ -340,6 +340,17 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
   }
 
   /**
+   * If this object contains a value, returns it. Otherwise returns `factory()`.
+   * @return The contained value or value returned by calling `factory()`
+   */
+  template <typename F> A getOrElseWith(F factory) && {
+    if (isJust()) {
+      return std::move(get());
+    }
+    return factory();
+  }
+
+  /**
    * Return result of applying predicate to stored value if there is one, false
    * otherwise.
    *
