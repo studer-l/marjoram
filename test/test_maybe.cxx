@@ -423,6 +423,22 @@ TEST(Maybe, get_or_else_move_nothing) {
   ASSERT_EQ(*five, 5);
 }
 
+TEST(Maybe, get_or_else_with_lambda) {
+  ma::Maybe<std::unique_ptr<int>> nada = ma::Nothing;
+  auto five = std::move(nada).getOrElseWith([](){return std::make_unique<int>(5);});
+  ASSERT_EQ(*five, 5);
+}
+
+std::unique_ptr<int> unique_one(){
+  return std::make_unique<int>(1);
+}
+
+TEST(Maybe, get_or_else_with_function) {
+  ma::Maybe<std::unique_ptr<int>> nada = ma::Nothing;
+  auto one = std::move(nada).getOrElseWith(unique_one);
+  ASSERT_EQ(*one, 1);
+}
+
 TEST(Maybe, equal_nothing) {
   ASSERT_EQ(ma::Nothing, ma::Maybe<int>());
   ASSERT_EQ(ma::Maybe<int>(), ma::Nothing);
