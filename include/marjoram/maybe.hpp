@@ -11,6 +11,13 @@ namespace ma {
 template <typename A> class MaybeIterator;
 template <typename A> class ConstMaybeIterator;
 template <typename A, typename B> class Either;
+
+/** Tag indicating in place construction is desired */
+struct InitInPlace_t {};
+
+/** Convenience constant */
+static const InitInPlace_t InitInPlace;
+
 /**
  * @defgroup Maybe Maybe
  * @addtogroup Maybe
@@ -77,6 +84,13 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
    * New empty object (containing `Nothing`).
    */
   Maybe() : impl_() {}
+
+  /**
+   * Construct value in place
+   */
+  template <class... Args>
+  Maybe(ma::InitInPlace_t, Args&&... args)
+      : impl_(boost::in_place_init, std::forward<Args>(args)...) {}
 
   /**
    * Copy `a` into new Maybe instance.

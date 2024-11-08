@@ -425,13 +425,12 @@ TEST(Maybe, get_or_else_move_nothing) {
 
 TEST(Maybe, get_or_else_with_lambda) {
   ma::Maybe<std::unique_ptr<int>> nada = ma::Nothing;
-  auto five = std::move(nada).getOrElseWith([](){return std::make_unique<int>(5);});
+  auto five =
+      std::move(nada).getOrElseWith([]() { return std::make_unique<int>(5); });
   ASSERT_EQ(*five, 5);
 }
 
-std::unique_ptr<int> unique_one(){
-  return std::make_unique<int>(1);
-}
+std::unique_ptr<int> unique_one() { return std::make_unique<int>(1); }
 
 TEST(Maybe, get_or_else_with_function) {
   ma::Maybe<std::unique_ptr<int>> nada = ma::Nothing;
@@ -446,6 +445,29 @@ TEST(Maybe, equal_nothing) {
 }
 
 TEST(Maybe, warns_on_discard) {
-  auto f = []() { return ma::Maybe<int> { 5 }; };
+  auto f = []() { return ma::Maybe<int>{5}; };
   f();  // this line must produce a compiler warning
+}
+
+// no move, no copy
+struct Pinned {
+  Pinned(int val_) : val(val_) {}
+  Pinned(Pinned&&) = delete;
+  Pinned(const Pinned&) = delete;
+
+  int val;
+};
+
+TEST(Maybe, pinned) { ma::Maybe<Pinned> mbPined{ma::InitInPlace, 4}; }
+
+struct PinnedNoCopyArg {
+  PinnedNoCopyArg(std::unique_ptr<int> val_) : val(std::move(val_)) {}
+  PinnedNoCopyArg(Pinned&&) = delete;
+  PinnedNoCopyArg(const Pinned&) = delete;
+
+  std::unique_ptr<int> val;
+};
+
+TEST(Maybe, pinned_perfect_forwarding) {
+  ma::Maybe<PinnedNoCopyArg> mbPined{ma::InitInPlace, nullptr};
 }
