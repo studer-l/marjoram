@@ -105,15 +105,21 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
   /**
    * Copy Maybe instance.
    */
-  Maybe(const Maybe<A>& Ma) = default;
+  Maybe(const Maybe<A>& ma) = default;
 
   /**
    * Move Maybe instance.
    */
-  Maybe(Maybe<A>&& Ma) = default;
+  Maybe(Maybe<A>&& ma) : impl_(std::move(ma.impl_)) { ma.reset(); };
 
-  Maybe<A>& operator=(const Maybe<A>& Ma) = default;
-  Maybe<A>& operator=(Maybe<A>&& Ma) = default;
+  Maybe<A>& operator=(const Maybe<A>& ma) = default;
+
+  Maybe<A>& operator=(Maybe<A>&& ma) {
+    reset();
+    using std::swap;
+    swap(this->impl_, ma.impl_);
+    return *this;
+  };
 
   /**
    * Create new instance of `A` in place in already allocated `Maybe<A>`.

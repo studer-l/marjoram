@@ -126,6 +126,23 @@ TEST(Maybe, For) {
   }
 }
 
+TEST(Maybe, MoveCtorClearsMovedFrom) {
+  ma::Maybe<int> five = Just(5);
+  ma::Maybe<int> newFive(std::move(five));
+
+  ASSERT_TRUE(five.isNothing());
+  ASSERT_TRUE(newFive.isJust());
+}
+
+TEST(Maybe, MoveAssignClearsMovedFrom) {
+  ma::Maybe<int> five = Just(5);
+  ma::Maybe<int> newFive;
+  newFive = std::move(five);
+
+  ASSERT_TRUE(five.isNothing());
+  ASSERT_TRUE(newFive.isJust());
+}
+
 TEST(Maybe, ConstFor) {
   const Maybe<int> five = Just(5);
   const Maybe<int> notFive;
