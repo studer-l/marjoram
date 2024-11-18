@@ -458,7 +458,7 @@ struct Pinned {
   int val;
 };
 
-TEST(Maybe, pinned) { ma::Maybe<Pinned> mbPined{ma::InitInPlace, 4}; }
+TEST(Maybe, pinned) { ma::Maybe<Pinned> mbPinned{ma::InitInPlace, 4}; }
 
 struct PinnedNoCopyArg {
   PinnedNoCopyArg(std::unique_ptr<int> val_) : val(std::move(val_)) {}
@@ -469,5 +469,34 @@ struct PinnedNoCopyArg {
 };
 
 TEST(Maybe, pinned_perfect_forwarding) {
-  ma::Maybe<PinnedNoCopyArg> mbPined{ma::InitInPlace, nullptr};
+  ma::Maybe<PinnedNoCopyArg> mbPinned{ma::InitInPlace, nullptr};
+}
+
+TEST(Maybe, emplace_pinned) {
+  ma::Maybe<Pinned> mbPinned;
+  ASSERT_TRUE(mbPinned.isNothing());
+
+  mbPinned.emplace(54);
+
+  ASSERT_TRUE(mbPinned.isJust());
+  ASSERT_TRUE(
+      mbPinned.exists([](const auto& pinned) { return pinned.val == 54; }));
+}
+
+TEST(Maybe, emplace_pinned_no_copy_arg) {
+  ma::Maybe<PinnedNoCopyArg> mbPinned;
+  ASSERT_TRUE(mbPinned.isNothing());
+
+  mbPinned.emplace(std::make_unique<int>(54));
+
+  ASSERT_TRUE(mbPinned.isJust());
+  ASSERT_TRUE(
+      mbPinned.exists([](const auto& pinned) { return *pinned.val == 54; }));
+}
+
+TEST(Maybe, reset) {
+  ma::Maybe<Pinned> mbPinned{ma::InitInPlace, 4};
+  ASSERT_TRUE(mbPinned.isJust());
+  mbPinned.reset();
+  ASSERT_TRUE(mbPinned.isNothing());
 }

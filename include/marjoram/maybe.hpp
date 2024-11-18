@@ -116,6 +116,18 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
   Maybe<A>& operator=(Maybe<A>&& Ma) = default;
 
   /**
+   * Create new instance of `A` in place in already allocated `Maybe<A>`.
+   * This is useful to initialize fields of type `Maybe<A>` where `A` can be
+   * neither moved nor copied.
+   */
+  template <class... Args> void emplace(Args&&... args) {
+    impl_.emplace(std::forward<Args>(args)...);
+  }
+
+  /** Clear current value if any. */
+  void reset() { impl_.reset(); }
+
+  /**
    * Returns result of `f(a)` wrapped in a Maybe if this holds a value,
    * otherwise returns Nothing.
    *
