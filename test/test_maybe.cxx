@@ -517,3 +517,94 @@ TEST(Maybe, reset) {
   mbPinned.reset();
   ASSERT_TRUE(mbPinned.isNothing());
 }
+
+TEST(Maybe, is_maybe) {
+  ma::Maybe<int> a{1};
+  ASSERT_TRUE(ma::is_maybe_v<decltype(a)>);
+  ASSERT_TRUE(ma::is_maybe_v<decltype(std::move(a))>);
+  ASSERT_FALSE(ma::is_maybe_v<int>);
+}
+
+TEST(Maybe, mapN) {
+  // We first create an object that is only movable, and need if for several
+  // reasons:
+  //  - To get compiler errors if a move is not handled correctly
+  //  - To check if an lvalue reference was moved from
+  class Movable {
+   public:
+    explicit Movable(std::string value_) : value(value_) {}
+    Movable(Movable&& other) : value(std::move(other.value)) {}
+    Movable& operator=(Movable&& other) {
+      value = std::move(other.value);
+      return *this;
+    }
+    Movable(const Movable&& other) = delete;
+    Movable& operator=(const Movable& other) = delete;
+
+    size_t size() const { return value.size(); }
+
+   private:
+    std::string value;
+  };
+  // It works with lvalue references
+  {
+    auto f = [](Movable& msg) { return msg.size(); };
+    ma::Maybe<Movable> msg = Movable("abcd");
+    auto res = mapN(f, msg);
+    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(msg.isJust());
+    ASSERT_EQ(msg.get().size(), 5ul);
+  }
+  {
+    auto f = [](const Movable& msg) { return msg.size(); };
+    ma::Maybe<Movable> msg = Movable("abcd");
+    auto res = mapN(f, msg);
+    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(msg.isJust());
+    ASSERT_EQ(msg.get().size(), 5ul);
+  }
+  // Also works for const references
+  {
+    auto f = [](const Movable& msg) { return msg.size(); };
+    const ma::Maybe<Movable> msg = Movable("abcd");
+    auto res = mapN(f, msg);
+    ASSERT_TRUE(res.contains(5ul));
+  }
+  // It works with rvalue references
+  {
+    auto f = [](Movable msg) { return msg.size(); };
+    ma::Maybe<Movable> msg = Movable("abcd");
+    auto res = mapN(f, std::move(msg));
+    ASSERT_TRUE(res.contains(5ul));
+  }
+  {
+    auto f = [](const Movable& msg) { return msg.size(); };
+    ma::Maybe<Movable> msg = Movable("abcd");
+    auto res = mapN(f, std::move(msg));
+    ASSERT_TRUE(res.contains(5ul));
+  }
+  {
+    auto f = [](Movable&& msg) { return msg.size(); };
+    ma::Maybe<Movable> msg = Movable("abcd");
+    auto res = mapN(f, std::move(msg));
+    ASSERT_TRUE(res.contains(5ul));
+  }
+  // It works with mixed everything
+  {
+    auto f = [](Movable msg1, const Movable& msg2, auto offset, auto joker) {
+      return msg1.size() + msg2.size() + offset + joker.size();
+    };
+    ma::Maybe<Movable> msg1 = Movable("ab");
+    ma::Maybe<Movable> msg2 = Movable("abcde");
+    auto res = mapN(f, std::move(msg1), msg2, ma::Just(19),
+                    ma::Just(std::string{"12"}));
+    ASSERT_TRUE(res.contains(30ul));
+  }
+  // But as soon as there is one nothing
+  {
+    auto f = [](int i1, int i2) { return i1 + i2; };
+    auto res = mapN(f, ma::Just(1), ma::Maybe<int>{});
+    // The function does not get called
+    ASSERT_TRUE(res.isNothing());
+  }
+}

@@ -544,5 +544,49 @@ template <typename A> class ConstMaybeIterator {
 template <typename A> Maybe<std::decay_t<A>> Just(A&& a) {
   return Maybe<A>(std::forward<A>(a));
 }
+
+/** Utility template for checking if a given type T is a ma::Maybe */
+template <typename> struct is_maybe : std::false_type {};
+template <typename T> struct is_maybe<Maybe<T>> : std::true_type {};
+
+/** Helper variable template for is_maybe<T>::value */
+template <typename T>
+constexpr bool is_maybe_v = is_maybe<std::decay_t<T>>::value;
+
+/**
+ * @brief Utility function for getting reference, or moving value from input
+ *        Maybe, depending on the reference type of the input argument
+ * @returns l-value reference to value contained in l-value qualified input, or
+ *          moved value else
+ */
+template <typename Arg> decltype(auto) get(Arg&& mbValue) {
+  static_assert(is_maybe_v<Arg>, "Argument has to be a ma::Maybe");
+  if constexpr (std::is_lvalue_reference_v<decltype(mbValue)>) {
+    return mbValue.get();
+  } else {
+    return std::move(mbValue.get());
+  }
+}
+
+/**
+ * Returns result of `f(mbVal1.get(), ...)` if all arguments contain a value,
+ * otherwise returns Nothing. The values are forwarded to the function.
+ *
+ * @param f Function object.
+ * @param mbArgs optional arguments to apply
+ *
+ * @return result of calling `f` with unwrapped arguments
+ */
+template <typename F, typename... Args,
+          typename = std::enable_if<(is_maybe_v<Args> && ...)>>
+auto mapN(F func, Args&&... mbArgs)
+    -> ma::Maybe<
+        std::invoke_result_t<F, decltype(get(std::forward<Args>(mbArgs)))...>> {
+  if (((mbArgs.isJust()) && ...)) {
+    return func(get(std::forward<Args>(mbArgs))...);
+  }
+  return ma::Nothing;
+}
+
 // @}
 }  // namespace ma
