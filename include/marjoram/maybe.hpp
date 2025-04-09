@@ -344,14 +344,25 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
    * Undefined behavior if this Maybe does not contain a value.
    * @return const reference to contained value.
    */
-  const A& get() const { return getImpl(); }
+  const A& get() const& { return getImpl(); }
 
   /**
    * Obtains contained value.
    * Undefined behavior if this Maybe does not contain a value.
    * @return reference to contained value.
    */
-  A& get() { return getImpl(); }
+  A& get() & { return getImpl(); }
+
+  /**
+   * Passes ownership of contained value to caller, resets the Maybe
+   * Undefined behavior if this Maybe does not contain a value.
+   * @return contained value.
+   */
+  A&& get() && {
+    auto&& ret = std::move(getImpl());
+    reset();
+    return ret;
+  }
 
   /**
    * If this object contains a value, returns it. Otherwise returns `dflt`.
@@ -554,21 +565,6 @@ template <typename T>
 constexpr bool is_maybe_v = is_maybe<std::decay_t<T>>::value;
 
 /**
- * @brief Utility function for getting reference, or moving value from input
- *        Maybe, depending on the reference type of the input argument
- * @returns l-value reference to value contained in l-value qualified input, or
- *          moved value else
- */
-template <typename Arg> decltype(auto) get(Arg&& mbValue) {
-  static_assert(is_maybe_v<Arg>, "Argument has to be a ma::Maybe");
-  if constexpr (std::is_lvalue_reference_v<decltype(mbValue)>) {
-    return mbValue.get();
-  } else {
-    return std::move(mbValue.get());
-  }
-}
-
-/**
  * Returns result of `f(mbVal1.get(), ...)` if all arguments contain a value,
  * otherwise returns Nothing. The values are forwarded to the function.
  *
@@ -577,13 +573,13 @@ template <typename Arg> decltype(auto) get(Arg&& mbValue) {
  *
  * @return result of calling `f` with unwrapped arguments
  */
-template <typename F, typename... Args,
-          typename = std::enable_if<(is_maybe_v<Args> && ...)>>
-auto mapN(F func, Args&&... mbArgs)
-    -> ma::Maybe<
-        std::invoke_result_t<F, decltype(get(std::forward<Args>(mbArgs)))...>> {
+template <typename F, typename... MbArgs,
+          typename = std::enable_if<(is_maybe_v<MbArgs> && ...)>>
+auto mapN(F func, MbArgs&&... mbArgs)
+    -> ma::Maybe<std::invoke_result_t<
+        F, decltype(std::forward<MbArgs>(mbArgs).get())...>> {
   if (((mbArgs.isJust()) && ...)) {
-    return func(get(std::forward<Args>(mbArgs))...);
+    return func(std::forward<MbArgs>(mbArgs).get()...);
   }
   return ma::Nothing;
 }

@@ -551,43 +551,43 @@ TEST(Maybe, mapN) {
     auto f = [](Movable& msg) { return msg.size(); };
     ma::Maybe<Movable> msg = Movable("abcd");
     auto res = mapN(f, msg);
-    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(res.contains(4ul));
     ASSERT_TRUE(msg.isJust());
-    ASSERT_EQ(msg.get().size(), 5ul);
+    ASSERT_EQ(msg.get().size(), 4ul);
   }
   {
     auto f = [](const Movable& msg) { return msg.size(); };
     ma::Maybe<Movable> msg = Movable("abcd");
     auto res = mapN(f, msg);
-    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(res.contains(4ul));
     ASSERT_TRUE(msg.isJust());
-    ASSERT_EQ(msg.get().size(), 5ul);
+    ASSERT_EQ(msg.get().size(), 4ul);
   }
   // Also works for const references
   {
     auto f = [](const Movable& msg) { return msg.size(); };
     const ma::Maybe<Movable> msg = Movable("abcd");
     auto res = mapN(f, msg);
-    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(res.contains(4ul));
   }
   // It works with rvalue references
   {
     auto f = [](Movable msg) { return msg.size(); };
     ma::Maybe<Movable> msg = Movable("abcd");
     auto res = mapN(f, std::move(msg));
-    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(res.contains(4ul));
   }
   {
     auto f = [](const Movable& msg) { return msg.size(); };
     ma::Maybe<Movable> msg = Movable("abcd");
     auto res = mapN(f, std::move(msg));
-    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(res.contains(4ul));
   }
   {
     auto f = [](Movable&& msg) { return msg.size(); };
     ma::Maybe<Movable> msg = Movable("abcd");
     auto res = mapN(f, std::move(msg));
-    ASSERT_TRUE(res.contains(5ul));
+    ASSERT_TRUE(res.contains(4ul));
   }
   // It works with mixed everything
   {
@@ -598,7 +598,7 @@ TEST(Maybe, mapN) {
     ma::Maybe<Movable> msg2 = Movable("abcde");
     auto res = mapN(f, std::move(msg1), msg2, ma::Just(19),
                     ma::Just(std::string{"12"}));
-    ASSERT_TRUE(res.contains(30ul));
+    ASSERT_TRUE(res.contains(28ul));
   }
   // But as soon as there is one nothing
   {
