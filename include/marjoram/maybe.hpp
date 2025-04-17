@@ -344,14 +344,25 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
    * Undefined behavior if this Maybe does not contain a value.
    * @return const reference to contained value.
    */
-  const A& get() const { return getImpl(); }
+  const A& get() const& { return getImpl(); }
 
   /**
    * Obtains contained value.
    * Undefined behavior if this Maybe does not contain a value.
    * @return reference to contained value.
    */
-  A& get() { return getImpl(); }
+  A& get() & { return getImpl(); }
+
+  /**
+   * Passes ownership of contained value to caller, resets the Maybe
+   * Undefined behavior if this Maybe does not contain a value.
+   * @return contained value.
+   */
+  A get() && {
+    auto ret = std::move(getImpl());
+    reset();
+    return std::move(ret);
+  }
 
   /**
    * If this object contains a value, returns it. Otherwise returns `dflt`.
@@ -544,5 +555,34 @@ template <typename A> class ConstMaybeIterator {
 template <typename A> Maybe<std::decay_t<A>> Just(A&& a) {
   return Maybe<A>(std::forward<A>(a));
 }
+
+/** Utility template for checking if a given type T is a ma::Maybe */
+template <typename> struct is_maybe : std::false_type {};
+template <typename T> struct is_maybe<Maybe<T>> : std::true_type {};
+
+/** Helper variable template for is_maybe<T>::value */
+template <typename T>
+constexpr bool is_maybe_v = is_maybe<std::decay_t<T>>::value;
+
+/**
+ * Returns result of `f(mbVal1.get(), ...)` if all arguments contain a value,
+ * otherwise returns Nothing. The values are forwarded to the function.
+ *
+ * @param f Function object.
+ * @param mbArgs optional arguments to apply
+ *
+ * @return result of calling `f` with unwrapped arguments
+ */
+template <typename F, typename... MbArgs,
+          typename = std::enable_if<(is_maybe_v<MbArgs> && ...)>>
+auto mapN(F func, MbArgs&&... mbArgs)
+    -> ma::Maybe<std::invoke_result_t<
+        F, decltype(std::forward<MbArgs>(mbArgs).get())...>> {
+  if (((mbArgs.isJust()) && ...)) {
+    return func(std::forward<MbArgs>(mbArgs).get()...);
+  }
+  return ma::Nothing;
+}
+
 // @}
 }  // namespace ma
