@@ -354,11 +354,15 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
   A& get() & { return getImpl(); }
 
   /**
-   * Passes ownership of contained value to caller
+   * Passes ownership of contained value to caller, resets the Maybe
    * Undefined behavior if this Maybe does not contain a value.
    * @return contained value.
    */
-  A&& get() && { return std::move(getImpl()); }
+  A get() && {
+    auto ret = std::move(getImpl());
+    reset();
+    return std::move(ret);
+  }
 
   /**
    * If this object contains a value, returns it. Otherwise returns `dflt`.
