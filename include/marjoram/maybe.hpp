@@ -361,7 +361,7 @@ template <typename A> class MARJORAM_NODISCARD Maybe {
   A&& get() && {
     auto&& ret = std::move(getImpl());
     reset();
-    return ret;
+    return std::move(ret);
   }
 
   /**

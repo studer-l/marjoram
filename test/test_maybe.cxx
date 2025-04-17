@@ -2,6 +2,7 @@
 #include "marjoram/nothing.hpp"
 #include "gtest/gtest.h"
 #include <memory>
+#include <utility>
 
 using ma::Just;
 using ma::Maybe;
@@ -360,14 +361,6 @@ TEST(Maybe, containsBool) {
   ASSERT_FALSE(nada.contains(false));
 }
 
-/*
- *TEST(Maybe, makePair) {
- *  std::pair<float, float> orig(1.0, 2.0);
- *  std::pair<ma::Maybe<float>, int> pOfMb =
- *std::make_pair(ma::Just(orig.first), 2);
- *}
- */
-
 TEST(Maybe, getOrElse_uniquePtr) {
   auto Mbptr = ma::Just(std::make_unique<int>(5));
   ASSERT_NE(Mbptr.getOrElse(nullptr), nullptr);
@@ -525,86 +518,108 @@ TEST(Maybe, is_maybe) {
   ASSERT_FALSE(ma::is_maybe_v<int>);
 }
 
-TEST(Maybe, mapN) {
-  // We first create an object that is only movable, and need if for several
-  // reasons:
-  //  - To get compiler errors if a move is not handled correctly
-  //  - To check if an lvalue reference was moved from
-  class Movable {
-   public:
-    explicit Movable(std::string value_) : value(value_) {}
-    Movable(Movable&& other) : value(std::move(other.value)) {}
-    Movable& operator=(Movable&& other) {
-      value = std::move(other.value);
-      return *this;
-    }
-    Movable(const Movable&& other) = delete;
-    Movable& operator=(const Movable& other) = delete;
-
-    size_t size() const { return value.size(); }
-
-   private:
-    std::string value;
+TEST(Maybe, mapN_lvalue) {
+  // Given a non copyable maybe value
+  ma::Maybe msg = std::make_unique<int>(1);
+  // And a lambda that takes an l-value reference
+  auto f = [](auto& msg) {
+    // We can modify the reference
+    *msg += 1;
+    return *msg;
   };
-  // It works with lvalue references
-  {
-    auto f = [](Movable& msg) { return msg.size(); };
-    ma::Maybe<Movable> msg = Movable("abcd");
-    auto res = mapN(f, msg);
-    ASSERT_TRUE(res.contains(4ul));
-    ASSERT_TRUE(msg.isJust());
-    ASSERT_EQ(msg.get().size(), 4ul);
-  }
-  {
-    auto f = [](const Movable& msg) { return msg.size(); };
-    ma::Maybe<Movable> msg = Movable("abcd");
-    auto res = mapN(f, msg);
-    ASSERT_TRUE(res.contains(4ul));
-    ASSERT_TRUE(msg.isJust());
-    ASSERT_EQ(msg.get().size(), 4ul);
-  }
-  // Also works for const references
-  {
-    auto f = [](const Movable& msg) { return msg.size(); };
-    const ma::Maybe<Movable> msg = Movable("abcd");
-    auto res = mapN(f, msg);
-    ASSERT_TRUE(res.contains(4ul));
-  }
-  // It works with rvalue references
-  {
-    auto f = [](Movable msg) { return msg.size(); };
-    ma::Maybe<Movable> msg = Movable("abcd");
-    auto res = mapN(f, std::move(msg));
-    ASSERT_TRUE(res.contains(4ul));
-  }
-  {
-    auto f = [](const Movable& msg) { return msg.size(); };
-    ma::Maybe<Movable> msg = Movable("abcd");
-    auto res = mapN(f, std::move(msg));
-    ASSERT_TRUE(res.contains(4ul));
-  }
-  {
-    auto f = [](Movable&& msg) { return msg.size(); };
-    ma::Maybe<Movable> msg = Movable("abcd");
-    auto res = mapN(f, std::move(msg));
-    ASSERT_TRUE(res.contains(4ul));
-  }
-  // It works with mixed everything
-  {
-    auto f = [](Movable msg1, const Movable& msg2, auto offset, auto joker) {
-      return msg1.size() + msg2.size() + offset + joker.size();
-    };
-    ma::Maybe<Movable> msg1 = Movable("ab");
-    ma::Maybe<Movable> msg2 = Movable("abcde");
-    auto res = mapN(f, std::move(msg1), msg2, ma::Just(19),
-                    ma::Just(std::string{"12"}));
-    ASSERT_TRUE(res.contains(28ul));
-  }
-  // But as soon as there is one nothing
-  {
-    auto f = [](int i1, int i2) { return i1 + i2; };
-    auto res = mapN(f, ma::Just(1), ma::Maybe<int>{});
-    // The function does not get called
-    ASSERT_TRUE(res.isNothing());
-  }
+  // When we call mapN with the function and non-copyable value
+  auto res = mapN(f, msg);
+  // The function will return something
+  ASSERT_TRUE(res.contains(2));
+  // And the contained value got updated as well
+  ASSERT_TRUE(msg.isJust());
+  ASSERT_EQ(*msg.get(), 2);
+}
+TEST(Maybe, mapN_const_lvalue) {
+  // Given a non copyable maybe value
+  ma::Maybe msg = std::make_unique<int>(1);
+  // And a lambda that takes a const l-value reference
+  auto f = [](const auto& msg) { return *msg; };
+  // When we call mapN with the function and non-copyable value
+  auto res = mapN(f, msg);
+  // The function will return something
+  ASSERT_TRUE(res.contains(1));
+  // And the original value did not get moved from
+  ASSERT_TRUE(msg.isJust());
+  // And the value is unchanged
+  ASSERT_EQ(*msg.get(), 1);
+}
+
+TEST(Maybe, mapN_const_lvalue_with_rvalue_argument) {
+  // Given a lambda that takes a const l-value reference
+  auto f = [](const auto& msg) { return *msg; };
+  // When we call mapN with the function and a newly constructed object
+  auto res = mapN(f, ma::Maybe{std::make_unique<int>(1)});
+  // The function will return something
+  ASSERT_TRUE(res.contains(1));
+}
+
+TEST(Maybe, mapN_non_qualified_argument) {
+  // Given a lambda that takes a non-reference qualified argument
+  auto f = [](auto msg) { return *msg; };
+  // When we call mapN with the function and a newly constructed object
+  auto res = mapN(f, Just(std::make_unique<int>(1)));
+  // The function will return something
+  ASSERT_TRUE(res.contains(1));
+}
+
+TEST(Maybe, mapN_non_qualified_argument_copyable) {
+  // Given a lambda that takes a non-reference qualified argument
+  auto f = [](auto msg) { return msg.size(); };
+  // When we call mapN with the function and a copyable object
+  auto mbString = Just(std::string{"abc"});
+  auto res = mapN(f, mbString);
+  // The function will return something
+  ASSERT_TRUE(res.contains(3ul));
+  // And the copyable object has not been moved from
+  ASSERT_TRUE(mbString.contains("abc"));
+}
+
+TEST(Maybe, mapN_rvalue) {
+  // Given a lambda that takes an r-value reference qualified argument
+  // NOTE: concrete type has to be specified so it is not interpreted as a
+  //       forwarding referece
+  auto f = [](std::unique_ptr<int>&& msg) { return *msg; };
+  // When we call mapN with the function and a copyable object
+  auto res = mapN(f, Just(std::make_unique<int>(1)));
+  // The function will return something
+  ASSERT_TRUE(res.contains(1));
+}
+
+TEST(Maybe, mapN_rvalue_move) {
+  // Given a lambda that takes an r-value reference qualified argument
+  // NOTE: concrete type has to be specified so it is not interpreted as a
+  //       forwarding referece
+  auto f = [](std::unique_ptr<int>&& msg) { return *msg; };
+  // When we call mapN with the function and a copyable object
+  auto mbIntPtr = Just(std::make_unique<int>(1));
+  auto res = mapN(f, std::move(mbIntPtr));
+  // The function will return something
+  ASSERT_TRUE(res.contains(1));
+}
+
+TEST(Maybe, mapN_many) {
+  auto f = [](std::unique_ptr<int> i1, int i2, std::string& s1, auto joker) {
+    return *i1 + i2 + s1.size() + joker.size();
+  };
+  // When we call mapN with many just values
+  auto mbIntPtr = Just(std::make_unique<int>(1));
+  auto mbString = Just(std::string{"abc"});
+  auto res = mapN(f, std::move(mbIntPtr), Just(2), mbString,
+                  Just(std::string{"abcd"}));
+  // The function will return the correct calculation
+  ASSERT_TRUE(res.contains(10ul));
+}
+
+TEST(Maybe, mapN_one_nothing) {
+  auto f = [](int i1, int i2) { return i1 + i2; };
+  // When we call mapN with the function and a copyable object
+  auto res = mapN(f, Just(1), ma::Maybe<int>{});
+  // The function will return something
+  ASSERT_TRUE(res.isNothing());
 }
