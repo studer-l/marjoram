@@ -138,7 +138,7 @@ class MARJORAM_NODISCARD Either : private detail::EitherImpl<A, B> {
    * their respective arguments.
    */
   template <typename Fa, typename Fb>
-  auto fold(Fa fa, Fb fb) const -> std::result_of_t<Fa(A)> {
+  auto fold(Fa fa, Fb fb) const & -> std::result_of_t<Fa(A)> {
     static_assert(
         std::is_same<std::result_of_t<Fa(A)>, std::result_of_t<Fb(B)>>::value,
         "Either::Fold Fa and Fb must have identical return type.");
@@ -160,7 +160,7 @@ class MARJORAM_NODISCARD Either : private detail::EitherImpl<A, B> {
    * their respective arguments.
    */
   template <typename Fa, typename Fb>
-  auto fold(Fa fa, Fb fb) -> std::result_of_t<Fa(A)> {
+  auto fold(Fa fa, Fb fb) & -> std::result_of_t<Fa(A)> {
     static_assert(
         std::is_same<std::result_of_t<Fa(A)>, std::result_of_t<Fb(B)>>::value,
         "Either::Fold Fa and Fb must have identical return type.");
@@ -169,6 +169,30 @@ class MARJORAM_NODISCARD Either : private detail::EitherImpl<A, B> {
       return fb(asRight());
     }
     return fa(asLeft());
+  }
+
+  /**
+   * Reduces Either<A, B> to single value via two function objects.
+   * The value is moved into the applied function.
+   *
+   * @param fa Function object that can be applied to an `A`.
+   * @param fb Function object that can be applied to a `B`.
+   * @return Result of either `fa(a)` or `fb(b)` depending on which kind of
+   * value is contained.
+   *
+   * Note that both `fa` and `fb` must have the same return type when applied to
+   * their respective arguments.
+   */
+  template <typename Fa, typename Fb>
+  auto fold(Fa fa, Fb fb) && -> std::result_of_t<Fa(A)> {
+    static_assert(
+        std::is_same<std::result_of_t<Fa(A)>, std::result_of_t<Fb(B)>>::value,
+        "Either::Fold Fa and Fb must have identical return type.");
+
+    if (impl::side == detail::right) {
+      return fb(std::move(asRight()));
+    }
+    return fa(std::move(asLeft()));
   }
 
   /**

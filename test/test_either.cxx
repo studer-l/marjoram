@@ -78,6 +78,17 @@ TEST(Either, fold) {
   EXPECT_EQ(rInt, 42LU);
 }
 
+TEST(Either, foldRvalue) {
+  auto fa = [](std::string s) -> std::size_t { return s.length(); };
+  auto fb = [](int i) -> std::size_t { return i; };
+
+  auto rStr = Either<std::string, int>("There was a cat").fold(fa, fb);
+  auto rInt = Either<std::string, int>(42).fold(fa, fb);
+
+  EXPECT_EQ(rStr, std::string("There was a cat").length());
+  EXPECT_EQ(rInt, 42LU);
+}
+
 TEST(Either, For) {
   Either<int, char> theLetterF(Right, 'f');
   Either<std::string, char> hello("Hello");
